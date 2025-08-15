@@ -1,0 +1,513 @@
+{
+  "survey": {
+    "title": "የኢትዮጵያ ኤሌክትሪክ አገልግሎት ደንበኞች እርካታ ጥናት",
+    "instructions": "እባክዎ የድርጅቱን አገልግሎት በተሰጠው መለኪያ ይለይቱ።",
+    "version": "1.0",
+    "metadata": {
+      "created": "2025-08-12",
+      "language": "amharic"
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "type": "multi_select",
+      "question": "ከጥናቱ ጋር ተያያዥነት ያላቸዉ ሪጅን",
+      "category": "demographics",
+      "options": [
+        {
+          "value": "region_1",
+          "label": "ሪጅን"
+        },
+        {
+          "value": "debre_markos",
+          "label": "ደ/ማርቆስ"
+        },
+        {
+          "value": "shashamene",
+          "label": "ሻሸመኔ"
+        },
+        {
+          "value": "desse",
+          "label": "ደሴ"
+        },
+        {
+          "value": "gondar",
+          "label": "ጎንደር"
+        },
+        {
+          "value": "woldiya",
+          "label": "ወልድያ"
+        },
+        {
+          "value": "finfinne",
+          "label": "ፊንፊኔ"
+        },
+        {
+          "value": "adama",
+          "label": "አዳማ"
+        },
+        {
+          "value": "arba_minch",
+          "label": "አርባ ምንጭ"
+        },
+        {
+          "value": "bahir_dar",
+          "label": "ባህር ዳር"
+        },
+        {
+          "value": "debre_birhan",
+          "label": "ደ/ብርሃን"
+        },
+        {
+          "value": "hosahna",
+          "label": "ሆሳህና"
+        },
+        {
+          "value": "sidama",
+          "label": "ሲዳማ"
+        },
+        {
+          "value": "jimma",
+          "label": "ጅማ"
+        },
+        {
+          "value": "gambella",
+          "label": "ጋምቤላ"
+        },
+        {
+          "value": "bale_robe",
+          "label": "ባሌሮቤ"
+        },
+        {
+          "value": "ambo",
+          "label": "አምቦ"
+        },
+        {
+          "value": "jijiga",
+          "label": "ጅጅጋ"
+        },
+        {
+          "value": "nekemte",
+          "label": "ነቀምት"
+        },
+        {
+          "value": "metu",
+          "label": "መቱ"
+        },
+        {
+          "value": "wolaita_sodo",
+          "label": "ወላይታ ሶዶ"
+        },
+        {
+          "value": "harar",
+          "label": "ሀረር"
+        },
+        {
+          "value": "afar",
+          "label": "አፋር"
+        },
+        {
+          "value": "south_west",
+          "label": "ደቡብ ምራብ"
+        },
+        {
+          "value": "chiro",
+          "label": "ጭሮ"
+        },
+        {
+          "value": "west_addis",
+          "label": "ምዕራብ አ.አ"
+        },
+        {
+          "value": "south_addis",
+          "label": "ደቡብአ.አ"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "single_choice",
+      "question": "የአገልግሎት መስጫ ማእከል",
+      "category": "service_location",
+      "options": [
+        "መቀሌ",
+        "ሰሜን አ.አ",
+        "ምስራቅአ.አ",
+        "ሽሬ",
+        "ቤኒሻንጉል",
+        "ድሬደዋ"
+      ]
+    },
+    {
+      "id": 4,
+      "question": "የአገልግሎት መስጫ ማእከል ቁጥር",
+      "type": "number",
+      "placeholder": "ደ/አ/መ/ቁጥር",
+      "category": "demographics"
+    },
+    {
+      "id": 6,
+      "question": "Customer account number(CA Number)",
+      "type": "number",
+      "placeholder": "",
+      "category": "demographics"
+    },
+    {
+      "id": 8,
+      "question": "business number",
+      "type": "number",
+      "placeholder": "0987",
+      "category": "demographics"
+    },
+    {
+      "id": 10,
+      "question": "ስልክ ቁጥር",
+      "type": "number",
+      "placeholder": "+25190000000",
+      "category": "demographic_verify"
+    },
+    {
+      "id": 12,
+      "question": "ኤሌክትሪክ የሚጠቀሙት",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": 1,
+          "text": "ለመኖሪያ ቤት"
+        },
+        {
+          "id": 2,
+          "text": "ለንግድ ኢንዱስትሪ"
+        },
+        {
+          "id": 3,
+          "text": "ሌላ",
+          "is_other": true
+        }
+      ],
+      "category": "demographics"
+    },
+    {
+      "id": 3,
+      "question": "እርስዎ የድርጅቱ ተደንበኛ ከሆኑ ምን ያህል ጊዜ ይሆኖታል?",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": 1,
+          "text": "ከ10 ዓመት በላይ"
+        },
+        {
+          "id": 2,
+          "text": "ከ6 እስከ 10 ዓመት"
+        },
+        {
+          "id": 3,
+          "text": "ከ1 እስከ 5 ዓመት"
+        },
+        {
+          "id": 4,
+          "text": "ከ1 ዓመት በታች"
+        }
+      ],
+      "category": "demographics"
+    },
+    {
+      "id": 14,
+      "question": "በተቋሙ የቆጣሪ ዓይነት እርስዎ የየትኛው ቆጣሪ ተጠቃሚ ነው?",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": 1,
+          "text": "ድህረ ክፍያ"
+        },
+        {
+          "id": 2,
+          "text": "ቅድመ ክፍያ"
+        },
+        {
+          "id": 3,
+          "text": "ስማርት ሜትር"
+        }
+      ],
+      "category": "service"
+    },
+    {
+      "id": 5,
+      "question": "ከተቋሙ ጋር በተደጋጋሚ የሚገናኙት ለየትኛው አገልግሎት ነው?",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": 1,
+          "text": "ቢል ለመክፈል"
+        },
+        {
+          "id": 2,
+          "text": "አዲስ ቆጣሪ ለመጠየቅ"
+        },
+        {
+          "id": 3,
+          "text": "የጥገና አገልግሎት ለመጠየቅ"
+        },
+        {
+          "id": 4,
+          "text": "ማሻሻያ ለመጠየቅ"
+        },
+        {
+          "id": 5,
+          "text": "ካርድ ለማስሞላት"
+        },
+        {
+          "id": 6,
+          "text": "ለአስተዳደራዊ ጉዳይ"
+        },
+        {
+          "id": 7,
+          "text": "ሌላ",
+          "is_other": true
+        }
+      ],
+      "category": "service"
+    },
+    {
+      "id": 16,
+      "question": "ከላይ የመረጡትን አገልግሎት ለማግኘት በአማካኝ ምን ያህል ጊዜ ተፈጅቦታል?",
+      "type": "single_choice",
+      "options": [
+        {
+          "id": 1,
+          "text": "ከ10 ደቂቃ በታች"
+        },
+        {
+          "id": 2,
+          "text": "ከ10 ደቂቃ እስከ 30 ደቂቃ"
+        },
+        {
+          "id": 3,
+          "text": "ከ31 ደቂቃ እስከ 1 ሰዓት"
+        },
+        {
+          "id": 4,
+          "text": "ከ1 ሰዓት በላይ"
+        },
+        {
+          "id": 5,
+          "text": "ሌላ",
+          "is_other": true
+        }
+      ],
+      "category": "service"
+    },
+    {
+      "id": 18,
+      "question": "የተቋሙ የቢሮ ሰራተኞች የደንበኞች መስተንግዶ (አቀባበል) ምን ይመስላል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "satisfaction"
+    },
+    {
+      "id": 9,
+      "question": "አዲስ ኃይል (ቆጣሪ) ለማግኘት ሂደቱ እንዴት ያዩታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "process"
+    },
+    {
+      "id": 20,
+      "question": "ቆጣሪ ለማገናኘት መስክ ላይ የሚሰማሩ የቴክኒክ ሠራተኞች ያላቸው የስራ ትብብር እንዴት ይመለከቱታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "technical"
+    },
+    {
+      "id": 11,
+      "question": "በየወሩ የሚመጣው የተጠቀሙበት የፍጆታ ሂሳብ ትክክለኛነት እንዴት ይመዝኑታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "billing"
+    },
+    {
+      "id": 22,
+      "question": "የተቋሙ የክፍያ ስርዓት እንዴት ያዩታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "billing"
+    },
+    {
+      "id": 13,
+      "question": "የቅድመ ክፍያ ካርድ ለመሙላት የተቋሙ ሰራተኞች አቀባበል እንዴት አገኙት?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "service"
+    },
+    {
+      "id": 24,
+      "question": "የድህረ ክፍያ ቆጣሪ ደንበኛ ከሆኑ ተቋሙ በየወሩ ተንባብ ከመውሰድ አንጻር ምን ላይ ይመድቡታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "billing"
+    },
+    {
+      "id": 15,
+      "question": "ቆጣሪው ላይ ያለው ንባብ በትክክል ከመውሰድ አንጻር ተቋሙ እንዴት ያዩታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "technical"
+    },
+    {
+      "id": 26,
+      "question": "የተቋሙ ቆጣሪ አንባቢዎች ደንበኛ አያያዛቸው እንዴት ነው?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "technical"
+    },
+    {
+      "id": 17,
+      "question": "አገልግሎት ሲቋረጥ ከማሳወቅ አንጻር ተቋሙን እንዴት ይገመግሙታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "reliability"
+    },
+    {
+      "id": 28,
+      "question": "የብልሽት አመዘጋገብ ሂደት እንዴት አዩት?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "process"
+    },
+    {
+      "id": 19,
+      "question": "አገልግሎት ሲቋረጥ የሚያስተናግዱት ሠራተኞች ምላሽ ምን ይመስላል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "reliability"
+    },
+    {
+      "id": 30,
+      "question": "ሃይል ባጭር ጊዜ መልሶ ከማገናኘት አንጻር ተቋሙን እንዴት ያዩታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "reliability"
+    },
+    {
+      "id": 21,
+      "question": "የኤሌክትሪክ ሃይል መዋዠቅ ከማጋጠም አንጻር ተቋሙን እንዴት ይገመግሙታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "reliability"
+    },
+    {
+      "id": 32,
+      "question": "የኤሌክትሪክ ሃይል ዝቅ ከማለት ተቋሙን እንዴት ያዩታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "reliability"
+    },
+    {
+      "id": 23,
+      "question": "የቅሬታ አቀባበል ዘዴን ለደንበኞቹ ከማሳወቅ አንጻር ተቋሙን እንዴት ያዩታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "communication"
+    },
+    {
+      "id": 34,
+      "question": "አቤቱታ ያላቸው ደንበኞች በተቀመጠዉ ጊዜ ምላሽ አሰጣጥ እንዴት ይገመግሙታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "satisfaction"
+    },
+    {
+      "id": 25,
+      "question": "ቢሮዉ የሚገኝበት ሥፍራ ምቹነት እንዴት ይገመግሙታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "facility"
+    },
+    {
+      "id": 36,
+      "question": "ቢሮዉ ውስጥ ያለዉ አደረጃጀት?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "facility"
+    },
+    {
+      "id": 27,
+      "question": "ሠራተኞቹ በሥራ ሰዓት መገኘታቸዉ?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "satisfaction"
+    },
+    {
+      "id": 38,
+      "question": "ተቋሙ ለሁሉም ተደራሽ የሆነ የመገናኛ ዘዴ ምን ይመስላል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "communication"
+    },
+    {
+      "id": 29,
+      "question": "የቅሬታ መቀበያ ስልክ ቶሎ ከማንሳት አንጻር ተቋሙን እንዴት ይገመግሙታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "communication"
+    },
+    {
+      "id": 40,
+      "question": "ድረ ገፅ እና ማህበራዊ ሚዲያ ላይ አስፈላጊ መረጃዎች ከመልቀቅ አንጻር ተቋሙን እንዴት ይገመግሙታል?",
+      "type": "rating",
+      "scale": "1-5",
+      "category": "communication"
+    }
+  ],
+  "question_categories": [
+    {
+      "id": 1,
+      "name": "demographics"
+    },
+    {
+      "id": 2,
+      "name": "service_location"
+    },
+    {
+      "id": 3,
+      "name": "demographic_verify"
+    },
+    {
+      "id": 4,
+      "name": "billing"
+    },
+    {
+      "id":5,
+      "name": "service"
+    },
+    {
+      "id": 6,
+      "name": "technical"
+    },
+    {
+      "id": 7,
+      "name": "process"
+    },
+    {
+      "id": 8,
+      "name": "reliability"
+    },
+    {
+      "id": 9,
+      "name": "communication"
+    },
+    {
+      "id": 10,
+      "name": "facility"
+    },
+    {
+      "id": 11,
+      "name": "satisfaction"
+    },
+    {
+      "id": 12,
+      "name": "demographic_verify"
+    }
+  ]
+}
