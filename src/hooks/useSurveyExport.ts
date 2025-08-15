@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { SurveyExport } from "./types";
+import type { SurveyExport } from "../types/survey";
 
 export function useSurveyExport(id: number) {
   const [data, setData] = useState<SurveyExport | null>(null);

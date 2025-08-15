@@ -1,8 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
+import "./assets/index.css";
 import SurveyForm from "./SurveyForm.tsx";
-import Header from "./Header.tsx";
+import Header from "./components/Header.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
