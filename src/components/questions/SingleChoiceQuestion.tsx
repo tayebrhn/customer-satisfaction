@@ -33,7 +33,6 @@ export const SingleChoiceQuestion = ({
         );
         const isOtherSelected =
           formValues[question.id] === optionValue && isOther;
-
         return (
           <div key={optionId} className="flex flex-col gap-1">
             <label className="flex items-center gap-2">
@@ -78,12 +77,12 @@ const parseOption = (option: any, index: number) => {
       isOther: false,
     };
   } else {
-    console.log(option)
+    // console.log(option)
     return {
       optionValue: option.text,
       optionLabel: option.text,
       optionId: option.id,
-      isOther: !!option,
+      isOther: option.is_other?true:false,
     };
   }
 };

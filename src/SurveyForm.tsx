@@ -21,7 +21,7 @@ export default function SurveyForm() {
   const { clearSavedData } = useFormPersistence(form, formValues);
 
   // Group questions by category
-  console.log("FROMUI",surveyData?.questions)
+  // console.log("FROMUI",surveyData?.questions)
   const categories = surveyData?.question_categories;
   const groupedQuestions = categories?.map((cat: { id: number; }) => ({
     ...cat,
@@ -52,7 +52,7 @@ export default function SurveyForm() {
   if (!surveyData || groupedQuestions.length === 0) return <div>No survey found.</div>;
 
   const currentCategory = groupedQuestions[currentCategoryIndex];
-console.log("hi",groupedQuestions)
+// console.log("hi",groupedQuestions)
   return (
     <main>
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
