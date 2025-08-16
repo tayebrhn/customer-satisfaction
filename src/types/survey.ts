@@ -13,7 +13,7 @@ export type ValueLabelQuestion = {
   id: number;
   type: string;
   question: string;
-  category: string;
+  category: number;
   options: ValueLabelOption[];
   placeholder?: undefined;
   scale?: undefined;
@@ -23,7 +23,7 @@ export type StringArrayQuestion = {
   id: number;
   type: string;
   question: string;
-  category: string;
+  category: number;
   options: string[];
   placeholder?: undefined;
   scale?: undefined;
@@ -34,7 +34,7 @@ export type TextQuestion = {
   question: string;
   type: string;
   placeholder: string;
-  category: string;
+  category: number;
   options?: undefined;
   scale?: undefined;
 };
@@ -43,8 +43,8 @@ export type ObjectOptionsQuestion = {
   id: number;
   question: string;
   type: string;
-  options: ChoiceOption[];
-  category: string;
+  options: QuestionOption[];
+  category: number;
   placeholder?: undefined;
   scale?: undefined;
 };
@@ -54,7 +54,7 @@ export type RatingQuestion = {
   question: string;
   type: string; // e.g. "rating"
   scale: string; // e.g. "1-5"
-  category: string;
+  category: number;
   options?: undefined;
   placeholder?: undefined;
 };

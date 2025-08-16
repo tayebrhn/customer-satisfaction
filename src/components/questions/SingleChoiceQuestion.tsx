@@ -23,7 +23,7 @@ export const SingleChoiceQuestion = ({
   const formValues = watch();
 
   if (!question.options) return null;
-
+// console.log(question.options[2].is_other)
   return (
     <div className="space-y-1">
       {question.options.map((option, index) => {
@@ -78,11 +78,12 @@ const parseOption = (option: any, index: number) => {
       isOther: false,
     };
   } else {
+    console.log(option)
     return {
       optionValue: option.text,
       optionLabel: option.text,
       optionId: option.id,
-      isOther: !!option.is_other,
+      isOther: !!option,
     };
   }
 };

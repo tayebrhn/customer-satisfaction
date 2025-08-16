@@ -12,7 +12,7 @@ import { ProgressBar } from "./components/ProgressBar";
 export default function SurveyForm() {
   const form = useForm({});
   const { register, handleSubmit, watch, setValue } = form;
-  const { data: surveyData, loading, error } = useSurveyExport(1);
+  const { data: surveyData, loading, error } = useSurveyExport();
 
   // Watch all form values for persistence and conditional rendering
   const formValues = watch();
@@ -21,11 +21,12 @@ export default function SurveyForm() {
   const { clearSavedData } = useFormPersistence(form, formValues);
 
   // Group questions by category
+  console.log("FROMUI",surveyData?.questions)
   const categories = surveyData?.question_categories;
-  const groupedQuestions = categories?.map((cat: { name: string; }) => ({
+  const groupedQuestions = categories?.map((cat: { id: number; }) => ({
     ...cat,
     questions: surveyData?.questions.filter(
-      (q: Question) => q.category === cat.name
+      (q: Question) => q.category === cat.id
     ),
   })) || [];
 
@@ -51,7 +52,7 @@ export default function SurveyForm() {
   if (!surveyData || groupedQuestions.length === 0) return <div>No survey found.</div>;
 
   const currentCategory = groupedQuestions[currentCategoryIndex];
-
+console.log("hi",groupedQuestions)
   return (
     <main>
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
