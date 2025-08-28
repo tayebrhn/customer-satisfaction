@@ -1,9 +1,9 @@
 // components/questions/RatingQuestion.tsx
 import type { UseFormRegister } from "react-hook-form";
-import type { Question } from "../../types/survey";
+import type { SurveyQuestion } from "../../types/survey";
 
 interface RatingQuestionProps {
-  question: Question;
+  question: SurveyQuestion;
   register: UseFormRegister<any>;
 }
 

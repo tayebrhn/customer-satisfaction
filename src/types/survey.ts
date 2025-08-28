@@ -1,108 +1,113 @@
-export type ValueLabelOption = {
-  value: string;
-  label: string;
-};
+// export type ValueLabelOption = {
+//   value: string;
+//   label: string;
+// };
 
-export type ChoiceOption = {
-  id: number;
-  text: string;
-  is_other?: boolean;
-};
+// export type ChoiceOption = {
+//   id: number;
+//   text: string;
+//   is_other?: boolean;
+// };
 
-export type ValueLabelQuestion = {
-  id: number;
-  type: string;
-  question: string;
-  category: number;
-  options: ValueLabelOption[];
-  placeholder?: undefined;
-  scale?: undefined;
-};
+// export type ValueLabelQuestion = {
+//   id: number;
+//   type: string;
+//   question: string;
+//   category: number;
+//   options: ValueLabelOption[];
+//   placeholder?: undefined;
+//   scale?: undefined;
+// };
 
-export type StringArrayQuestion = {
-  id: number;
-  type: string;
-  question: string;
-  category: number;
-  options: string[];
-  placeholder?: undefined;
-  scale?: undefined;
-};
+// export type StringArrayQuestion = {
+//   id: number;
+//   type: string;
+//   question: string;
+//   category: number;
+//   options: string[];
+//   placeholder?: undefined;
+//   scale?: undefined;
+// };
 
-export type TextQuestion = {
-  id: number;
-  question: string;
-  type: string;
-  placeholder: string;
-  category: number;
-  options?: undefined;
-  scale?: undefined;
-};
+// export type TextQuestion = {
+//   id: number;
+//   question: string;
+//   type: string;
+//   placeholder: string;
+//   category: number;
+//   options?: undefined;
+//   scale?: undefined;
+// };
 
-export type ObjectOptionsQuestion = {
-  id: number;
-  question: string;
-  type: string;
-  options: QuestionOption[];
-  category: number;
-  placeholder?: undefined;
-  scale?: undefined;
-};
+// export type ObjectOptionsQuestion = {
+//   id: number;
+//   question: string;
+//   type: string;
+//   options: QuestionOption[];
+//   category: number;
+//   placeholder?: undefined;
+//   scale?: undefined;
+// };
 
-export type RatingQuestion = {
-  id: number;
-  question: string;
-  type: string; // e.g. "rating"
-  scale: string; // e.g. "1-5"
-  category: number;
-  options?: undefined;
-  placeholder?: undefined;
-};
+// export type RatingQuestion = {
+//   id: number;
+//   question: string;
+//   type: string; // e.g. "rating"
+//   scale: string; // e.g. "1-5"
+//   category: number;
+//   options?: undefined;
+//   placeholder?: undefined;
+// };
 
-export type Question =
-  | ValueLabelQuestion
-  | StringArrayQuestion
-  | TextQuestion
-  | ObjectOptionsQuestion
-  | RatingQuestion;
-
-
-export interface SurveyExport {
-  survey: {
-    title: string;
-    instructions: string;
-    version: string;
-    metadata: {
-      created: string; // ISO date string, e.g., "2025-08-12"
-      language: string;
-    };
-  };
-  questions: Question[];
-  question_categories: QuestionCategory[];
-}
+// export type Question =
+//   | ValueLabelQuestion
+//   | StringArrayQuestion
+//   | TextQuestion
+//   | ObjectOptionsQuestion
+//   | RatingQuestion;
 
 export interface QuestionCategory {
   id: number;
   name: string;
 }
 
+export interface QuestionOption {
+  id: number;
+  text?: string;
+  is_other: boolean;
+}
+
 export interface SurveyQuestion {
   id: number;
-  type: "multi_select" | "single_choice" | "number" | "rating" | string;
+  type:
+    | "multi_select"
+    | "single_choice"
+    | "number"
+    | "rating"
+    | "drop_down"
+    | "text_area"
+    | "text";
   question: string;
-  category: string | null; // category name
+  category: number; // category name
   placeholder?: string;
   scale?: string;
-  options?: (QuestionOption | string)[];
+  options: QuestionOption[];
 }
 
-export interface QuestionOption {
-  value?: string;
-  label?: string;
-  text?: string;
-  is_other?: boolean;
+export interface SurveyExport {
+  id:string,
+  metadata: {
+    title: string;
+    instructions: string;
+    version: string;
+    created: string; // ISO date string, e.g., "2025-08-12"
+    language: string;
+  };
+  questions: SurveyQuestion[];
+  question_categories?: QuestionCategory[];
 }
 
+export type AppRoutes = Record<string, string>;
 
 // export type QuestionsArray = Question[];
 

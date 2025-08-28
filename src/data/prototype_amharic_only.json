@@ -53,75 +53,75 @@
         },
         {
           "value": "bahir_dar",
-          "label": "ባህር ዳር"
+          "label": "9"
         },
         {
           "value": "debre_birhan",
-          "label": "ደ/ብርሃን"
+          "label": "10"
         },
         {
           "value": "hosahna",
-          "label": "ሆሳህና"
+          "label": "11"
         },
         {
           "value": "sidama",
-          "label": "ሲዳማ"
+          "label": "12"
         },
         {
           "value": "jimma",
-          "label": "ጅማ"
+          "label": "13"
         },
         {
           "value": "gambella",
-          "label": "ጋምቤላ"
+          "label": "14"
         },
         {
           "value": "bale_robe",
-          "label": "ባሌሮቤ"
+          "label": "15"
         },
         {
           "value": "ambo",
-          "label": "አምቦ"
+          "label": "16"
         },
         {
           "value": "jijiga",
-          "label": "ጅጅጋ"
+          "label": "17"
         },
         {
           "value": "nekemte",
-          "label": "ነቀምት"
+          "label": "18"
         },
         {
           "value": "metu",
-          "label": "መቱ"
+          "label": "19"
         },
         {
           "value": "wolaita_sodo",
-          "label": "ወላይታ ሶዶ"
+          "label": "20"
         },
         {
           "value": "harar",
-          "label": "ሀረር"
+          "label": "21"
         },
         {
           "value": "afar",
-          "label": "አፋር"
+          "label": "22"
         },
         {
           "value": "south_west",
-          "label": "ደቡብ ምራብ"
+          "label": "23"
         },
         {
           "value": "chiro",
-          "label": "ጭሮ"
+          "label": "24"
         },
         {
           "value": "west_addis",
-          "label": "ምዕራብ አ.አ"
+          "label": "25"
         },
         {
           "value": "south_addis",
-          "label": "ደቡብአ.አ"
+          "label": ""
         }
       ]
     },
@@ -131,12 +131,12 @@
       "question": "የአገልግሎት መስጫ ማእከል",
       "category": "service_location",
       "options": [
-        "መቀሌ",
-        "ሰሜን አ.አ",
-        "ምስራቅአ.አ",
-        "ሽሬ",
-        "ቤኒሻንጉል",
-        "ድሬደዋ"
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
       ]
     },
     {
