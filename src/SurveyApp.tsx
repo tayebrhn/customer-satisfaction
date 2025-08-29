@@ -3,25 +3,23 @@ import { useForm } from "react-hook-form";
 import type {
   FormValues,
   QuestionCategory,
-  SurveyExport,
   SurveyQuestion,
 } from "./types/survey";
 // import surveyData from "./data/prototype_amharic_only.json";
-import { useSurveyExport } from "./hooks/useSurveyExport";
+import { useSurveyFetchOne } from "./hooks/useSurveyFetch.ts";
 import { useFormPersistence } from "./hooks/useFormPersistence";
 import { useSurveyNavigation } from "./hooks/useSurveyNavigation";
 import { QuestionRenderer } from "./components/QuestionRenderer";
 import { SurveyNavigation } from "./components/SurveyNavigation";
 import { ProgressBar } from "./components/ProgressBar";
 import { Header } from "./components/Header.tsx";
-import { useMemo } from "react";
+import { useParams } from "react-router-dom";
 
-
-
-export default function SurveyApp({prefix}:{prefix:string}) {
+export default function SurveyApp() {
+  const { lang, id } = useParams<{ lang: string; id: string }>();
   const form = useForm({});
   const { register, handleSubmit, watch, setValue } = form;
-  const { data: surveyData, loading, error } = useSurveyExport(prefix);
+  const { data: surveyData, loading, error } = useSurveyFetchOne(lang as string,id as string);
 
   // Watch all form values for persistence and conditional rendering
   const formValues = watch();
@@ -29,28 +27,16 @@ export default function SurveyApp({prefix}:{prefix:string}) {
   // Custom hooks for form persistence and navigation
   const { clearSavedData } = useFormPersistence(form, formValues);
 
-  // normalize data
-
-  const singleSurvey:SurveyExport|null = useMemo(()=>{
-    if (!surveyData) {
-      return null
-    }
-    if (Array.isArray(surveyData)) {
-      return null
-    }
-    return surveyData
-  },[])
-
   // Group questions by category
   // console.log("FROMM",surveyData?.questions)
   let categories;
-  if (singleSurvey?.question_categories !== null) {
-    categories = singleSurvey?.question_categories;
+  if (surveyData?.question_categories !== null) {
+    categories = surveyData?.question_categories;
   }
   const groupedQuestions =
     categories?.map((cat: QuestionCategory) => ({
       ...cat,
-      questions: singleSurvey?.questions.filter((q: SurveyQuestion) => {
+      questions: surveyData?.questions.filter((q: SurveyQuestion) => {
         const match = q.category === cat.id;
 
         // console.log("groupedQuestions: ",q.category,cat.id)
@@ -81,7 +67,11 @@ export default function SurveyApp({prefix}:{prefix:string}) {
   if (loading) return <div>Loading survey...</div>;
   if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
   if (!surveyData || groupedQuestions.length === 0)
-    return <div>No survey found.</div>;
+    return (
+      <div>
+        No survey found {"=>"} {id}
+      </div>
+    );
 
   // let filtered:Array<any>
   // groupedQuestions.forEach((element) => {
@@ -91,10 +81,10 @@ export default function SurveyApp({prefix}:{prefix:string}) {
   // });
   const currentCategory = groupedQuestions[currentCategoryIndex];
 
-  const { title, instructions } = singleSurvey?.metadata??{};
+  const { title, instructions } = surveyData?.metadata ?? {};
   return (
     <>
-      <Header title={title??""} instructions={instructions??""} />
+      <Header title={title ?? ""} instructions={instructions ?? ""} />
       <main>
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <form
