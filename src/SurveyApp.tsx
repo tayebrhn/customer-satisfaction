@@ -13,13 +13,19 @@ import { QuestionRenderer } from "./components/QuestionRenderer";
 import { SurveyNavigation } from "./components/SurveyNavigation";
 import { ProgressBar } from "./components/ProgressBar";
 import { Header } from "./components/Header.tsx";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 export default function SurveyApp() {
-  const { lang, id } = useParams<{ lang: string; id: string }>();
+  const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
+  const lang = searchParams.get("lang")
   const form = useForm({});
   const { register, handleSubmit, watch, setValue } = form;
-  const { data: surveyData, loading, error } = useSurveyFetchOne(lang as string,id as string);
+  const {
+    data: surveyData,
+    loading,
+    error,
+  } = useSurveyFetchOne(lang as string, id as string);
 
   // Watch all form values for persistence and conditional rendering
   const formValues = watch();
