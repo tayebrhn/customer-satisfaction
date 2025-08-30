@@ -28,8 +28,10 @@ export const DropDownQuestion = ({
   return (
     <div className="flex flex-col gap-2">
       <select
-        {...register(fieldName)}
-        onChange={(e) => setValue(fieldName, Number(e.target.value))}
+        {...register(
+          fieldName,
+          { onChange: (e) => setValue(fieldName, e.target.value) }
+        )}
         className="border p-2 rounded"
         defaultValue=""
       >
