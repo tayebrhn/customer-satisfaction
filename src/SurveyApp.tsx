@@ -17,15 +17,15 @@ import { useParams, useSearchParams } from "react-router-dom";
 
 export default function SurveyApp() {
   const { id } = useParams<{ id: string }>();
-  const [searchParams] = useSearchParams();
-  const lang = searchParams.get("lang")
+  // const [searchParams] = useSearchParams();
+  // const lang = searchParams.get("lang")
   const form = useForm({});
   const { register, handleSubmit, watch, setValue } = form;
   const {
     data: surveyData,
     loading,
     error,
-  } = useSurveyFetchOne(lang as string, id as string);
+  } = useSurveyFetchOne(id as string);
 
   // Watch all form values for persistence and conditional rendering
   const formValues = watch();

@@ -29,7 +29,7 @@ export default function App() {
                     <ul className="space-y-2">
                       <li>
                         <Link
-                          to={`survey/${survey.id}?lang=${survey.metadata.language}`}
+                          to={`survey/${survey.id}`}
                           className="block px-4 py-2 rounded bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition"
                           target="_blank"
                           rel="noopener noreferrer"

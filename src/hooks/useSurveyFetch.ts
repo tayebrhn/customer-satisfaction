@@ -26,7 +26,7 @@ export function useSurveyFetch() {
 
   return { data, loading, error };
 }
-export function useSurveyFetchOne(lang:string,surveId: string) {
+export function useSurveyFetchOne(surveId: string) {
   const [data, setData] = useState<SurveyExport>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +35,7 @@ export function useSurveyFetchOne(lang:string,surveId: string) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/surveys/${surveId}?lang=${lang}`);
+      const res = await fetch(`http://127.0.0.1:8000/api/surveys/${surveId}`);
       if (!res.ok) throw new Error(`Failed to fetch survey`);
       const json: SurveyExport = await res.json();
       
