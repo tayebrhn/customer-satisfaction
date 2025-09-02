@@ -30,7 +30,7 @@ export function useSurveyFetchOne(surveId: string) {
   const [data, setData] = useState<SurveyExport>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  console.log("useSurveyFetchOne :", surveId);
+  // console.log("useSurveyFetchOne :", surveId);
   const fetchSurvey = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -39,7 +39,7 @@ export function useSurveyFetchOne(surveId: string) {
       if (!res.ok) throw new Error(`Failed to fetch survey`);
       const json: SurveyExport = await res.json();
       
-        console.log("fetchSurvey :", json);
+        // console.log("fetchSurvey :", json);
       setData(json);
     } catch (err: any) {
       setError(err.message || "Unknown error");

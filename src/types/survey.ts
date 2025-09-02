@@ -73,8 +73,12 @@ export interface QuestionCategory {
 
 export interface QuestionOption {
   id: number;
-  text?: string;
+  text: string;
   is_other: boolean;
+}
+export interface KeyChoice {
+  key: string;
+  description: string;
 }
 
 export interface SurveyQuestion {
@@ -95,7 +99,7 @@ export interface SurveyQuestion {
 }
 
 export interface SurveyExport {
-  id:string,
+  id: string;
   metadata: {
     title: string;
     instructions: string;
@@ -105,6 +109,7 @@ export interface SurveyExport {
   };
   questions: SurveyQuestion[];
   question_categories?: QuestionCategory[];
+  key_choice: KeyChoice[];
 }
 
 export type AppRoutes = Record<string, string>;

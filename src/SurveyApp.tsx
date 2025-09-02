@@ -88,6 +88,8 @@ export default function SurveyApp() {
   const currentCategory = groupedQuestions[currentCategoryIndex];
 
   const { title, instructions } = surveyData?.metadata ?? {};
+  console.log("SurveyApp:",surveyData.key_choice[0])
+
   return (
     <>
       <Header title={title ?? ""} instructions={instructions ?? ""} />
@@ -103,6 +105,7 @@ export default function SurveyApp() {
                 <p className="mb-2 font-medium">{question.question}</p>
                 <QuestionRenderer
                   question={question}
+                  choices={surveyData.key_choice}
                   register={register}
                   setValue={setValue}
                   watch={watch}
