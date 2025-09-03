@@ -23,17 +23,19 @@ export const DropDownQuestion = ({
 }: DropDownQuestionProps) => {
   const fieldName = String(question.id);
   const selectedValue = watch(fieldName);
-  
+
   const [inputText, setInputText] = useState("");
   const [showOptions, setShowOptions] = useState(false);
-  const [filteredOptions, setFilteredOptions] = useState(question.options || []);
+  const [filteredOptions, setFilteredOptions] = useState(
+    question.options || []
+  );
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   if (!question.options) return null;
 
   // Check if there's an "Other" option
-  const otherOption = question.options.find(option => {
+  const otherOption = question.options.find((option) => {
     const { isOther } = parseOption(option);
     return isOther;
   });
@@ -41,7 +43,7 @@ export const DropDownQuestion = ({
   // Filter options based on input text
   useEffect(() => {
     if (inputText) {
-      const filtered = question.options!.filter(option => {
+      const filtered = question.options!.filter((option) => {
         const { optionLabel } = parseOption(option);
         return optionLabel.toLowerCase().includes(inputText.toLowerCase());
       });
@@ -72,7 +74,7 @@ export const DropDownQuestion = ({
   // Handle option selection
   const handleOptionSelect = (option: any) => {
     const { optionValue, optionLabel, optionId, isOther } = parseOption(option);
-    
+
     if (isOther) {
       // If "Other" is selected, keep the current input text
       setValue(fieldName, optionId);
@@ -83,7 +85,7 @@ export const DropDownQuestion = ({
       setValue(fieldName, optionValue);
       setValue(`${fieldName}_other`, "");
     }
-    
+
     setShowOptions(false);
   };
 
@@ -105,11 +107,11 @@ export const DropDownQuestion = ({
   // Initialize input text with selected value
   useEffect(() => {
     if (selectedValue) {
-      const selectedOption = question.options!.find(option => {
+      const selectedOption = question.options!.find((option) => {
         const { optionValue, optionId } = parseOption(option);
         return optionValue === selectedValue || optionId === selectedValue;
       });
-      
+
       if (selectedOption) {
         const { optionLabel, isOther } = parseOption(selectedOption);
         if (isOther) {
@@ -134,40 +136,36 @@ export const DropDownQuestion = ({
           placeholder="Type to search or select an option..."
           className="border p-2 rounded w-full"
         />
-        
+
         {showOptions && filteredOptions.length > 0 && (
           <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-48 overflow-y-auto">
             {filteredOptions.map((option) => {
-              const { optionValue, optionLabel, optionId, isOther } = parseOption(option);
+              const { optionValue, optionLabel, optionId, isOther } =
+                parseOption(option);
               return (
                 <div
                   key={optionId}
                   onClick={() => handleOptionSelect(option)}
                   className="p-2 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
                 >
-                  {isOther ? `Other: ${inputText || "Enter custom text"}` : optionLabel}
+                  {isOther
+                    ? `Other: ${inputText || "Enter custom text"}`
+                    : optionLabel}
                 </div>
               );
             })}
           </div>
         )}
-        
         {showOptions && filteredOptions.length === 0 && inputText && (
           <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded shadow-lg z-10 p-2 text-gray-500">
-            No matching options found
+            ...{" "}
           </div>
         )}
       </div>
 
       {/* Hidden inputs for form registration */}
-      <input
-        {...register(fieldName)}
-        type="hidden"
-      />
-      <input
-        {...register(`${fieldName}_other`)}
-        type="hidden"
-      />
+      <input {...register(fieldName)} type="hidden" />
+      <input {...register(`${fieldName}_other`)} type="hidden" />
     </div>
   );
 };

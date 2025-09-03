@@ -26,7 +26,7 @@ export const QuestionRenderer = ({
   setValue,
   watch,
 }: QuestionRendererProps) => {
-  console.log("QuestionRenderer:",choices)
+  // console.log("QuestionRenderer:",choices)
 
   switch (question.type) {
     case "text":

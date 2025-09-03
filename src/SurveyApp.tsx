@@ -85,10 +85,11 @@ export default function SurveyApp() {
 
   //   }
   // });
-  const currentCategory = groupedQuestions[currentCategoryIndex];
+  // groupedQuestions.sort()
+  const currentCategory = groupedQuestions.sort((a,b)=>{return a.cat_number - b.cat_number})[currentCategoryIndex];
 
   const { title, instructions } = surveyData?.metadata ?? {};
-  console.log("SurveyApp:",surveyData.key_choice[0])
+  // console.log("SurveyApp:",surveyData.key_choice[0])
 
   return (
     <>

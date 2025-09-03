@@ -68,6 +68,7 @@
 
 export interface QuestionCategory {
   id: number;
+  cat_number: number;
   name: string;
 }
 

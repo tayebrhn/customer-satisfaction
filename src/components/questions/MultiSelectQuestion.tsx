@@ -35,7 +35,7 @@ export const MultiSelectQuestion = ({
 
         const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           let updated = [...selectedValues];
-          console.log("handleChange",updated)
+          // console.log("handleChange",updated)
           if (e.target.checked) {
             updated.push(optionId);
           } else {
