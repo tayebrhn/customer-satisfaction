@@ -140,6 +140,24 @@ export type AppRoutes = Record<string, string>;
 // export const isRatingQuestion = (q: Question): q is RatingQuestion =>
 //   "scale" in q && typeof q.scale === "string";
 
-export type FormValues = {
-  [key: string]: any;
-};
+// export type FormValues = {
+//   [key: string]: any;
+// };
+
+export interface Response{
+  question_id:number
+  question_type:string
+  answer?:{
+    selected_option_id?:number,
+    text_value?:string
+  }
+} 
+export interface SurveyResponse {
+  survey_id: string;
+  respondent_info?: {
+    ip_address?: string;
+    user_agent?: string;
+    session_id?: string;
+  };
+  responses:Response[]
+}

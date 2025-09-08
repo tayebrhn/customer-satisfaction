@@ -4,6 +4,7 @@ import type {
   FormValues,
   QuestionCategory,
   SurveyQuestion,
+  SurveyResponse,
 } from "./types/survey";
 // import surveyData from "./data/prototype_amharic_only.json";
 import { useSurveyFetchOne } from "./hooks/useSurveyFetch.ts";
@@ -63,7 +64,7 @@ export default function SurveyApp() {
     clearPageData,
   } = useSurveyNavigation(groupedQuestions.length);
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: SurveyResponse) => {
     console.log("Full survey data:", data);
     clearSavedData();
     clearPageData();

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { SurveyExport } from "../types/survey";
+// import "dotenv/config";
 
 export function useSurveyFetch() {
   const [data, setData] = useState<SurveyExport[]>();
@@ -10,7 +11,7 @@ export function useSurveyFetch() {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`http://127.0.0.1:8000/api/surveys/`);
+        const res = await fetch(import.meta.env.VITE_SURVEY_URL);
 
         if (!res.ok) throw new Error(`Failed to fetch survey`);
         const json: SurveyExport[] = await res.json();
@@ -35,11 +36,11 @@ export function useSurveyFetchOne(surveId: string) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/surveys/${surveId}`);
+      const res = await fetch(`${import.meta.env.VITE_SURVEY_URL+surveId}`);
       if (!res.ok) throw new Error(`Failed to fetch survey`);
       const json: SurveyExport = await res.json();
-      
-        // console.log("fetchSurvey :", json);
+
+      // console.log("fetchSurvey :", json);
       setData(json);
     } catch (err: any) {
       setError(err.message || "Unknown error");
