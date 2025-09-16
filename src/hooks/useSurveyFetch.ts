@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import type { SurveyExport } from "../types/survey";
-// import "dotenv/config";
 
 export function useSurveyFetch() {
   const [data, setData] = useState<SurveyExport[]>();

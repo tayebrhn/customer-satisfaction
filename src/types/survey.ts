@@ -144,20 +144,62 @@ export type AppRoutes = Record<string, string>;
 //   [key: string]: any;
 // };
 
-export interface Response{
-  question_id:number
-  question_type:string
-  answer?:{
-    selected_option_id?:number,
-    text_value?:string
-  }
-} 
+export type Answer =
+  | {
+      // single_choice, drop_down
+      selected_option_id: number | null;
+      text_value: string | null;
+      is_other?: boolean;
+      selected_option_ids?: undefined;
+      number_value?: undefined;
+      rating_value?: undefined;
+    }
+  | {
+      // multi_select
+      selected_option_ids: number[];
+      text_value: string | null;
+      selected_option_id?: undefined;
+      number_value?: undefined;
+      rating_value?: undefined;
+    }
+  | {
+      // text, text_area
+      selected_option_id: null;
+      text_value: string;
+      selected_option_ids?: undefined;
+      number_value?: undefined;
+      rating_value?: undefined;
+    }
+  | {
+      // number
+      selected_option_id: null;
+      number_value: number | null;
+      selected_option_ids?: undefined;
+      text_value?: undefined;
+      rating_value?: undefined;
+    }
+  | {
+      // rating
+      selected_option_id: null;
+      rating_value: number | null;
+      selected_option_ids?: undefined;
+      text_value?: undefined;
+      number_value?: undefined;
+    };
+
+export interface Response {
+  question_id: number;
+  question_type: "single_choice"|"drop_down"|"multi_select"|"text"|"text_area"|"number"|"rating";
+  answer: Answer;
+}
+
 export interface SurveyResponse {
   survey_id: string;
-  respondent_info?: {
+  respondent_info: {
     ip_address?: string;
     user_agent?: string;
     session_id?: string;
   };
-  responses:Response[]
+  responses: any;
 }
+
