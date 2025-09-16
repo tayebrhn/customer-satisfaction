@@ -10,6 +10,7 @@ import { ProgressBar } from "./components/ProgressBar";
 import { Header } from "./components/Header.tsx";
 import { useParams } from "react-router-dom";
 import { useState, useMemo } from "react";
+import Footer from "./components/Footer.tsx";
 
 export default function SurveyApp() {
   const { id } = useParams<{ id: string }>();
@@ -147,17 +148,17 @@ export default function SurveyApp() {
   );
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col  ">
       <Header title={title ?? ""} instructions={instructions ?? ""} />
-      <main>
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <main className="flex-1">
+        <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
           <FormProvider {...form}>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="space-y-6 max-w-2xl mx-auto"
             >
               {currentCategory?.questions?.map((q) => (
-                <div key={q.id} className="border p-4 rounded shadow-sm">
+                <div key={q.id} className="bg-white shadow-md p-4 rounded-lg">
                   <p className="mb-2 font-medium">{q.question}</p>
                   <QuestionRenderer
                     question={q}
@@ -165,19 +166,6 @@ export default function SurveyApp() {
                   />
                 </div>
               ))}
-
-              <ProgressBar progress={progress} />
-
-              <SurveyNavigation
-                onPrevious={prevCategory}
-                onNext={async () => {
-                  const isValid = await trigger(fieldsForCurrentCategory);
-                  if (isValid) nextCategory();
-                }}
-                onSubmit={() => handleSubmit(onSubmit)()}
-                isFirstPage={isFirstPage}
-                isLastPage={isLastPage}
-              />
 
               {submissionStatus === "loading" && (
                 <p className="text-blue-500 mt-4">Submitting...</p>
@@ -192,10 +180,22 @@ export default function SurveyApp() {
                   ❌ Oops! Something went wrong. Please try again.
                 </p>
               )}
+              <SurveyNavigation
+                onPrevious={prevCategory}
+                onNext={async () => {
+                  const isValid = await trigger(fieldsForCurrentCategory);
+                  if (isValid) nextCategory();
+                }}
+                onSubmit={() => handleSubmit(onSubmit)()}
+                progress={progress}
+                isFirstPage={isFirstPage}
+                isLastPage={isLastPage}
+              />
             </form>
           </FormProvider>
         </div>
       </main>
-    </>
+      <Footer />
+    </div>
   );
 }
