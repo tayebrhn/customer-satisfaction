@@ -28,26 +28,35 @@ export const SingleChoiceQuestion = ({
   return (
     <div className="space-y-1">
       {question.options.map((option) => {
-        const { optionValue, optionLabel, optionId, isOther } = parseOption(
-          option,
-        );
-        const isOtherSelected = Number(formValues[question.id]) === optionId && isOther;
+        const { optionValue, optionLabel, optionId, isOther } =
+          parseOption(option);
+        const isOtherSelected =
+          Number(formValues[question.id]) === optionId && isOther;
         return (
           <div key={optionId} className="flex flex-col gap-1">
-            <label className="flex items-center gap-2" htmlFor={optionId.toString()}>
+            <label
+              className="flex items-center gap-2"
+              htmlFor={optionId.toString()}
+            >
               <input
                 type="radio"
                 value={optionValue}
                 id={optionId.toString()}
-                {...register(fieldName)}
-                onChange={(e) => setValue(fieldName, e.target.value)}
+                {...register(fieldName, {
+                  required: question.required
+                    ? `${question.question} required`
+                    : false,
+                })}
+                // onChange={(e) => setValue(fieldName, e.target.value)}
               />
               {optionLabel}
             </label>
 
             {isOtherSelected && (
               <input
-                {...register(`${fieldName}_other`)}
+                {...register(`${fieldName}_other`,{
+                  required:question.required?`${question.question} required`:false
+                })}
                 type="text"
                 id={optionId.toString()}
                 placeholder="Please specify..."
@@ -60,4 +69,3 @@ export const SingleChoiceQuestion = ({
     </div>
   );
 };
-

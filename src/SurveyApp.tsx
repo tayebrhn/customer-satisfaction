@@ -1,9 +1,6 @@
 // Main refactored SurveyApp.tsx
-import { useForm } from "react-hook-form";
-import type {
-  QuestionCategory,
-  SurveyQuestion,
-} from "./types/survey";
+import { FormProvider, useForm } from "react-hook-form";
+import type { QuestionCategory, SurveyQuestion } from "./types/survey";
 // import surveyData from "./data/prototype_amharic_only.json";
 import { useSurveyFetchOne } from "./hooks/useSurveyFetch.ts";
 import { useFormPersistence } from "./hooks/useFormPersistence";
@@ -20,7 +17,15 @@ export default function SurveyApp() {
   // const [searchParams] = useSearchParams();
   // const lang = searchParams.get("lang")
   const form = useForm({});
-  const { register, handleSubmit, watch, setValue } = form;
+  const methods = useForm({});
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    trigger,
+    formState: { errors },
+  } = form;
   const { data: surveyData, loading, error } = useSurveyFetchOne(id as string);
   // ✅ UI states for API call
   const [submissionStatus, setSubmissionStatus] = useState<
@@ -32,7 +37,6 @@ export default function SurveyApp() {
 
   // Custom hooks for form persistence and navigation
   const { clearSavedData } = useFormPersistence(form, formValues);
-  
 
   // Group questions by category
   // console.log("FROMM",surveyData?.questions)
@@ -63,7 +67,6 @@ export default function SurveyApp() {
     isLastPage,
     clearPageData,
   } = useSurveyNavigation(groupedQuestions.length);
-
 
   if (!surveyData) {
     return <>no survey data</>;
@@ -189,7 +192,9 @@ export default function SurveyApp() {
 
   const { title, instructions } = surveyData?.metadata ?? {};
   // console.log("SurveyApp:",surveyData.key_choice[0])
-
+  const fieldsForCurrentCategory = currentCategory?.questions?.map((q) =>
+    String(q.id)
+  );
   return (
     <>
       <Header title={title ?? ""} instructions={instructions ?? ""} />
@@ -200,24 +205,52 @@ export default function SurveyApp() {
             className="space-y-6 max-w-2xl mx-auto"
           >
             {/* Render current category questions */}
-            {currentCategory?.questions?.map((question: SurveyQuestion) => (
+            {/* {currentCategory?.questions?.map((question: SurveyQuestion) => (
               <div key={question.id} className="border p-4 rounded shadow-sm">
-                <p className="mb-2 font-medium">{question.question}</p>
-                <QuestionRenderer
-                  question={question}
-                  choices={surveyData.key_choice}
-                  register={register}
-                  setValue={setValue}
-                  watch={watch}
-                />
+              <p className="mb-2 font-medium">{question.question}</p>
+              <QuestionRenderer
+              question={question}
+              choices={surveyData.key_choice}
+              register={register}
+              setValue={setValue}
+              watch={watch}
+              error={errors[question.id]}
+              />
               </div>
-            ))}
+              ))} */}
+
+            <FormProvider {...form}>
+              {/* <form onSubmit={methods.handleSubmit(onSubmit)}> */}
+              {currentCategory?.questions?.map((q) => (
+                <div key={q.id} className="border p-4 rounded shadow-sm">
+                  <p className="mb-2 font-medium">{q.question}</p>
+                  <QuestionRenderer
+                    key={q.id}
+                    question={q}
+                    choices={surveyData.key_choice}
+                  />
+                  {/* {errors[q.id] !== undefined && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors[q.id]?.message}
+                    </p>
+                  )} */}
+                </div>
+              ))}
+              {/* </form> */}
+            </FormProvider>
 
             <ProgressBar progress={progress} />
 
             <SurveyNavigation
               onPrevious={prevCategory}
-              onNext={nextCategory}
+              onNext={async () => {
+                const isValid = await trigger(fieldsForCurrentCategory);
+                console.log(errors[0]);
+                console.log(errors);
+                if (isValid) {
+                  nextCategory();
+                }
+              }}
               onSubmit={() => handleSubmit(onSubmit)()}
               isFirstPage={isFirstPage}
               isLastPage={isLastPage}

@@ -97,6 +97,7 @@ export interface SurveyQuestion {
   placeholder?: string;
   scale?: string;
   options: QuestionOption[];
+  required:boolean
 }
 
 export interface SurveyExport {

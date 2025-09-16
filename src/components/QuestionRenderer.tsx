@@ -1,9 +1,5 @@
 // components/QuestionRenderer.tsx
-import type {
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import type { KeyChoice, SurveyQuestion } from "../types/survey";
 import { TextQuestion } from "./questions/TextQuestion";
 import { SingleChoiceQuestion } from "./questions/SingleChoiceQuestion";
@@ -14,61 +10,90 @@ import { DropDownQuestion } from "./questions/DropDownQuestion";
 interface QuestionRendererProps {
   question: SurveyQuestion;
   choices: KeyChoice[];
-  register: UseFormRegister<any>;
-  setValue: UseFormSetValue<any>;
-  watch: UseFormWatch<any>;
+  // register: UseFormRegister<any>;
+  // setValue: UseFormSetValue<any>;
+  // watch: UseFormWatch<any>;
+  // error: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
 }
 
 export const QuestionRenderer = ({
   question,
   choices,
-  register,
-  setValue,
-  watch,
-}: QuestionRendererProps) => {
-  // console.log("QuestionRenderer:",choices)
+}: // register,
+// setValue,
+// watch,
+// error,
+QuestionRendererProps) => {
+  const {
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
+  const fieldName = String(question.id);
+  const mainError = errors[fieldName];
+  const otherError = errors[`${fieldName}_other`];
 
-  switch (question.type) {
-    case "text":
-    case "number":
-    case "text_area":
-      return <TextQuestion question={question} register={register} />;
+  // Watch the main field to handle conditional "Other" input
+  const value = watch(fieldName);
+  return (
+    <div className="space-y-1">
+      {(() => {
+        switch (question.type) {
+          case "text":
+          case "number":
+          case "text_area":
+            return <TextQuestion question={question} register={register} />;
 
-    case "single_choice":
-      return (
-        <SingleChoiceQuestion
-          question={question}
-          register={register}
-          setValue={setValue}
-          watch={watch}
-        />
-      );
+          case "single_choice":
+            return (
+              <SingleChoiceQuestion
+                question={question}
+                register={register}
+                setValue={setValue}
+                watch={watch}
+              />
+            );
 
-    case "multi_select":
-      return (
-        <MultiSelectQuestion
-          question={question}
-          register={register}
-          setValue={setValue}
-          watch={watch}
-        />
-      );
-    case "drop_down":
-      return (
-        <DropDownQuestion
-          question={question}
-          register={register}
-          setValue={setValue}
-          watch={watch}
-        />
-      );
+          case "multi_select":
+            return (
+              <MultiSelectQuestion
+                question={question}
+                register={register}
+                setValue={setValue}
+                watch={watch}
+              />
+            );
+          case "drop_down":
+            return (
+              <DropDownQuestion
+                question={question}
+                register={register}
+                setValue={setValue}
+                watch={watch}
+              />
+            );
 
-    case "rating":
-      return (
-        <RatingQuestion question={question} choices={choices} register={register} />
-      );
+          case "rating":
+            return (
+              <RatingQuestion
+                question={question}
+                choices={choices}
+                register={register}
+              />
+            );
 
-    default:
-      return null;
-  }
+          default:
+            return null;
+        }
+      })()}
+      {/* Error messages */}
+      {mainError && (
+        <p className="text-red-500 text-sm mt-1">{mainError.message as string}</p>
+      )}
+      {otherError && (
+        <p className="text-red-500 text-sm mt-1 ml-6">{otherError.message as string}</p>
+      )}
+    </div>
+  );
 };

@@ -46,19 +46,30 @@ export const MultiSelectQuestion = ({
 
         return (
           <div key={optionId} className="flex flex-col gap-1">
-            <label className="flex items-center gap-2" htmlFor={optionId.toString()}>
+            <label
+              className="flex items-center gap-2"
+              htmlFor={optionId.toString()}
+            >
               <input
                 type="checkbox"
                 id={optionId.toString()}
-                checked={isChecked}
-                onChange={handleChange}
+                // checked={isChecked}
+                value={optionId}
+                {...register(`${fieldName}`, {
+                  required: question.required
+                    ? `${question.question} is required`
+                    : false,
+                })}
+                // onChange={handleChange}
               />
               {optionLabel}
             </label>
 
             {isOtherSelected && (
               <input
-                {...register(`${fieldName}_other`)}
+                {...register(`${fieldName}_other`, {
+                  required: isOtherSelected ? "Please specify" : false,
+                })}
                 type="text"
                 placeholder="Please specify..."
                 className="border p-2 rounded w-auto ml-6"
@@ -70,4 +81,3 @@ export const MultiSelectQuestion = ({
     </div>
   );
 };
-

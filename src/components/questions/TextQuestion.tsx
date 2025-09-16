@@ -6,7 +6,6 @@ interface TextQuestionProps {
   register: UseFormRegister<any>;
 }
 
-
 export const TextQuestion = ({ question, register }: TextQuestionProps) => {
   const fieldName = String(question.id);
 
@@ -14,7 +13,9 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
   if (question.type === "text_area") {
     return (
       <textarea
-        {...register(fieldName)}
+        {...register(fieldName, {
+          required: question.required ? `${question.question} required` : false,
+        })}
         id={question.id.toString()}
         placeholder={question.placeholder || ""}
         className="border p-2 rounded w-full min-h-[100px]"
@@ -26,7 +27,9 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
 
   return (
     <input
-      {...register(fieldName)}
+      {...register(fieldName, {
+        required: question.required ? `${question.question} required` : false,
+      })}
       id={question.id.toString()}
       type={inputType}
       placeholder={question.placeholder || ""}
@@ -34,4 +37,3 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
     />
   );
 };
-

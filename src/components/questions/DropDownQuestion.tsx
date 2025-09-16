@@ -164,8 +164,20 @@ export const DropDownQuestion = ({
       </div>
 
       {/* Hidden inputs for form registration */}
-      <input {...register(fieldName)} type="hidden" />
-      <input {...register(`${fieldName}_other`)} type="hidden" />
+      <input
+        {...register(fieldName, {
+          required: question.required
+            ? `${question.question} is required`
+            : false,
+        })}
+        type="hidden"
+      />
+      <input
+        {...register(`${fieldName}_other`, {
+          required: question.required ? `Please specify` : false,
+        })}
+        type="hidden"
+      />
     </div>
   );
 };
