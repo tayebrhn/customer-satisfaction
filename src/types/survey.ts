@@ -97,7 +97,11 @@ export interface SurveyQuestion {
   placeholder?: string;
   scale?: string;
   options: QuestionOption[];
-  required:boolean
+  constraints: {
+    required: boolean;
+    min_length: number | null;
+    max_length: number | null;
+  };
 }
 
 export interface SurveyExport {
@@ -190,7 +194,14 @@ export type Answer =
 
 export interface Response {
   question_id: number;
-  question_type: "single_choice"|"drop_down"|"multi_select"|"text"|"text_area"|"number"|"rating";
+  question_type:
+    | "single_choice"
+    | "drop_down"
+    | "multi_select"
+    | "text"
+    | "text_area"
+    | "number"
+    | "rating";
   answer: Answer;
 }
 
@@ -203,4 +214,3 @@ export interface SurveyResponse {
   };
   responses: any;
 }
-

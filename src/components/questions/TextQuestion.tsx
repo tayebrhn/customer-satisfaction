@@ -9,12 +9,25 @@ interface TextQuestionProps {
 export const TextQuestion = ({ question, register }: TextQuestionProps) => {
   const fieldName = String(question.id);
 
+  const { required, min_length, max_length } = question.constraints;
   // Decide which element to render
   if (question.type === "text_area") {
     return (
       <textarea
         {...register(fieldName, {
-          required: question.required ? `${question.question} required` : false,
+          required: required ? `This field is required` : false,
+          maxLength: max_length
+            ? {
+                value: max_length,
+                message: `Must be at most ${max_length} characters`,
+              }
+            : undefined,
+          minLength: min_length
+            ? {
+                value: min_length,
+                message: `Must be at least ${min_length} characters`,
+              }
+            : undefined,
         })}
         id={question.id.toString()}
         placeholder={question.placeholder || ""}
@@ -28,7 +41,20 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
   return (
     <input
       {...register(fieldName, {
-        required: question.required ? `${question.question} required` : false,
+        required: required ? `This field is required` : false,
+        maxLength: max_length
+          ? {
+              value: max_length,
+              message: `Must be at most ${max_length} characters`,
+            }
+          : undefined,
+          
+        minLength: min_length
+          ? {
+              value: min_length,
+              message: `Must be at least ${min_length} characters`,
+            }
+          : undefined,
       })}
       id={question.id.toString()}
       type={inputType}

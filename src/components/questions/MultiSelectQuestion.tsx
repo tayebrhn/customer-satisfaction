@@ -26,6 +26,8 @@ export const MultiSelectQuestion = ({
 
   if (!question.options) return null;
 
+  const { required, min_length, max_length } = question.constraints;
+
   return (
     <div className="space-y-1">
       {question.options.map((option) => {
@@ -33,16 +35,16 @@ export const MultiSelectQuestion = ({
         const isChecked = selectedValues.includes(optionId);
         const isOtherSelected = isChecked && isOther;
 
-        const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-          let updated = [...selectedValues];
-          // console.log("handleChange",updated)
-          if (e.target.checked) {
-            updated.push(optionId);
-          } else {
-            updated = updated.filter((id) => id !== optionId);
-          }
-          setValue(fieldName, updated, { shouldValidate: true });
-        };
+        // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        //   let updated = [...selectedValues];
+        //   // console.log("handleChange",updated)
+        //   if (e.target.checked) {
+        //     updated.push(optionId);
+        //   } else {
+        //     updated = updated.filter((id) => id !== optionId);
+        //   }
+        //   setValue(fieldName, updated, { shouldValidate: true });
+        // };
 
         return (
           <div key={optionId} className="flex flex-col gap-1">
@@ -56,9 +58,9 @@ export const MultiSelectQuestion = ({
                 // checked={isChecked}
                 value={optionId}
                 {...register(`${fieldName}`, {
-                  required: question.required
-                    ? `${question.question} is required`
-                    : false,
+                  required: required ? `This field is required` : false,
+                  maxLength: max_length ? max_length : undefined,
+                  minLength: min_length ? min_length : undefined,
                 })}
                 // onChange={handleChange}
               />
@@ -68,7 +70,9 @@ export const MultiSelectQuestion = ({
             {isOtherSelected && (
               <input
                 {...register(`${fieldName}_other`, {
-                  required: isOtherSelected ? "Please specify" : false,
+                  required: required ? `This field is required` : false,
+                  maxLength: max_length ? max_length : undefined,
+                  minLength: min_length ? min_length : undefined,
                 })}
                 type="text"
                 placeholder="Please specify..."

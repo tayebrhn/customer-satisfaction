@@ -124,6 +124,8 @@ export const DropDownQuestion = ({
     }
   }, [selectedValue, question.options, fieldName, watch]);
 
+  const { required, min_length, max_length } = question.constraints;
+  
   return (
     <div className="flex flex-col gap-2" ref={dropdownRef}>
       <div className="relative">
@@ -166,15 +168,15 @@ export const DropDownQuestion = ({
       {/* Hidden inputs for form registration */}
       <input
         {...register(fieldName, {
-          required: question.required
-            ? `${question.question} is required`
-            : false,
+          required: required ? `This field is required` : false,
         })}
         type="hidden"
       />
       <input
         {...register(`${fieldName}_other`, {
-          required: question.required ? `Please specify` : false,
+          required: required ? `This field is required` : false,
+          maxLength: max_length ? max_length : undefined,
+          minLength: min_length ? min_length : undefined,
         })}
         type="hidden"
       />

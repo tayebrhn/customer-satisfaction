@@ -25,6 +25,9 @@ export const SingleChoiceQuestion = ({
 
   if (!question.options) return null;
   // console.log(question.options[2].is_other)
+
+  const { required, min_length, max_length } = question.constraints;
+
   return (
     <div className="space-y-1">
       {question.options.map((option) => {
@@ -43,9 +46,7 @@ export const SingleChoiceQuestion = ({
                 value={optionValue}
                 id={optionId.toString()}
                 {...register(fieldName, {
-                  required: question.required
-                    ? `${question.question} required`
-                    : false,
+                  required: required ? `This field is required` : false,
                 })}
                 // onChange={(e) => setValue(fieldName, e.target.value)}
               />
@@ -54,8 +55,10 @@ export const SingleChoiceQuestion = ({
 
             {isOtherSelected && (
               <input
-                {...register(`${fieldName}_other`,{
-                  required:question.required?`${question.question} required`:false
+                {...register(`${fieldName}_other`, {
+                  required: required ? `This field is required` : false,
+                  maxLength: max_length ? max_length : undefined,
+                  minLength: min_length ? min_length : undefined,
                 })}
                 type="text"
                 id={optionId.toString()}
