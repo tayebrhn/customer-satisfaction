@@ -27,7 +27,7 @@ QuestionRendererProps) => {
   const {
     register,
     watch,
-    setValue,
+    setValue,control,
     formState: { errors },
   } = useFormContext();
   const fieldName = String(question.id);
@@ -59,9 +59,7 @@ QuestionRendererProps) => {
             return (
               <MultiSelectQuestion
                 question={question}
-                register={register}
-                setValue={setValue}
-                watch={watch}
+                control={control}
               />
             );
           case "drop_down":

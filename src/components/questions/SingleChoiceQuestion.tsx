@@ -10,14 +10,13 @@ import { parseOption } from "../../utils/helpers";
 interface SingleChoiceQuestionProps {
   question: SurveyQuestion;
   register: UseFormRegister<any>;
-  setValue: UseFormSetValue<any>;
+  setValue?: UseFormSetValue<any>;
   watch: UseFormWatch<any>;
 }
 
 export const SingleChoiceQuestion = ({
   question,
   register,
-  setValue,
   watch,
 }: SingleChoiceQuestionProps) => {
   const fieldName = String(question.id);

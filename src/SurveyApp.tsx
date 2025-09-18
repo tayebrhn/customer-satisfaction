@@ -6,7 +6,6 @@ import { useFormPersistence } from "./hooks/useFormPersistence";
 import { useSurveyNavigation } from "./hooks/useSurveyNavigation";
 import { QuestionRenderer } from "./components/QuestionRenderer";
 import { SurveyNavigation } from "./components/SurveyNavigation";
-import { ProgressBar } from "./components/ProgressBar";
 import { Header } from "./components/Header.tsx";
 import { useParams } from "react-router-dom";
 import { useState, useMemo } from "react";
