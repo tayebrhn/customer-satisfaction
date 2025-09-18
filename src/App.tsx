@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import SurveyApp from "./SurveyApp";
 import { useSurveyFetch } from "./hooks/useSurveyFetch";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./assets/index.css";
 
 export default function App() {
   const { data: surveyData, loading, error } = useSurveyFetch();
@@ -50,3 +53,9 @@ export default function App() {
     </Router>
   );
 }
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+      <App />
+  </StrictMode>
+);

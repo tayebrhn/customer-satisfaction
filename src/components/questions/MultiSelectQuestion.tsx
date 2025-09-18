@@ -1,87 +1,107 @@
-// components/questions/MultiSelectQuestion.tsx
-import type {
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from "react-hook-form";
+import { Controller } from "react-hook-form";
+import type { Control } from "react-hook-form";
 import type { SurveyQuestion } from "../../types/survey";
 import { parseOption } from "../../utils/helpers";
 
 interface MultiSelectQuestionProps {
   question: SurveyQuestion;
-  register: UseFormRegister<any>;
-  setValue: UseFormSetValue<any>;
-  watch: UseFormWatch<any>;
+  control: Control<any>;
 }
 
 export const MultiSelectQuestion = ({
   question,
-  register,
-  setValue,
-  watch,
+  control,
 }: MultiSelectQuestionProps) => {
   const fieldName = String(question.id);
-  const formValues = watch();
-  const selectedValues: number[] = formValues[question.id] || [];
 
   if (!question.options) return null;
 
   const { required, min_length, max_length } = question.constraints;
 
   return (
-    <div className="space-y-1">
-      {question.options.map((option) => {
-        const { optionLabel, optionId, isOther } = parseOption(option);
-        const isChecked = selectedValues.includes(optionId);
-        const isOtherSelected = isChecked && isOther;
-
-        // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        //   let updated = [...selectedValues];
-        //   // console.log("handleChange",updated)
-        //   if (e.target.checked) {
-        //     updated.push(optionId);
-        //   } else {
-        //     updated = updated.filter((id) => id !== optionId);
+    <Controller
+      name={fieldName}
+      control={control}
+      defaultValue={[]}
+      rules={{
+        required: required ? "This field is required" : false,
+        // validate: (value: any[]) => {
+        //   if (min_length && value.length < min_length) {
+        //     return `Select at least ${min_length} options`;
         //   }
-        //   setValue(fieldName, updated, { shouldValidate: true });
-        // };
+        //   if (max_length && value.length > max_length) {
+        //     return `Select at most ${max_length} options`;
+        //   }
+        //   return true;
+        // },
+      }}
+      render={({ field }) => {
+        const selectedValues: number[] = field.value || [];
 
         return (
-          <div key={optionId} className="flex flex-col gap-1">
-            <label
-              className="flex items-center gap-2"
-              htmlFor={optionId.toString()}
-            >
-              <input
-                type="checkbox"
-                id={optionId.toString()}
-                // checked={isChecked}
-                value={optionId}
-                {...register(`${fieldName}`, {
-                  required: required ? `This field is required` : false,
-                  maxLength: max_length ? max_length : undefined,
-                  minLength: min_length ? min_length : undefined,
-                })}
-                // onChange={handleChange}
-              />
-              {optionLabel}
-            </label>
+          <div className="space-y-1">
+            {question.options!.map((option) => {
+              const { optionLabel, optionId, isOther } = parseOption(option);
+              const isChecked = selectedValues.includes(optionId);
 
-            {isOtherSelected && (
-              <input
-                {...register(`${fieldName}_other`, {
-                  required: required ? `This field is required` : false,
-                  maxLength: max_length ? max_length : undefined,
-                  minLength: min_length ? min_length : undefined,
-                })}
-                type="text"
-                placeholder="Please specify..."
-                className="border p-2 rounded w-auto ml-6"
-              />
-            )}
+              return (
+                <div key={optionId} className="flex flex-col gap-1">
+                  <label
+                    className="flex items-center gap-2"
+                    htmlFor={optionId.toString()}
+                  >
+                    <input
+                      type="checkbox"
+                      id={optionId.toString()}
+                      checked={isChecked}
+                      onChange={(e) => {
+                        let updated = [...selectedValues];
+                        if (e.target.checked) {
+                          updated.push(optionId);
+                        } else {
+                          updated = updated.filter((id) => id !== optionId);
+                        }
+                        field.onChange(updated);
+                      }}
+                    />
+                    {optionLabel}
+                  </label>
+
+                  {isOther && isChecked && (
+                    <Controller
+                      name={`${fieldName}_other`}
+                      control={control}
+                      rules={{
+                        required: required ? "This field is required" : false,
+                        maxLength: max_length
+                          ? {
+                              value: max_length,
+                              message: `Max ${max_length} characters`,
+                            }
+                          : undefined,
+                        minLength: min_length
+                          ? {
+                              value: min_length,
+                              message: `Min ${min_length} characters`,
+                            }
+                          : undefined,
+                      }}
+                      render={({ field }) => (
+                        <input
+                          {...field}
+                          type="text"
+                          placeholder="Please specify..."
+                          className="border p-2 rounded w-auto ml-6"
+                        />
+                      )}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
         );
-      })}
-    </div>
+      }}
+    />
   );
 };

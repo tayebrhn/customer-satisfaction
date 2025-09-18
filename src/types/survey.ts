@@ -72,6 +72,13 @@ export interface QuestionCategory {
   name: string;
 }
 
+export interface CurrentCategory{
+    questions: SurveyQuestion[];
+    id: number;
+    cat_number: number;
+    name: string;
+}
+
 export interface QuestionOption {
   id: number;
   text: string;

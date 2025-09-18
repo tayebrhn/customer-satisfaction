@@ -142,7 +142,7 @@ export const DropDownQuestion = ({
         {showOptions && filteredOptions.length > 0 && (
           <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-48 overflow-y-auto">
             {filteredOptions.map((option) => {
-              const { optionValue, optionLabel, optionId, isOther } =
+              const {  optionLabel, optionId, isOther } =
                 parseOption(option);
               return (
                 <div
