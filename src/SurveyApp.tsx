@@ -62,25 +62,27 @@ export default function SurveyApp() {
 
   if (loading) return <div>Loading survey...</div>;
   if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
-  if (!surveyData || groupedQuestions.length === 0) return <div>No survey found</div>;
+  if (!surveyData || groupedQuestions.length === 0)
+    return <div>No survey found</div>;
 
   const { title, instructions } = surveyData.metadata ?? {};
 
   return (
     <SurveyLayout title={title ?? ""} instructions={instructions ?? ""}>
-      <SurveyForm
-        form={form}
-        onSubmit={onSubmit}
-        currentCategory={currentCategory}
-        surveyData={surveyData}
-        submissionStatus={submissionStatus}
-        prevCategory={prevCategory}
-        nextCategory={nextCategory}
-        trigger={form.trigger}
-        progress={progress}
-        isFirstPage={isFirstPage}
-        isLastPage={isLastPage}
-      />
+      
+        <SurveyForm
+          form={form}
+          onSubmit={onSubmit}
+          currentCategory={currentCategory}
+          surveyData={surveyData}
+          submissionStatus={submissionStatus}
+          prevCategory={prevCategory}
+          nextCategory={nextCategory}
+          trigger={form.trigger}
+          progress={progress}
+          isFirstPage={isFirstPage}
+          isLastPage={isLastPage}
+        />
     </SurveyLayout>
   );
 }

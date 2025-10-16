@@ -35,7 +35,7 @@ QuestionRendererProps) => {
   const otherError = errors[`${fieldName}_other`];
 
   // Watch the main field to handle conditional "Other" input
-  const value = watch(fieldName);
+  // const value = watch(fieldName);
   return (
     <div className="space-y-1">
       {(() => {

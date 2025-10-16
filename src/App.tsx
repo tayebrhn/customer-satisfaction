@@ -9,10 +9,9 @@ export default function App() {
   const { data: surveyData, loading, error } = useSurveyFetch();
 
   if (loading) return <p>Loading surveys...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!surveyData) return <p>No data found</p>;
-
-  return (
+  if (error) return <p className="text-red-600">App::Error Loading Survey List: {error}</p>;
+  if (!surveyData || !Array.isArray(surveyData)||surveyData.length==0) return <p>No data found</p>;
+    return (
     <Router>
       <Routes>
         <Route

@@ -35,35 +35,48 @@ export function SurveyForm({
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl mx-auto">
-        {currentCategory?.questions?.map((q: SurveyQuestion) => (
-          <div key={q.id} className="bg-white shadow-md p-4 rounded-lg">
-            <p className="mb-2 font-medium">{q.question}</p>
-            <QuestionRenderer question={q} choices={surveyData.key_choice} />
-          </div>
-        ))}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-6 max-w-2xl mx-auto"
+      >
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-gray-700 border-b border-gray-200 pb-2">
+            {currentCategory?.name}
+          </h2>
 
-        {submissionStatus === "loading" && (
-          <p className="text-blue-500 mt-4">Submitting...</p>
-        )}
-        {submissionStatus === "success" && (
-          <p className="text-green-600 mt-4">✅ Thank you! Your responses have been submitted.</p>
-        )}
-        {submissionStatus === "error" && (
-          <p className="text-red-600 mt-4">❌ Oops! Something went wrong. Please try again.</p>
-        )}
+          {currentCategory?.questions?.map((q: SurveyQuestion) => (
+            <div key={q.id} className="bg-white shadow-md p-4 rounded-lg">
+              <p className="mb-2 font-semibold">{q.question}</p>
+              <QuestionRenderer question={q} choices={surveyData.key_choice} />
+            </div>
+          ))}
 
-        <SurveyNavigation
-          onPrevious={prevCategory}
-          onNext={async () => {
-            const isValid = await trigger(fieldsForCurrentCategory);
-            if (isValid) nextCategory();
-          }}
-          onSubmit={() => handleSubmit(onSubmit)()}
-          progress={progress}
-          isFirstPage={isFirstPage}
-          isLastPage={isLastPage}
-        />
+          {submissionStatus === "loading" && (
+            <p className="text-blue-500 mt-4">Submitting...</p>
+          )}
+          {submissionStatus === "success" && (
+            <p className="text-green-600 mt-4">
+              ✅ Thank you! Your responses have been submitted.
+            </p>
+          )}
+          {submissionStatus === "error" && (
+            <p className="text-red-600 mt-4">
+              ❌ Oops! Something went wrong. Please try again.
+            </p>
+          )}
+
+          <SurveyNavigation
+            onPrevious={prevCategory}
+            onNext={async () => {
+              const isValid = await trigger(fieldsForCurrentCategory);
+              if (isValid) nextCategory();
+            }}
+            onSubmit={() => handleSubmit(onSubmit)()}
+            progress={progress}
+            isFirstPage={isFirstPage}
+            isLastPage={isLastPage}
+          />
+        </section>
       </form>
     </FormProvider>
   );
