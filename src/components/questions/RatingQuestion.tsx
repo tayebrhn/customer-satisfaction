@@ -9,7 +9,6 @@ interface RatingQuestionProps {
 
 export const RatingQuestion = ({
   question,
-  choices,
   register,
 }: RatingQuestionProps) => {
   const fieldName = String(question.id);
@@ -31,7 +30,7 @@ export const RatingQuestion = ({
               className="
                 flex flex-col items-center justify-center
                hover:bg-gray-100
-                rounded-full p-1 sm:p-4 
+                rounded-full p-0.5 sm:p-2 
                 cursor-pointer transition
                 text-center
               "
@@ -47,7 +46,7 @@ export const RatingQuestion = ({
               <div
                 className="
                   flex items-center justify-center 
-                  w-8 h-8 sm:w-10 sm:h-10 
+                  w-6 h-6 sm:w-8 sm:h-8 
                   border-2 border-gray-400 
                   rounded-full peer-checked:border-blue-500 
                   peer-checked:bg-blue-500 
