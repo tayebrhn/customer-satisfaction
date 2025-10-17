@@ -31,6 +31,11 @@ export default function SurveyApp() {
       ),
     }));
   }, [surveyData]);
+  const nonEmptyCategories = useMemo(() => {
+    return groupedQuestions
+      .filter((cat) => cat.questions && cat.questions.length > 0)
+      .sort((a, b) => a.cat_number - b.cat_number);
+  }, [groupedQuestions]);
 
   const {
     currentCategoryIndex,
@@ -40,18 +45,12 @@ export default function SurveyApp() {
     isFirstPage,
     isLastPage,
     clearPageData,
-  } = useSurveyNavigation(groupedQuestions.length);
+  } = useSurveyNavigation(nonEmptyCategories.length);
 
-  const currentCategory = useMemo(() => {
-    const nonEmpty = groupedQuestions
-      .filter((cat) => cat.questions && cat.questions.length > 0)
-      .sort((a, b) => a.cat_number - b.cat_number);
+  const currentCategory = nonEmptyCategories[currentCategoryIndex];
 
-    return nonEmpty[currentCategoryIndex];
-  }, [groupedQuestions, currentCategoryIndex]);
-
-  const onSubmit = async (formData: any) =>
-    handleSurveySubmit({
+  const onSubmit = async (formData: any) => {
+    await handleSurveySubmit({
       formData,
       surveyData,
       id: id as string,
@@ -59,30 +58,35 @@ export default function SurveyApp() {
       clearPageData,
       setSubmissionStatus,
     });
+  };
 
   if (loading) return <div>Loading survey...</div>;
   if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
   if (!surveyData || groupedQuestions.length === 0)
-    return <div>No survey found</div>;
+    return <div>There is no survey</div>;
 
   const { title, instructions } = surveyData.metadata ?? {};
+  console.log({
+    totalCategories: groupedQuestions.length,
+    currentCategoryIndex,
+    isLastPage,
+  });
 
   return (
     <SurveyLayout title={title ?? ""} instructions={instructions ?? ""}>
-      
-        <SurveyForm
-          form={form}
-          onSubmit={onSubmit}
-          currentCategory={currentCategory}
-          surveyData={surveyData}
-          submissionStatus={submissionStatus}
-          prevCategory={prevCategory}
-          nextCategory={nextCategory}
-          trigger={form.trigger}
-          progress={progress}
-          isFirstPage={isFirstPage}
-          isLastPage={isLastPage}
-        />
+      <SurveyForm
+        form={form}
+        onSubmit={onSubmit}
+        currentCategory={currentCategory}
+        surveyData={surveyData}
+        submissionStatus={submissionStatus}
+        prevCategory={prevCategory}
+        nextCategory={nextCategory}
+        trigger={form.trigger}
+        progress={progress}
+        isFirstPage={isFirstPage}
+        isLastPage={isLastPage}
+      />
     </SurveyLayout>
   );
 }

@@ -1,56 +1,56 @@
 import { ProgressBar } from "./ProgressBar";
 
-// components/SurveyNavigation.tsx
 interface SurveyNavigationProps {
   onPrevious: () => void;
   onNext: () => void;
-  onSubmit: () => void;
   progress: number;
   isFirstPage: boolean;
   isLastPage: boolean;
+  isSubmitting?: boolean; // <-- optional prop
 }
 
 export const SurveyNavigation = ({
   onPrevious,
   onNext,
-  onSubmit,
   progress,
   isFirstPage,
   isLastPage,
+  isSubmitting = false,
 }: SurveyNavigationProps) => {
   return (
-    <>
-      <div className="sticky bottom-1 left-0 w-full ">
+    <div className="sticky bottom-0 left-0 w-full bg-white shadow-md p-4 rounded-t-lg">
       <ProgressBar progress={progress} />
-        <div className="flex justify-between items-center bg-white shadow-md p-4 rounded-lg">
-          {!isFirstPage && (
-            <button
-              type="button"
-              className="bg-gray-500 text-white px-4 py-2 rounded"
-              onClick={onPrevious}
-            >
-              Previous
-            </button>
-          )}
 
-          {!isLastPage ? (
-            <button
-              type="button"
-              className="bg-blue-500 text-white px-4 py-2 rounded ml-auto"
-              onClick={onNext}
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className="bg-green-500 text-white px-4 py-2 rounded ml-auto"
-            >
-              Submit
-            </button>
-          )}
-        </div>
+      <div className="flex justify-between items-center mt-2">
+        {!isFirstPage && (
+          <button
+            type="button"
+            onClick={onPrevious}
+            disabled={isSubmitting}
+            className={`px-4 py-2 rounded text-white ${
+              isSubmitting
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-gray-500 hover:bg-gray-600"
+            }`}
+          >
+            Previous
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={onNext}
+          disabled={isSubmitting}
+          className={`px-4 py-2 rounded ml-auto text-white ${
+            !isLastPage
+              ? "bg-blue-500 hover:bg-blue-600"
+              : isSubmitting
+              ? "bg-green-300 cursor-not-allowed"
+              : "bg-green-500 hover:bg-green-600"
+          }`}
+        >
+          {!isLastPage ? "Next" : isSubmitting ? "Submitting..." : "Submit"}
+        </button>
       </div>
-    </>
+    </div>
   );
 };

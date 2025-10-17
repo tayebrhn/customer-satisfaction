@@ -32,6 +32,17 @@ export function SurveyForm({
   const fieldsForCurrentCategory = currentCategory?.questions?.map((q) =>
     String(q.id)
   );
+const handleNext = async () => {
+  const fieldsForCurrentCategory = currentCategory?.questions.map(q => String(q.id));
+  const isValid = await trigger(fieldsForCurrentCategory);
+  if (!isValid) return;
+
+  if (isLastPage) {
+    handleSubmit(onSubmit)(); // submit if final page
+  } else {
+    nextCategory(); // otherwise, go to next
+  }
+};
 
   return (
     <FormProvider {...form}>
@@ -67,11 +78,7 @@ export function SurveyForm({
 
           <SurveyNavigation
             onPrevious={prevCategory}
-            onNext={async () => {
-              const isValid = await trigger(fieldsForCurrentCategory);
-              if (isValid) nextCategory();
-            }}
-            onSubmit={() => handleSubmit(onSubmit)()}
+            onNext={handleNext}
             progress={progress}
             isFirstPage={isFirstPage}
             isLastPage={isLastPage}

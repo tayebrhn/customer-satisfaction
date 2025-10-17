@@ -28,7 +28,7 @@ export const useSurveyNavigation = (totalCategories: number) => {
 
   const progress = ((currentCategoryIndex + 1) / totalCategories) * 100;
   const isFirstPage = currentCategoryIndex === 0;
-  const isLastPage = currentCategoryIndex === totalCategories - 1;
+  const isLastPage = currentCategoryIndex === totalCategories - 1; // ✅ fixed
 
   const clearPageData = () => {
     localStorage.removeItem(PAGE_KEY);
