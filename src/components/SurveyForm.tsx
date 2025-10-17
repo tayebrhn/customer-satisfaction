@@ -46,7 +46,7 @@ export function SurveyForm({
 
           {currentCategory?.questions?.map((q: SurveyQuestion) => (
             <div key={q.id} className="bg-white shadow-md p-4 rounded-lg">
-              <p className="mb-2 font-semibold">{q.question}</p>
+              <p className="mb-2 font-weight">{q.question}</p>
               <QuestionRenderer question={q} choices={surveyData.key_choice} />
             </div>
           ))}
