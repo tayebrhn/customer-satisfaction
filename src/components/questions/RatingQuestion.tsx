@@ -46,7 +46,11 @@ export const RatingQuestion = ({
               <div
                 className="
                   flex items-center justify-center 
+<<<<<<< HEAD
                   w-6 h-6 sm:w-8 sm:h-8 
+=======
+                  w-5 h-5 sm:w-8 sm:h-8 
+>>>>>>> 32f30d482ce4ed3dde19bdcc1924df8e1e13af30
                   border-2 border-gray-400 
                   rounded-full peer-checked:border-blue-500 
                   peer-checked:bg-blue-500 
