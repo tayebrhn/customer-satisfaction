@@ -1,9 +1,8 @@
 import type { UseFormRegister } from "react-hook-form";
-import type { KeyChoice, SurveyQuestion } from "../../types/survey";
+import type { SurveyQuestion } from "../../types/survey";
 
 interface RatingQuestionProps {
   question: SurveyQuestion;
-  choices: KeyChoice[];
   register: UseFormRegister<any>;
 }
 
@@ -12,7 +11,7 @@ export const RatingQuestion = ({
   register,
 }: RatingQuestionProps) => {
   const fieldName = String(question.id);
-  const scaleCount = question.scale ? Number(question.scale.split("-")[1]) : 5;
+  const scaleCount = question.configs.scale ? Number(question.configs.scale.split("-")[1]) : 5;
   const { required } = question.constraints;
 
   return (

@@ -13,10 +13,9 @@ export const MultiSelectQuestion = ({
   control,
 }: MultiSelectQuestionProps) => {
   const fieldName = String(question.id);
+  const { required, min, max } = question.constraints ?? {};
 
-  if (!question.options) return null;
-
-  const { required, min_length, max_length } = question.constraints;
+  if (!Array.isArray(question.options)) return null;
 
   return (
     <Controller
@@ -25,23 +24,24 @@ export const MultiSelectQuestion = ({
       defaultValue={[]}
       rules={{
         required: required ? "This field is required" : false,
-        // validate: (value: any[]) => {
-        //   if (min_length && value.length < min_length) {
-        //     return `Select at least ${min_length} options`;
-        //   }
-        //   if (max_length && value.length > max_length) {
-        //     return `Select at most ${max_length} options`;
-        //   }
-        //   return true;
-        // },
+        validate: (value: any[]) => {
+          if (min && value.length < min) {
+            return `Select at least ${min} options`;
+          }
+          if (max && value.length > max) {
+            return `Select at most ${max} options`;
+          }
+          return true;
+        },
       }}
       render={({ field }) => {
-        const selectedValues: number[] = field.value || [];
+        const selectedValues: (string | number)[] = field.value || [];
 
         return (
           <div className="space-y-1">
-            {question.options!.map((option) => {
-              const { optionLabel, optionId, isOther } = parseOption(option);
+            {question.options.map((option, index) => {
+              // Handle simple string option safely
+              const { optionLabel, optionId, isOther } = parseOption(option, index);
               const isChecked = selectedValues.includes(optionId);
 
               return (
@@ -64,7 +64,7 @@ export const MultiSelectQuestion = ({
                         field.onChange(updated);
                       }}
                     />
-                    {optionLabel}
+                    <span>{optionLabel}</span>
                   </label>
 
                   {isOther && isChecked && (
@@ -72,19 +72,17 @@ export const MultiSelectQuestion = ({
                       name={`${fieldName}_other`}
                       control={control}
                       rules={{
-                        required: required ? "This field is required" : false,
-                        maxLength: max_length
-                          ? {
-                              value: max_length,
-                              message: `Max ${max_length} characters`,
-                            }
-                          : undefined,
-                        minLength: min_length
-                          ? {
-                              value: min_length,
-                              message: `Min ${min_length} characters`,
-                            }
-                          : undefined,
+                        required: required
+                          ? "This field is required"
+                          : false,
+                        maxLength:
+                          max !== undefined
+                            ? { value: max, message: `Max ${max} characters` }
+                            : undefined,
+                        minLength:
+                          min !== undefined
+                            ? { value: min, message: `Min ${min} characters` }
+                            : undefined,
                       }}
                       render={({ field }) => (
                         <input

@@ -31,24 +31,23 @@ export async function handleSurveySubmit({
       switch (q.type) {
         case "single_choice":
           base.answer = {
-            selected_option_id: Number(value) || null,
+            selected_option: Number(value) || null,
             text_value: otherValue,
             ...(otherValue ? { is_other: true } : {}),
           };
           break;
         case "multi_select":
           base.answer = {
-            selected_option_ids: value || [],
+            selected_option: (value) || [],
             text_value: otherValue,
           };
           break;
         case "text":
         case "text_area":
-          base.answer = { selected_option_id: null, text_value: value || "" };
+          base.answer = { text_value: value || "" };
           break;
         case "number":
           base.answer = {
-            selected_option_id: null,
             number_value: Number(value) || null,
           };
           break;
@@ -60,7 +59,7 @@ export async function handleSurveySubmit({
           break;
         case "drop_down":
           base.answer = {
-            selected_option_id: Number(value) || null,
+            selected_option: String(value) || null,
             text_value: otherValue,
           };
           break;
@@ -70,6 +69,7 @@ export async function handleSurveySubmit({
       return base;
     })
     .filter(Boolean);
+    console.log(responses)
 
   const surveyResponse = {
     survey_id: id,

@@ -1,53 +1,83 @@
-// components/questions/SingleChoiceQuestion.tsx
 import type {
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
 import type { SurveyQuestion } from "../../types/survey";
-import { parseOption } from "../../utils/helpers";
 
 interface SingleChoiceQuestionProps {
   question: SurveyQuestion;
   register: UseFormRegister<any>;
-  setValue?: UseFormSetValue<any>;
+  setValue: UseFormSetValue<any>;
   watch: UseFormWatch<any>;
 }
 
 export const SingleChoiceQuestion = ({
   question,
   register,
+  setValue,
   watch,
 }: SingleChoiceQuestionProps) => {
   const fieldName = String(question.id);
-  const formValues = watch();
+  const selectedValue = watch(fieldName);
 
-  if (!question.options) return null;
-  // console.log(question.options[2].is_other)
+  // ✅ Normalize options into a clean string array
+  const normalizedOptions: string[] = (() => {
+    const opts = (question && (question as any).options);
+    if (Array.isArray(opts)) {
+      return opts.map((o) => (o == null ? "" : String(o))).filter(Boolean);
+    }
+    if (typeof opts === "string") {
+      return opts
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+    }
+    if (opts && typeof opts === "object") {
+      try {
+        return Object.values(opts)
+          .map((v) => (v == null ? "" : String(v)))
+          .filter(Boolean);
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  })();
 
-  const { required, min_length, max_length } = question.constraints;
+  if (normalizedOptions.length === 0) return null;
+
+  const { required, min, max } = question.constraints || {};
 
   return (
-    <div className="space-y-1">
-      {question.options.map((option) => {
-        const { optionValue, optionLabel, optionId, isOther } =
-          parseOption(option);
+    <div className="space-y-2">
+      {normalizedOptions.map((option, index) => {
+        const optionId = index; // numeric ID based on position
+        const optionLabel = option.trim();
+        const isOther = optionLabel.toLowerCase().startsWith("other");
         const isOtherSelected =
-          Number(formValues[question.id]) === optionId && isOther;
+          Number(selectedValue) === optionId && isOther;
+
         return (
           <div key={optionId} className="flex flex-col gap-1">
             <label
-              className="flex items-center gap-2"
-              htmlFor={optionId.toString()}
+              className="flex items-center gap-2 cursor-pointer"
+              htmlFor={`${fieldName}_${optionId}`}
             >
               <input
                 type="radio"
-                value={optionValue}
-                id={optionId.toString()}
+                id={`${fieldName}_${optionId}`}
+                value={optionId}
+                checked={Number(selectedValue) === optionId}
                 {...register(fieldName, {
-                  required: required ? `This field is required` : false,
+                  required: required ? "This field is required" : false,
                 })}
-                // onChange={(e) => setValue(fieldName, e.target.value)}
+                onChange={(e) => {
+                  const val = Number(e.target.value);
+                  setValue(fieldName, val, { shouldValidate: true });
+                  // Clear other text when switching options
+                  setValue(`${fieldName}_other`, "");
+                }}
               />
               {optionLabel}
             </label>
@@ -55,12 +85,11 @@ export const SingleChoiceQuestion = ({
             {isOtherSelected && (
               <input
                 {...register(`${fieldName}_other`, {
-                  required: required ? `This field is required` : false,
-                  maxLength: max_length ? max_length : undefined,
-                  minLength: min_length ? min_length : undefined,
+                  required: required ? "This field is required" : false,
+                  maxLength: max || undefined,
+                  minLength: min || undefined,
                 })}
                 type="text"
-                id={optionId.toString()}
                 placeholder="Please specify..."
                 className="border p-2 rounded w-auto ml-6"
               />
