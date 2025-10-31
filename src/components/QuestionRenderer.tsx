@@ -1,6 +1,6 @@
 // components/QuestionRenderer.tsx
 import { useFormContext } from "react-hook-form";
-import type { KeyChoice, SurveyQuestion } from "../types/survey";
+import type { SurveyQuestion } from "../types/survey";
 import { TextQuestion } from "./questions/TextQuestion";
 import { SingleChoiceQuestion } from "./questions/SingleChoiceQuestion";
 import { RatingQuestion } from "./questions/RatingQuestion";
@@ -9,7 +9,6 @@ import { DropDownQuestion } from "./questions/DropDownQuestion";
 
 interface QuestionRendererProps {
   question: SurveyQuestion;
-  choices: KeyChoice[];
   // register: UseFormRegister<any>;
   // setValue: UseFormSetValue<any>;
   // watch: UseFormWatch<any>;
@@ -18,7 +17,6 @@ interface QuestionRendererProps {
 
 export const QuestionRenderer = ({
   question,
-  choices,
 }: // register,
 // setValue,
 // watch,
@@ -76,7 +74,6 @@ QuestionRendererProps) => {
             return (
               <RatingQuestion
                 question={question}
-                choices={choices}
                 register={register}
               />
             );

@@ -16,7 +16,7 @@ export const MultiSelectQuestion = ({
 
   if (!question.options) return null;
 
-  const { required, min_length, max_length } = question.constraints;
+  const { required, min, max } = question.constraints;
 
   return (
     <Controller
@@ -26,11 +26,11 @@ export const MultiSelectQuestion = ({
       rules={{
         required: required ? "This field is required" : false,
         // validate: (value: any[]) => {
-        //   if (min_length && value.length < min_length) {
-        //     return `Select at least ${min_length} options`;
+        //   if (min && value.length < min) {
+        //     return `Select at least ${min} options`;
         //   }
-        //   if (max_length && value.length > max_length) {
-        //     return `Select at most ${max_length} options`;
+        //   if (max && value.length > max) {
+        //     return `Select at most ${max} options`;
         //   }
         //   return true;
         // },
@@ -73,16 +73,16 @@ export const MultiSelectQuestion = ({
                       control={control}
                       rules={{
                         required: required ? "This field is required" : false,
-                        maxLength: max_length
+                        maxLength: max
                           ? {
-                              value: max_length,
-                              message: `Max ${max_length} characters`,
+                              value: max,
+                              message: `Max ${max} characters`,
                             }
                           : undefined,
-                        minLength: min_length
+                        minLength: min
                           ? {
-                              value: min_length,
-                              message: `Min ${min_length} characters`,
+                              value: min,
+                              message: `Min ${min} characters`,
                             }
                           : undefined,
                       }}

@@ -1,12 +1,12 @@
-import type { AppRoutes, QuestionOption, SurveyExport } from "../types/survey";
+import type { AppRoutes, SurveyExport } from "../types/survey";
 
 // Utility function for parsing different option formats
-export const parseOption = (option: QuestionOption) => {
+export const parseOption = (option: string) => {
   return {
-    optionValue: option.id,
-    optionLabel: option.text,
-    optionId: option.id,
-    isOther: option.is_other,
+    optionValue: option,
+    optionLabel: option,
+    optionId: option,
+    isOther: option
   };
 };
 

@@ -1,11 +1,9 @@
-// components/questions/SingleChoiceQuestion.tsx
 import type {
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
 import type { SurveyQuestion } from "../../types/survey";
-import { parseOption } from "../../utils/helpers";
 
 interface SingleChoiceQuestionProps {
   question: SurveyQuestion;
@@ -17,50 +15,86 @@ interface SingleChoiceQuestionProps {
 export const SingleChoiceQuestion = ({
   question,
   register,
+  setValue,
   watch,
 }: SingleChoiceQuestionProps) => {
   const fieldName = String(question.id);
   const formValues = watch();
 
-  if (!question.options) return null;
-  // console.log(question.options[2].is_other)
+  // ✅ Normalize options into a clean string array
+  const normalizedOptions: string[] = (() => {
+    const opts = (question && (question as any).options);
+    if (Array.isArray(opts)) {
+      return opts.map((o) => (o == null ? "" : String(o))).filter(Boolean);
+    }
+    if (typeof opts === "string") {
+      return opts
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+    }
+    if (opts && typeof opts === "object") {
+      try {
+        return Object.values(opts)
+          .map((v) => (v == null ? "" : String(v)))
+          .filter(Boolean);
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  })();
 
-  const { required, min_length, max_length } = question.constraints;
+  if (normalizedOptions.length === 0) return null;
+
+  const { required, min, max } = question.constraints || {};
 
   return (
     <div className="space-y-1">
-      {question.options.map((option) => {
-        const { optionValue, optionLabel, optionId, isOther } =
-          parseOption(option);
-        const isOtherSelected =
-          Number(formValues[question.id]) === optionId && isOther;
+      {normalizedOptions.map((option, index) => {
+        const optionValue = option;
+        const optionId = `${fieldName}_${index}`;
+        const isOther = option.trim().toLowerCase().startsWith("other");
+        const selectedValue = formValues[fieldName];
+        const isOtherSelected = selectedValue === "Other" && isOther;
+
         return (
           <div key={optionId} className="flex flex-col gap-1">
             <label
               className="flex items-center gap-2"
-              htmlFor={optionId.toString()}
+              htmlFor={optionId}
             >
               <input
                 type="radio"
-                value={optionValue}
-                id={optionId.toString()}
+                value={isOther ? "Other" : optionValue}
+                id={optionId}
                 {...register(fieldName, {
                   required: required ? `This field is required` : false,
                 })}
-                // onChange={(e) => setValue(fieldName, e.target.value)}
+                onChange={(e) => {
+                  if (setValue) {
+                    if (isOther) {
+                      // When selecting "Other", clear _other first
+                      setValue(`${fieldName}_other`, "");
+                    } else {
+                      // Clear custom text when normal option selected
+                      setValue(`${fieldName}_other`, "");
+                    }
+                  }
+                }}
               />
-              {optionLabel}
+              {option}
             </label>
 
             {isOtherSelected && (
               <input
                 {...register(`${fieldName}_other`, {
                   required: required ? `This field is required` : false,
-                  maxLength: max_length ? max_length : undefined,
-                  minLength: min_length ? min_length : undefined,
+                  maxLength: max || undefined,
+                  minLength: min || undefined,
                 })}
                 type="text"
-                id={optionId.toString()}
+                id={`${optionId}_other`}
                 placeholder="Please specify..."
                 className="border p-2 rounded w-auto ml-6"
               />

@@ -29,9 +29,9 @@ export function SurveyForm({
   isLastPage: boolean;
 }) {
   const { handleSubmit } = form;
-  const fieldsForCurrentCategory = currentCategory?.questions?.map((q) =>
-    String(q.id)
-  );
+  // const fieldsForCurrentCategory = currentCategory?.questions?.map((q) =>
+  //   String(q.id)
+  // );
 const handleNext = async () => {
   const fieldsForCurrentCategory = currentCategory?.questions.map(q => String(q.id));
   const isValid = await trigger(fieldsForCurrentCategory);
@@ -57,7 +57,8 @@ const handleNext = async () => {
 
           {currentCategory?.questions?.map((q: SurveyQuestion) => (
             <div key={q.id} className="bg-white shadow-md p-4 rounded-lg">
-              <p className="mb-2 font-weight">{q.question}</p>
+              <p className="mb-2 font-weight">{q.label}</p>
+              <p>{q.description}</p>
               <QuestionRenderer question={q} choices={surveyData.key_choice} />
             </div>
           ))}

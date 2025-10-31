@@ -1,71 +1,3 @@
-// export type ValueLabelOption = {
-//   value: string;
-//   label: string;
-// };
-
-// export type ChoiceOption = {
-//   id: number;
-//   text: string;
-//   is_other?: boolean;
-// };
-
-// export type ValueLabelQuestion = {
-//   id: number;
-//   type: string;
-//   question: string;
-//   category: number;
-//   options: ValueLabelOption[];
-//   placeholder?: undefined;
-//   scale?: undefined;
-// };
-
-// export type StringArrayQuestion = {
-//   id: number;
-//   type: string;
-//   question: string;
-//   category: number;
-//   options: string[];
-//   placeholder?: undefined;
-//   scale?: undefined;
-// };
-
-// export type TextQuestion = {
-//   id: number;
-//   question: string;
-//   type: string;
-//   placeholder: string;
-//   category: number;
-//   options?: undefined;
-//   scale?: undefined;
-// };
-
-// export type ObjectOptionsQuestion = {
-//   id: number;
-//   question: string;
-//   type: string;
-//   options: QuestionOption[];
-//   category: number;
-//   placeholder?: undefined;
-//   scale?: undefined;
-// };
-
-// export type RatingQuestion = {
-//   id: number;
-//   question: string;
-//   type: string; // e.g. "rating"
-//   scale: string; // e.g. "1-5"
-//   category: number;
-//   options?: undefined;
-//   placeholder?: undefined;
-// };
-
-// export type Question =
-//   | ValueLabelQuestion
-//   | StringArrayQuestion
-//   | TextQuestion
-//   | ObjectOptionsQuestion
-//   | RatingQuestion;
-
 export interface QuestionCategory {
   id: number;
   cat_number: number;
@@ -79,15 +11,11 @@ export interface CurrentCategory{
     name: string;
 }
 
-export interface QuestionOption {
-  id: number;
-  text: string;
-  is_other: boolean;
-}
-export interface KeyChoice {
-  key: string;
-  description: string;
-}
+export interface Configs {
+  placeholder?:string
+  scale?:string
+} 
+// export type QuestionOption = string[];
 
 export interface SurveyQuestion {
   id: number;
@@ -99,15 +27,15 @@ export interface SurveyQuestion {
     | "drop_down"
     | "text_area"
     | "text";
-  question: string;
-  category: number; // category name
-  placeholder?: string;
-  scale?: string;
-  options: QuestionOption[];
+  label: string;
+  description:string;
+  category: number;
+  configs:Configs
+  options: string[];
   constraints: {
     required: boolean;
-    min_length: number | null;
-    max_length: number | null;
+    min: number | null;
+    max: number | null;
   };
 }
 
@@ -122,7 +50,6 @@ export interface SurveyExport {
   };
   questions: SurveyQuestion[];
   question_categories?: QuestionCategory[];
-  key_choice: KeyChoice[];
 }
 
 export type AppRoutes = Record<string, string>;
