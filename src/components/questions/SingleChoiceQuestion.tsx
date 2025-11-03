@@ -79,7 +79,7 @@ export const SingleChoiceQuestion = ({
                   setValue(`${fieldName}_other`, "");
                 }}
               />
-              {optionLabel}
+              {option}
             </label>
 
             {isOtherSelected && (
