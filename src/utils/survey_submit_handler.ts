@@ -69,17 +69,17 @@ export async function handleSurveySubmit({
       return base;
     })
     .filter(Boolean);
-    console.log(responses)
-
-  const surveyResponse = {
-    survey_id: id,
-    respondent_info: {
-      ip_address: "192.168.1.1",
-      user_agent: navigator.userAgent,
-      session_id: "optional_session_identifier",
-    },
-    responses,
-  };
+    
+    const surveyResponse = {
+      survey_id: id,
+      respondent_info: {
+        ip_address: "192.168.1.1",
+        user_agent: navigator.userAgent,
+        session_id: "optional_session_identifier",
+      },
+      responses,
+    };
+    console.log(surveyResponse)
 
   try {
     const res = await fetch(import.meta.env.VITE_SURVEY_URL_SUBMIT, {
