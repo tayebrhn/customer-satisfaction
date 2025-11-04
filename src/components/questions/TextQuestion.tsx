@@ -41,7 +41,7 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
   return (
     <input
       {...register(fieldName, {
-        required: required ? `This field is required` : false,
+        // required: required ? `This field is required` : false,
         maxLength: max_length
           ? {
               value: max_length,
