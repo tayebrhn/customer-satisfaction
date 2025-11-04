@@ -1,5 +1,6 @@
 // SurveyModal.tsx
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
 
 export function SurveyModal({
   status,
@@ -12,6 +13,14 @@ export function SurveyModal({
 
   const isSuccess = status === "success";
 
+  useEffect(() => {
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        window.location.href = "/survey/completion";
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess]);
   return (
     <AnimatePresence>
       <motion.div
