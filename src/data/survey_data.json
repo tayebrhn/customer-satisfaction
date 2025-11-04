@@ -1,8 +1,8 @@
 {
     "id": "1ff05da5-2617-40ef-b697-fcd0f489a611",
     "metadata": {
-        "title": "የኢትዮጵያ ኤሌክትሪክ አገልግሎት ደንበኞች እርካታ ጥናት",
-        "instructions": "እባክዎ የድርጅቱን አገልግሎት በተሰጠው መለኪያ",
+        "title": "የኢትዮጵያ ኤሌክትሪክ አገልግሎት የደንበኞች እርካታ ጥናት",
+        "instructions": "እባክዎ የድርጅቱን አገልግሎት በተሰጠው መለኪያ መሰረት ይሙሉ",
         "start": "2025-08-20",
         "end": "2025-09-09",
         "version": "2.0",
@@ -17,208 +17,113 @@
             "category": 62,
             "options": [
                 {
-                    "id": 234,
-                    "text": "ደ/ማርቆስ",
-                    "is_other": false
+                    "text": "ADAMA REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 235,
-                    "text": "ሻሸመኔ",
-                    "is_other": false
+                    "text": "AFAR REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 236,
-                    "text": "ደሴ",
-                    "is_other": false
+                    "text": "AMBO REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 237,
-                    "text": "ጎንደር",
-                    "is_other": false
+                    "text": "ARBAMINICH REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 238,
-                    "text": "ወልድያ",
-                    "is_other": false
+                    "text": "BAHIRDAR REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 239,
-                    "text": "አዲስ አበባ",
-                    "is_other": false
+                    "text": "BALE ROBE REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 240,
-                    "text": "አዳማ",
-                    "is_other": false
+                    "text": "BENISHANGULE GUMIZ REGION ELECTRIC UTILI"
                 },
                 {
-                    "id": 241,
-                    "text": "አርባ ምንጭ",
-                    "is_other": false
+                    "text": "BONGA ICS  DISTRICT"
                 },
                 {
-                    "id": 242,
-                    "text": "ባህር ዳር",
-                    "is_other": false
+                    "text": "CHIRO REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 243,
-                    "text": "ደ/ብርሃን",
-                    "is_other": false
+                    "text": "DEBEREMARKOS REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 244,
-                    "text": "ሆሳህና",
-                    "is_other": false
+                    "text": "DEBREBIRHAN REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 245,
-                    "text": "ሲዳማ",
-                    "is_other": false
+                    "text": "DESSIE REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 246,
-                    "text": "ጅማ",
-                    "is_other": false
+                    "text": "DIRE DAWA REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 247,
-                    "text": "ጋምቤላ",
-                    "is_other": false
+                    "text": "EAAD (BOLE & YEKA SUB CITY)"
                 },
                 {
-                    "id": 248,
-                    "text": "ባሌ ሮቤ",
-                    "is_other": false
+                    "text": "GAMBELA REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 249,
-                    "text": "አምቦ",
-                    "is_other": false
+                    "text": "GODE DISTRICT"
                 },
                 {
-                    "id": 250,
-                    "text": "ጅጅጋ",
-                    "is_other": false
+                    "text": "GONDER REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 251,
-                    "text": "ነቀምት",
-                    "is_other": false
+                    "text": "HARERE REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 252,
-                    "text": "መቱ",
-                    "is_other": false
+                    "text": "HAWASSA ICS  DISTRICT"
                 },
                 {
-                    "id": 253,
-                    "text": "ወላይታ ሶዶ",
-                    "is_other": false
+                    "text": "HOSSANA ICS  DISTRICT"
                 },
                 {
-                    "id": 254,
-                    "text": "ሐረር",
-                    "is_other": false
+                    "text": "JIMMA REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 255,
-                    "text": "አፋር",
-                    "is_other": false
+                    "text": "MEKELE REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 256,
-                    "text": "ደቡብ ምዕራብ",
-                    "is_other": false
+                    "text": "METU REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 257,
-                    "text": "ጭሮ",
-                    "is_other": false
+                    "text": "NAA REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 258,
-                    "text": "ምዕራብ አ.አ",
-                    "is_other": false
+                    "text": "NEKEMITE REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 259,
-                    "text": "መቀሌ",
-                    "is_other": false
+                    "text": "SAA REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 260,
-                    "text": "ሰሜን አ.አ",
-                    "is_other": false
+                    "text": "SHASHEMENE REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 261,
-                    "text": "ምሥራቅ አ.አ",
-                    "is_other": false
+                    "text": "SHEGER REGION ELECTRIC UTILITY COORDINAT"
                 },
                 {
-                    "id": 262,
-                    "text": "ሽሬ",
-                    "is_other": false
+                    "text": "SHIRE REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 263,
-                    "text": "ቤኒሻንጉል",
-                    "is_other": false
+                    "text": "SIDAMA REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 264,
-                    "text": "ድሬደዋ",
-                    "is_other": false
+                    "text": "SOMALI REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 265,
-                    "text": "ፊንፊኔ",
-                    "is_other": false
+                    "text": "SOUTH WEST REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 266,
-                    "text": "ደቡብ",
-                    "is_other": false
+                    "text": "WAA REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 267,
-                    "text": "ምሥራቅ",
-                    "is_other": false
+                    "text": "WELAYITA SODO REGION ELECTRIC UTILITY"
                 },
                 {
-                    "id": 268,
-                    "text": "ምዕራብ",
-                    "is_other": false
-                },
-                {
-                    "id": 269,
-                    "text": "መካከለኛ",
-                    "is_other": false
-                },
-                {
-                    "id": 270,
-                    "text": "ሰሜን",
-                    "is_other": false
-                },
-                {
-                    "id": 271,
-                    "text": "ጎዴ",
-                    "is_other": false
+                    "text": "WOLEDIYA REGION ELECTRIC UTILITY"
                 }
             ],
             "scale": null,
             "placeholder": "pick"
-        },
-        {
-            "id": 131,
-            "type": "number",
-            "question": "የአገልግሎት መስጫ ማእከል ቁጥር",
-            "label": "Q_131",
-            "category": 62,
-            "options": [],
-            "scale": null,
-            "placeholder": "ደ/አ/መ/ቁጥር"
         },
         {
             "id": 132,
@@ -269,7 +174,7 @@
         {
             "id": 135,
             "type": "single_choice",
-            "question": "እርስዎ የድርጅቱ ተደንበኛ ከሆኑ ምን ያህል ጊዜ ይሆኖታል?",
+            "question": "እርስዎ የድርጅቱ ደንበኛ ከሆኑ ምን ያህል ጊዜ ይሆኖታል?",
             "label": "Q_135",
             "category": 61,
             "options": [

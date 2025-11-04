@@ -62,20 +62,6 @@ const handleNext = async () => {
             </div>
           ))}
 
-          {submissionStatus === "loading" && (
-            <p className="text-blue-500 mt-4">Submitting...</p>
-          )}
-          {submissionStatus === "success" && (
-            <p className="text-green-600 mt-4">
-              ✅ Thank you! Your responses have been submitted.
-            </p>
-          )}
-          {submissionStatus === "error" && (
-            <p className="text-red-600 mt-4">
-              ❌ Oops! Something went wrong. Please try again.
-            </p>
-          )}
-
           <SurveyNavigation
             onPrevious={prevCategory}
             onNext={handleNext}
@@ -83,6 +69,7 @@ const handleNext = async () => {
             isFirstPage={isFirstPage}
             isLastPage={isLastPage}
           />
+          
         </section>
       </form>
     </FormProvider>

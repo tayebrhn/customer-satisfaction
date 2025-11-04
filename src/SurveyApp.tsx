@@ -8,6 +8,7 @@ import type { QuestionCategory, SurveyQuestion } from "./types/survey";
 import { handleSurveySubmit } from "./utils/survey_submit_handler";
 import { useParams } from "react-router-dom";
 import { useState, useMemo } from "react";
+import { SurveyModal } from "./components/SurveyModal";
 
 export default function SurveyApp() {
   const { id } = useParams<{ id: string }>();
@@ -66,11 +67,6 @@ export default function SurveyApp() {
     return <div>There is no survey</div>;
 
   const { title, instructions } = surveyData.metadata ?? {};
-  console.log({
-    totalCategories: groupedQuestions.length,
-    currentCategoryIndex,
-    isLastPage,
-  });
 
   return (
     <SurveyLayout title={title ?? ""} instructions={instructions ?? ""}>
@@ -86,6 +82,11 @@ export default function SurveyApp() {
         progress={progress}
         isFirstPage={isFirstPage}
         isLastPage={isLastPage}
+      />
+      {/* Success/Error Modal */}
+      <SurveyModal
+        status={submissionStatus}
+        onClose={() => setSubmissionStatus("idle")}
       />
     </SurveyLayout>
   );
