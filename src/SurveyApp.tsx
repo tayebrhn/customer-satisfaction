@@ -19,7 +19,7 @@ export default function SurveyApp() {
   const [submissionStatus, setSubmissionStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
-
+  const [validationErrors, setValidationErrors] = useState<any[]>([]);
   const formValues = watch();
   const { clearSavedData } = useFormPersistence(form, formValues);
 
@@ -58,6 +58,7 @@ export default function SurveyApp() {
       clearSavedData,
       clearPageData,
       setSubmissionStatus,
+      setValidationErrors,
     });
   };
 
@@ -86,7 +87,11 @@ export default function SurveyApp() {
       {/* Success/Error Modal */}
       <SurveyModal
         status={submissionStatus}
-        onClose={() => setSubmissionStatus("idle")}
+        validationErrors={validationErrors}
+        onClose={() => {
+          setSubmissionStatus("idle");
+          setValidationErrors([]);
+        }}
       />
     </SurveyLayout>
   );
