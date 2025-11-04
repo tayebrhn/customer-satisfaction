@@ -4,15 +4,15 @@ import { useEffect } from "react";
 
 export function SurveyModal({
   status,
+  validationErrors = [],
   onClose,
 }: {
   status: "idle" | "loading" | "success" | "error";
+  validationErrors?: { question_id: number; error: string }[];
   onClose: () => void;
 }) {
   if (status === "idle" || status === "loading") return null;
-
   const isSuccess = status === "success";
-
   useEffect(() => {
     if (isSuccess) {
       const timer = setTimeout(() => {
@@ -21,6 +21,7 @@ export function SurveyModal({
       return () => clearTimeout(timer);
     }
   }, [isSuccess]);
+  console.log("ValidError:", validationErrors);
   return (
     <AnimatePresence>
       <motion.div
@@ -34,20 +35,37 @@ export function SurveyModal({
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className={`w-full max-w-sm bg-white rounded-2xl shadow-lg p-6 text-center`}
+          className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6 text-center"
         >
           <h2
-            className={`text-xl font-semibold mb-2 ${
+            className={`text-xl font-semibold mb-3 ${
               isSuccess ? "text-green-600" : "text-red-600"
             }`}
           >
             {isSuccess ? "✅ Submission Successful" : "❌ Submission Failed"}
           </h2>
-          <p className="text-gray-600 mb-4">
-            {isSuccess
-              ? "Thank you for filling out the survey!"
-              : "There was an issue submitting your responses. Please try again."}
-          </p>
+
+          {isSuccess ? (
+            <p className="text-gray-600 mb-4">
+              Thank you for completing the survey!
+            </p>
+          ) : validationErrors.length > 0 ? (
+            <div className="text-left text-sm text-gray-700 mb-4">
+              <p className="font-medium mb-2">Some questions need attention:</p>
+              <ul className="space-y-1">
+                {validationErrors.map((err, idx) => (
+                  <li key={idx} className="text-red-600">
+                    • Question {err.question_id}: {err.error}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p className="text-gray-600 mb-4">
+              An unexpected error occurred. Please try again.
+            </p>
+          )}
+
           <button
             onClick={onClose}
             className={`px-4 py-2 rounded font-medium ${
@@ -56,7 +74,7 @@ export function SurveyModal({
                 : "bg-red-600 text-white hover:bg-red-700"
             }`}
           >
-            {isSuccess ? "Continue" : "Try Again"}
+            {isSuccess ? "Continue" : "Close"}
           </button>
         </motion.div>
       </motion.div>

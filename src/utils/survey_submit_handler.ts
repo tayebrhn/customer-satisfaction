@@ -7,6 +7,7 @@ export async function handleSurveySubmit({
   clearSavedData,
   clearPageData,
   setSubmissionStatus,
+  setValidationErrors,
 }: {
   formData: any;
   surveyData: any;
@@ -14,9 +15,10 @@ export async function handleSurveySubmit({
   clearSavedData: () => void;
   clearPageData: () => void;
   setSubmissionStatus: (s: "idle" | "loading" | "success" | "error") => void;
+  setValidationErrors: (errors: any[]) => void;
 }) {
   setSubmissionStatus("loading");
-
+  setValidationErrors([]);
   const responses = surveyData?.questions
     .map((q: SurveyQuestion) => {
       const value = formData[q.id];
@@ -88,7 +90,13 @@ export async function handleSurveySubmit({
       body: JSON.stringify(surveyResponse),
     });
 
-    if (!res.ok) throw new Error(`Server error: ${res.status}`);
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null);
+      if (errorData?.errors) {
+        setValidationErrors(errorData.errors);
+      }
+      throw new Error(`Server error: ${res.status}`);
+    }
 
     setSubmissionStatus("success");
     clearSavedData();
