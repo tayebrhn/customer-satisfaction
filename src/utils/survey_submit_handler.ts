@@ -1,4 +1,4 @@
-import type { SurveyQuestion } from "../types/survey";
+import type { SurveyQuestion, SurveySubmitResponse, SurveySubmitResult, ValidationError } from "../types/survey";
 
 export async function handleSurveySubmit({
   formData,
@@ -15,10 +15,11 @@ export async function handleSurveySubmit({
   clearSavedData: () => void;
   clearPageData: () => void;
   setSubmissionStatus: (s: "idle" | "loading" | "success" | "error") => void;
-  setValidationErrors: (errors: any[]) => void;
+  setValidationErrors: (errors: ValidationError[]) => void;
 }) {
   setSubmissionStatus("loading");
   setValidationErrors([]);
+
   const responses = surveyData?.questions
     .map((q: SurveyQuestion) => {
       const value = formData[q.id];
@@ -90,19 +91,25 @@ export async function handleSurveySubmit({
       body: JSON.stringify(surveyResponse),
     });
 
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => null);
-      if (errorData?.errors) {
-        setValidationErrors(errorData.errors);
+    const json: SurveySubmitResult = await res.json();
+
+    if (!res.ok || json.success === false) {
+      // Backend validation errors
+      if ("errors" in json && json.errors?.length) {
+        setValidationErrors(json.errors);
       }
-      throw new Error(`Server error: ${res.status}`);
+      setSubmissionStatus("error");
+      return;
     }
 
+    // Success: you can pass json to /survey/completion
     setSubmissionStatus("success");
     clearSavedData();
     clearPageData();
+
+    return json as SurveySubmitResponse;
   } catch (err) {
-    console.error("Failed to submit survey:", err);
+    // console.error("Failed to submit survey:", err);
     setSubmissionStatus("error");
   }
 }

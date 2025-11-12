@@ -4,14 +4,19 @@ import { useSurveyFetch } from "./hooks/useSurveyFetch";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./assets/index.css";
+import SurveyCompletion from "./SurveyCompletion";
 
 export default function App() {
   const { data: surveyData, loading, error } = useSurveyFetch();
 
   if (loading) return <p>Loading surveys...</p>;
-  if (error) return <p className="text-red-600">App::Error Loading Survey List: {error}</p>;
-  if (!surveyData || !Array.isArray(surveyData)||surveyData.length==0) return <p>No data found</p>;
+  if (error)
     return (
+      <p className="text-red-600">App::Error Loading Survey List: {error}</p>
+    );
+  if (!surveyData || !Array.isArray(surveyData) || surveyData.length == 0)
+    return <p>No data found</p>;
+  return (
     <Router>
       <Routes>
         <Route
@@ -48,6 +53,7 @@ export default function App() {
           }
         ></Route>
         <Route path="/survey/:id" element={<SurveyApp />} />
+        <Route path="/survey/completion" element={<SurveyCompletion />} />
       </Routes>
     </Router>
   );
@@ -55,6 +61,6 @@ export default function App() {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-      <App />
+    <App />
   </StrictMode>
 );

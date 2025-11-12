@@ -22,6 +22,9 @@ export default function SurveyApp() {
   const [validationErrors, setValidationErrors] = useState<any[]>([]);
   const formValues = watch();
   const { clearSavedData } = useFormPersistence(form, formValues);
+  const [submissionResponse, setSubmissionResponse] = useState<any | null>(
+    null
+  );
 
   const groupedQuestions = useMemo(() => {
     if (!surveyData?.question_categories) return [];
@@ -51,7 +54,7 @@ export default function SurveyApp() {
   const currentCategory = nonEmptyCategories[currentCategoryIndex];
 
   const onSubmit = async (formData: any) => {
-    await handleSurveySubmit({
+    const result = await handleSurveySubmit({
       formData,
       surveyData,
       id: id as string,
@@ -60,6 +63,9 @@ export default function SurveyApp() {
       setSubmissionStatus,
       setValidationErrors,
     });
+    if (result?.success) {
+      setSubmissionResponse(result);
+    }
   };
 
   if (loading) return <div>Loading survey...</div>;
@@ -92,6 +98,7 @@ export default function SurveyApp() {
           setSubmissionStatus("idle");
           setValidationErrors([]);
         }}
+        response={submissionResponse}
       />
     </SurveyLayout>
   );

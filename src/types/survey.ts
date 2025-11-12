@@ -127,6 +127,29 @@ export interface SurveyExport {
 
 export type AppRoutes = Record<string, string>;
 
+// types/surveyResponses.ts
+
+export interface SurveySubmitResponse {
+  success: true;
+  response_id: string | number;
+  award_assigned: boolean;
+  message: string;
+}
+
+export interface ValidationError {
+  question_id: number;
+  error: string;
+}
+
+export interface SurveySubmitError {
+  success: false;
+  message: string;
+  errors?: ValidationError[];
+}
+
+export type SurveySubmitResult = SurveySubmitResponse | SurveySubmitError;
+
+
 // export type QuestionsArray = Question[];
 
 // // ---------- Type Guards ----------

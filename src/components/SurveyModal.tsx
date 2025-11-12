@@ -1,28 +1,34 @@
 // SurveyModal.tsx
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import type { SurveySubmitResponse } from "../types/survey";
 
 export function SurveyModal({
   status,
   validationErrors = [],
+  response,
   onClose,
 }: {
   status: "idle" | "loading" | "success" | "error";
   validationErrors?: { question_id: number; error: string }[];
+  response?: SurveySubmitResponse;
   onClose: () => void;
 }) {
-  if (status === "idle" || status === "loading") return null;
+  const navigate = useNavigate();
+
   const isSuccess = status === "success";
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && response) {
       const timer = setTimeout(() => {
-        window.location.href = "/survey/completion";
+        navigate("/survey/completion", { state: { response } });
+        // window.location.href = `/survey/completion?response_id=${response?.response_id}`;
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [isSuccess]);
-  console.log("ValidError:", validationErrors);
-  return (
+  }, [isSuccess, response]);
+  if (status === "idle" || status === "loading") return null;
+  return (  
     <AnimatePresence>
       <motion.div
         key="modal"
@@ -55,7 +61,7 @@ export function SurveyModal({
               <ul className="space-y-1">
                 {validationErrors.map((err, idx) => (
                   <li key={idx} className="text-red-600">
-                    • Question {err.question_id}: {err.error}
+                    • {err.question_id}: {err.error}
                   </li>
                 ))}
               </ul>
