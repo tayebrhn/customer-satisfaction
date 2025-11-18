@@ -51,9 +51,9 @@ const handleNext = async () => {
         className="space-y-6 max-w-2xl mx-auto"
       >
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold text-gray-700 border-b border-gray-200 pb-2">
+          {/* <h2 className="text-xl font-semibold text-gray-700 border-b border-gray-200 pb-2">
             {currentCategory?.name}
-          </h2>
+          </h2> */}
 
           {currentCategory?.questions?.map((q: SurveyQuestion) => (
             <div key={q.id} className="bg-white shadow-md p-4 rounded-lg">

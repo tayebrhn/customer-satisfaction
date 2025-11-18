@@ -33,7 +33,7 @@ export const SurveyNavigation = ({
                 : "bg-gray-500 hover:bg-gray-600"
             }`}
           >
-            Previous
+            የቀደም ገጽ
           </button>
         )}
         <button
@@ -48,7 +48,7 @@ export const SurveyNavigation = ({
               : "bg-green-500 hover:bg-green-600"
           }`}
         >
-          {!isLastPage ? "Next" : isSubmitting ? "Submitting..." : "Submit"}
+          {!isLastPage ? "ቀጣይ" : isSubmitting ? "እየላክን..." : "አስገባ"}
         </button>
       </div>
     </div>

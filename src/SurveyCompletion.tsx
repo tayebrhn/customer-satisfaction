@@ -24,19 +24,17 @@ export default function SurveyCompletion() {
       >
         <CheckCircle className="text-green-500 w-16 h-16 mx-auto mb-4" />
         <h1 className="text-2xl font-bold text-gray-800 mb-2">
-          🎉 Thank You for Completing the Survey!
+          🎉 ጥናቱን ስላጠናቀቁ እናመሰግናለን!
         </h1>
-        <p className="text-gray-600 mb-6">
-          Your responses have been successfully recorded.
-        </p>
+        <p className="text-gray-600 mb-6">ምላሾችዎ በተሳካ ሁኔታ ተመዝግበዋል።</p>
         <div className="p-6">
-          <h1 className="text-2xl font-bold mb-2">Survey Completed!</h1>
-          {/* Optional: show rewards */}
+          <h1 className="text-2xl font-bold mb-2">ጥናቱ ተጠናቋል!</h1>
+          {/* Optional: show rewards
           {response.award_assigned && (
             <p className="text-green-600">
               You earned a reward: {response.message}
             </p>
-          )}
+          )} */}
         </div>
       </motion.div>
     </div>
