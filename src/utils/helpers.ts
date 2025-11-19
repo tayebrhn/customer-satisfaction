@@ -13,9 +13,17 @@ export const parseOption = (option: QuestionOption) => {
 export function generateRoutes(data: SurveyExport[] | null): AppRoutes {
   if (!data) return {}; // return empty when null
   const routes: AppRoutes = {};
-  data.map(
-    (element) =>
-      (routes[element.metadata.title] = `/${element.id}`)
-  );
+  data.map((element) => (routes[element.metadata.title] = `/${element.id}`));
   return routes;
+}
+
+export async function verifyPageInputs(fields: any[]) {
+  console.log(JSON.stringify({ fields }));
+  const res = await fetch("/api/survey/verify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ fields }),
+  });
+
+  return await res.json();
 }

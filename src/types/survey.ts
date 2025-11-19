@@ -105,6 +105,7 @@ export interface SurveyQuestion {
   scale?: string;
   options: QuestionOption[];
   constraints: {
+    verifiable: boolean;
     required: boolean;
     min_length: number | null;
     max_length: number | null;
@@ -148,6 +149,11 @@ export interface SurveySubmitError {
 }
 
 export type SurveySubmitResult = SurveySubmitResponse | SurveySubmitError;
+
+export interface VerifyPayload {
+  [key: string]: any;
+}
+
 
 
 // export type QuestionsArray = Question[];

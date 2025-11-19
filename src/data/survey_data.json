@@ -1,618 +1,795 @@
-{
-    "id": "1ff05da5-2617-40ef-b697-fcd0f489a611",
-    "metadata": {
-        "title": "የኢትዮጵያ ኤሌክትሪክ አገልግሎት የደንበኞች እርካታ ጥናት",
-        "instructions": "እባክዎ የድርጅቱን አገልግሎት በተሰጠው መለኪያ መሰረት ይሙሉ",
-        "start": "2025-08-20",
-        "end": "2025-09-09",
-        "version": "2.0",
-        "language": "am"
-    },
-    "questions": [
-        {
-            "id": 130,
-            "type": "drop_down",
-            "question": "የአገልግሎት መስጫ ማእከል",
-            "label": "Q_130",
-            "category": 62,
-            "options": [
-                {
-                    "text": "ADAMA REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "AFAR REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "AMBO REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "ARBAMINICH REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "BAHIRDAR REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "BALE ROBE REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "BENISHANGULE GUMIZ REGION ELECTRIC UTILI"
-                },
-                {
-                    "text": "BONGA ICS  DISTRICT"
-                },
-                {
-                    "text": "CHIRO REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "DEBEREMARKOS REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "DEBREBIRHAN REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "DESSIE REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "DIRE DAWA REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "EAAD (BOLE & YEKA SUB CITY)"
-                },
-                {
-                    "text": "GAMBELA REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "GODE DISTRICT"
-                },
-                {
-                    "text": "GONDER REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "HARERE REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "HAWASSA ICS  DISTRICT"
-                },
-                {
-                    "text": "HOSSANA ICS  DISTRICT"
-                },
-                {
-                    "text": "JIMMA REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "MEKELE REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "METU REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "NAA REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "NEKEMITE REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "SAA REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "SHASHEMENE REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "SHEGER REGION ELECTRIC UTILITY COORDINAT"
-                },
-                {
-                    "text": "SHIRE REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "SIDAMA REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "SOMALI REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "SOUTH WEST REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "WAA REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "WELAYITA SODO REGION ELECTRIC UTILITY"
-                },
-                {
-                    "text": "WOLEDIYA REGION ELECTRIC UTILITY"
+    {
+        "id": "3cd0d941-2ed2-4050-8ea8-cfc532fbed21",
+        "metadata": {
+            "title": "የኢትዮጵያ ኤሌክትሪክ አገልግሎት የደንበኞች እርካታ ጥናት",
+            "instructions": "እባክዎ የድርጅቱን አገልግሎት በተሰጠው መለኪያ መሰረት ይሙሉ",
+            "start": "2025-08-20",
+            "end": "2025-11-30",
+            "version": "2.0",
+            "language": "am"
+        },
+        "questions": [
+            {
+                "id": 1,
+                "type": "drop_down",
+                "question": "የአገልግሎት መስጫ ማእከል",
+                "label": "Q_1",
+                "category": 1,
+                "options": [
+                    {
+                        "text": "Adama"
+                    },
+                    {
+                        "text": "Dessie"
+                    },
+                    {
+                        "text": "Diredawa"
+                    },
+                    {
+                        "text": "D.Markos"
+                    },
+                    {
+                        "text": "East Addis Ababa"
+                    },
+                    {
+                        "text": "Gambela"
+                    },
+                    {
+                        "text": "Gonder"
+                    },
+                    {
+                        "text": "Harer"
+                    },
+                    {
+                        "text": "Hossana"
+                    },
+                    {
+                        "text": "Jimma"
+                    },
+                    {
+                        "text": "Metu"
+                    },
+                    {
+                        "text": "Afar"
+                    },
+                    {
+                        "text": "North Addis Ababa"
+                    },
+                    {
+                        "text": "Nekemte"
+                    },
+                    {
+                        "text": "South Addis Ababa"
+                    },
+                    {
+                        "text": "Shire"
+                    },
+                    {
+                        "text": "Sidama"
+                    },
+                    {
+                        "text": "Somali"
+                    },
+                    {
+                        "text": "South West"
+                    },
+                    {
+                        "text": "West Addis Ababa"
+                    },
+                    {
+                        "text": "Shashemene"
+                    },
+                    {
+                        "text": "Welayta"
+                    },
+                    {
+                        "text": "Ambo"
+                    },
+                    {
+                        "text": "Weldiya"
+                    },
+                    {
+                        "text": "Sheger"
+                    },
+                    {
+                        "text": "Mekele"
+                    },
+                    {
+                        "text": "Arbaminch"
+                    },
+                    {
+                        "text": "Bahirdar"
+                    },
+                    {
+                        "text": "Bale"
+                    },
+                    {
+                        "text": "Benshangul"
+                    },
+                    {
+                        "text": "Chiro"
+                    },
+                    {
+                        "text": "D.Berhan"
+                    }
+                ],
+                "scale": null,
+                "placeholder": "begin typing and pick",
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
                 }
-            ],
-            "scale": null,
-            "placeholder": "pick"
-        },
-        {
-            "id": 132,
-            "type": "number",
-            "question": "Customer account number(CA Number)",
-            "label": "Q_132",
-            "category": 61,
-            "options": [],
-            "scale": null,
-            "placeholder": null
-        },
-        {
-            "id": 133,
-            "type": "number",
-            "question": "Business Partner Number",
-            "label": "Q_133",
-            "category": 61,
-            "options": [],
-            "scale": null,
-            "placeholder": "eg-1234"
-        },
-        {
-            "id": 134,
-            "type": "multi_select",
-            "question": "ኤሌክትሪክ የሚጠቀሙት",
-            "label": "Q_134",
-            "category": 61,
-            "options": [
-                {
-                    "id": 272,
-                    "text": "ለመኖሪያ ቤት",
-                    "is_other": false
-                },
-                {
-                    "id": 273,
-                    "text": "ለንግድ ኢንዱስትሪ",
-                    "is_other": false
-                },
-                {
-                    "id": 274,
-                    "text": "ሌላ",
-                    "is_other": true
+            },
+            {
+                "id": 2,
+                "type": "number",
+                "question": "Customer account number(CA Number)",
+                "label": "Q_2",
+                "category": 2,
+                "options": [],
+                "scale": null,
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": true,
+                    "min_length": null,
+                    "max_length": null
                 }
-            ],
-            "scale": null,
-            "placeholder": null
-        },
-        {
-            "id": 135,
-            "type": "single_choice",
-            "question": "እርስዎ የድርጅቱ ደንበኛ ከሆኑ ምን ያህል ጊዜ ይሆኖታል?",
-            "label": "Q_135",
-            "category": 61,
-            "options": [
-                {
-                    "id": 275,
-                    "text": "ከ10 ዓመት በላይ",
-                    "is_other": false
-                },
-                {
-                    "id": 276,
-                    "text": "ከ6 እስከ 10 ዓመት",
-                    "is_other": false
-                },
-                {
-                    "id": 277,
-                    "text": "ከ1 እስከ 5 ዓመት",
-                    "is_other": false
-                },
-                {
-                    "id": 278,
-                    "text": "ከ1 ዓመት በታች",
-                    "is_other": false
+            },
+            {
+                "id": 3,
+                "type": "number",
+                "question": "Business Partner Number",
+                "label": "Q_3",
+                "category": 2,
+                "options": [],
+                "scale": null,
+                "placeholder": "eg-1234",
+                "constraints": {
+                    "verifiable": false,
+                    "required": true,
+                    "min_length": 5,
+                    "max_length": 5
                 }
-            ],
-            "scale": null,
-            "placeholder": null
-        },
-        {
-            "id": 136,
-            "type": "single_choice",
-            "question": "በተቋሙ የቆጣሪ ዓይነት እርስዎ የየትኛው ቆጣሪ ተጠቃሚ ነው?",
-            "label": "Q_136",
-            "category": 63,
-            "options": [
-                {
-                    "id": 279,
-                    "text": "ድህረ ክፍያ",
-                    "is_other": false
-                },
-                {
-                    "id": 280,
-                    "text": "ቅድመ ክፍያ",
-                    "is_other": false
-                },
-                {
-                    "id": 281,
-                    "text": "ስማርት ሜትር",
-                    "is_other": false
+            },
+            {
+                "id": 4,
+                "type": "multi_select",
+                "question": "ኤሌክትሪክ የሚጠቀሙት",
+                "label": "Q_4",
+                "category": 2,
+                "options": [
+                    {
+                        "id": 37,
+                        "text": "ለመኖሪያ ቤት",
+                        "is_other": false
+                    },
+                    {
+                        "id": 38,
+                        "text": "ለንግድ ኢንዱስትሪ",
+                        "is_other": false
+                    },
+                    {
+                        "id": 39,
+                        "text": "ሌላ",
+                        "is_other": true
+                    }
+                ],
+                "scale": null,
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
                 }
-            ],
-            "scale": null,
-            "placeholder": null
-        },
-        {
-            "id": 137,
-            "type": "drop_down",
-            "question": "ከተቋሙ ጋር በተደጋጋሚ የሚገናኙት ለየትኛው አገልግሎት ነው?",
-            "label": "Q_137",
-            "category": 63,
-            "options": [
-                {
-                    "id": 282,
-                    "text": "ቢል ለመክፈል",
-                    "is_other": false
-                },
-                {
-                    "id": 283,
-                    "text": "አዲስ ቆጣሪ ለመጠየቅ",
-                    "is_other": false
-                },
-                {
-                    "id": 284,
-                    "text": "የጥገና አገልግሎት ለመጠየቅ",
-                    "is_other": false
-                },
-                {
-                    "id": 285,
-                    "text": "ማሻሻያ ለመጠየቅ",
-                    "is_other": false
-                },
-                {
-                    "id": 286,
-                    "text": "ካርድ ለማስሞላት",
-                    "is_other": false
-                },
-                {
-                    "id": 287,
-                    "text": "ለአስተዳደራዊ ጉዳይ",
-                    "is_other": false
-                },
-                {
-                    "id": 288,
-                    "text": "ሌላ",
-                    "is_other": true
+            },
+            {
+                "id": 5,
+                "type": "single_choice",
+                "question": "እርስዎ የድርጅቱ ደንበኛ ከሆኑ ምን ያህል ጊዜ ይሆኖታል?",
+                "label": "Q_5",
+                "category": 2,
+                "options": [
+                    {
+                        "id": 40,
+                        "text": "ከ10 ዓመት በላይ",
+                        "is_other": false
+                    },
+                    {
+                        "id": 41,
+                        "text": "ከ6 እስከ 10 ዓመት",
+                        "is_other": false
+                    },
+                    {
+                        "id": 42,
+                        "text": "ከ1 እስከ 5 ዓመት",
+                        "is_other": false
+                    },
+                    {
+                        "id": 43,
+                        "text": "ከ1 ዓመት በታች",
+                        "is_other": false
+                    }
+                ],
+                "scale": null,
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
                 }
-            ],
-            "scale": null,
-            "placeholder": null
-        },
-        {
-            "id": 138,
-            "type": "single_choice",
-            "question": "ከላይ የመረጡትን አገልግሎት ለማግኘት በአማካኝ ምን ያህል ጊዜ ተፈጅቦታል?",
-            "label": "Q_138",
-            "category": 63,
-            "options": [
-                {
-                    "id": 289,
-                    "text": "ከ10 ደቂቃ በታች",
-                    "is_other": false
-                },
-                {
-                    "id": 290,
-                    "text": "ከ10 ደቂቃ እስከ 30 ደቂቃ",
-                    "is_other": false
-                },
-                {
-                    "id": 291,
-                    "text": "ከ31 ደቂቃ እስከ 1 ሰዓት",
-                    "is_other": false
-                },
-                {
-                    "id": 292,
-                    "text": "ከ1 ሰዓት በላይ",
-                    "is_other": false
-                },
-                {
-                    "id": 293,
-                    "text": "ሌላ",
-                    "is_other": true
+            },
+            {
+                "id": 6,
+                "type": "single_choice",
+                "question": "በተቋሙ የቆጣሪ ዓይነት እርስዎ የየትኛው ቆጣሪ ተጠቃሚ ነው?",
+                "label": "Q_6",
+                "category": 3,
+                "options": [
+                    {
+                        "id": 44,
+                        "text": "ድህረ ክፍያ",
+                        "is_other": false
+                    },
+                    {
+                        "id": 45,
+                        "text": "ቅድመ ክፍያ",
+                        "is_other": false
+                    },
+                    {
+                        "id": 46,
+                        "text": "ስማርት ሜትር",
+                        "is_other": false
+                    }
+                ],
+                "scale": null,
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
                 }
-            ],
-            "scale": null,
-            "placeholder": null
-        },
-        {
-            "id": 139,
-            "type": "rating",
-            "question": "የተቋሙ የቢሮ ሰራተኞች የደንበኞች መስተንግዶ (አቀባበል) ምን ይመስላል?",
-            "label": "Q_139",
-            "category": 64,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 140,
-            "type": "rating",
-            "question": "አዲስ ኃይል (ቆጣሪ) ለማግኘት ሂደቱ እንዴት ያዩታል?",
-            "label": "Q_140",
-            "category": 64,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 141,
-            "type": "rating",
-            "question": "ቆጣሪ ለማገናኘት መስክ ላይ የሚሰማሩ የቴክኒክ ሠራተኞች ያላቸው የስራ ትብብር እንዴት ይመለከቱታል?",
-            "label": "Q_141",
-            "category": 65,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 142,
-            "type": "rating",
-            "question": "የተቋሙ የክፍያ ስርዓት እንዴት ያዩታል?",
-            "label": "Q_142",
-            "category": 66,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 143,
-            "type": "rating",
-            "question": "የቅድመ ክፍያ ካርድ ለመሙላት የተቋሙ ሰራተኞች አቀባበል እንዴት አገኙት?",
-            "label": "Q_143",
-            "category": 69,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 144,
-            "type": "rating",
-            "question": "የድህረ ክፍያ ቆጣሪ ደንበኛ ከሆኑ ተቋሙ በየወሩ ተንባብ ከመውሰድ አንጻር ምን ላይ ይመድቡታል?",
-            "label": "Q_144",
-            "category": 66,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 145,
-            "type": "rating",
-            "question": "ቆጣሪው ላይ ያለው ንባብ በትክክል ከመውሰድ አንጻር ተቋሙ እንዴት ያዩታል?",
-            "label": "Q_145",
-            "category": 65,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 146,
-            "type": "rating",
-            "question": "የተቋሙ ቆጣሪ አንባቢዎች ደንበኛ አያያዛቸው እንዴት ነው?",
-            "label": "Q_146",
-            "category": 65,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 147,
-            "type": "rating",
-            "question": "አገልግሎት ሲቋረጥ ከማሳወቅ አንጻር ተቋሙን እንዴት ይገመግሙታል?",
-            "label": "Q_147",
-            "category": 67,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 148,
-            "type": "rating",
-            "question": "የብልሽት አመዘጋገብ ሂደት እንዴት አዩት?",
-            "label": "Q_148",
-            "category": 68,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 149,
-            "type": "rating",
-            "question": "አገልግሎት ሲቋረጥ የሚያስተናግዱት ሠራተኞች ምላሽ ምን ይመስላል?",
-            "label": "Q_149",
-            "category": 67,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 150,
-            "type": "rating",
-            "question": "ሃይል ባጭር ጊዜ መልሶ ከማገናኘት አንጻር ተቋሙን እንዴት ያዩታል?",
-            "label": "Q_150",
-            "category": 67,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 151,
-            "type": "rating",
-            "question": "የኤሌክትሪክ ሃይል መዋዠቅ ከማጋጠም አንጻር ተቋሙን እንዴት ይገመግሙታል?",
-            "label": "Q_151",
-            "category": 67,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 152,
-            "type": "rating",
-            "question": "የኤሌክትሪክ ሃይል መዋዠቅ ከማጋጠም አንጻር ተቋሙን እንዴት ይገመግሙታል?",
-            "label": "Q_152",
-            "category": 67,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 153,
-            "type": "rating",
-            "question": "የኤሌክትሪክ ሃይል ዝቅ ከማለት ተቋሙን እንዴት ያዩታል?",
-            "label": "Q_153",
-            "category": 67,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 154,
-            "type": "rating",
-            "question": "የቅሬታ አቀባበል ዘዴን ለደንበኞቹ ከማሳወቅ አንጻር ተቋሙን እንዴት ያዩታል?",
-            "label": "Q_154",
-            "category": 69,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 155,
-            "type": "rating",
-            "question": "አቤቱታ ያላቸው ደንበኞች በተቀመጠዉ ጊዜ ምላሽ አሰጣጥ እንዴት ይገመግሙታል?",
-            "label": "Q_155",
-            "category": 64,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 156,
-            "type": "rating",
-            "question": "ቢሮዉ የሚገኝበት ሥፍራ ምቹነት እንዴት ይገመግሙታል?",
-            "label": "Q_156",
-            "category": 70,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 157,
-            "type": "rating",
-            "question": "ቢሮዉ ውስጥ ያለዉ አደረጃጀት?",
-            "label": "Q_157",
-            "category": 70,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 158,
-            "type": "rating",
-            "question": "ሠራተኞቹ በሥራ ሰዓት መገኘታቸዉ?",
-            "label": "Q_158",
-            "category": 64,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 159,
-            "type": "rating",
-            "question": "ተቋሙ ለሁሉም ተደራሽ የሆነ የመገናኛ ዘዴ ምን ይመስላል?",
-            "label": "Q_159",
-            "category": 69,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 160,
-            "type": "rating",
-            "question": "የቅሬታ መቀበያ ስልክ ቶሎ ከማንሳት አንጻር ተቋሙን እንዴት ይገመግሙታል?",
-            "label": "Q_160",
-            "category": 69,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        },
-        {
-            "id": 161,
-            "type": "rating",
-            "question": "ድረ ገፅ እና ማህበራዊ ሚዲያ ላይ አስፈላጊ መረጃዎች ከመልቀቅ አንጻር ተቋሙን እንዴት ይገመግሙታል?",
-            "label": "Q_161",
-            "category": 69,
-            "options": [],
-            "scale": "1-5",
-            "placeholder": null
-        }
-    ],
-    "key_choice": [
-        {
-            "key": "1",
-            "description": "እጅግ በጣም ጥሩ"
-        },
-        {
-            "key": "2",
-            "description": "በጣም ጥሩ"
-        },
-        {
-            "key": "3",
-            "description": "ጥሩ"
-        },
-        {
-            "key": "4",
-            "description": "አጥጋቢ አይደለም"
-        },
-        {
-            "key": "5",
-            "description": "በጣም አጥጋቢ አይደለም"
-        }
-    ],
-    "question_categories": [
-        {
-            "id": 62,
-            "cat_number": 1,
-            "name": "service_location"
-        },
-        {
-            "id": 61,
-            "cat_number": 2,
-            "name": "demographics"
-        },
-        {
-            "id": 63,
-            "cat_number": 4,
-            "name": "service"
-        },
-        {
-            "id": 64,
-            "cat_number": 5,
-            "name": "satisfaction"
-        },
-        {
-            "id": 65,
-            "cat_number": 6,
-            "name": "technical"
-        },
-        {
-            "id": 66,
-            "cat_number": 7,
-            "name": "billing"
-        },
-        {
-            "id": 67,
-            "cat_number": 8,
-            "name": "reliability"
-        },
-        {
-            "id": 68,
-            "cat_number": 9,
-            "name": "process"
-        },
-        {
-            "id": 69,
-            "cat_number": 10,
-            "name": "communication"
-        },
-        {
-            "id": 70,
-            "cat_number": 11,
-            "name": "facility"
-        }
-    ]
-}
+            },
+            {
+                "id": 7,
+                "type": "drop_down",
+                "question": "ከተቋሙ ጋር በተደጋጋሚ የሚገናኙት ለየትኛው አገልግሎት ነው?",
+                "label": "Q_7",
+                "category": 3,
+                "options": [
+                    {
+                        "id": 47,
+                        "text": "ቢል ለመክፈል",
+                        "is_other": false
+                    },
+                    {
+                        "id": 48,
+                        "text": "አዲስ ቆጣሪ ለመጠየቅ",
+                        "is_other": false
+                    },
+                    {
+                        "id": 49,
+                        "text": "የጥገና አገልግሎት ለመጠየቅ",
+                        "is_other": false
+                    },
+                    {
+                        "id": 50,
+                        "text": "ማሻሻያ ለመጠየቅ",
+                        "is_other": false
+                    },
+                    {
+                        "id": 51,
+                        "text": "ካርድ ለማስሞላት",
+                        "is_other": false
+                    },
+                    {
+                        "id": 52,
+                        "text": "ለአስተዳደራዊ ጉዳይ",
+                        "is_other": false
+                    },
+                    {
+                        "id": 53,
+                        "text": "ሌላ",
+                        "is_other": true
+                    }
+                ],
+                "scale": null,
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 8,
+                "type": "single_choice",
+                "question": "ከላይ የመረጡትን አገልግሎት ለማግኘት በአማካኝ ምን ያህል ጊዜ ተፈጅቦታል?",
+                "label": "Q_8",
+                "category": 3,
+                "options": [
+                    {
+                        "id": 54,
+                        "text": "ከ10 ደቂቃ በታች",
+                        "is_other": false
+                    },
+                    {
+                        "id": 55,
+                        "text": "ከ10 ደቂቃ እስከ 30 ደቂቃ",
+                        "is_other": false
+                    },
+                    {
+                        "id": 56,
+                        "text": "ከ31 ደቂቃ እስከ 1 ሰዓት",
+                        "is_other": false
+                    },
+                    {
+                        "id": 57,
+                        "text": "ከ1 ሰዓት በላይ",
+                        "is_other": false
+                    },
+                    {
+                        "id": 58,
+                        "text": "ሌላ",
+                        "is_other": true
+                    }
+                ],
+                "scale": null,
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 9,
+                "type": "rating",
+                "question": "የተቋሙ የቢሮ ሰራተኞች የደንበኞች መስተንግዶ (አቀባበል) ምን ይመስላል?",
+                "label": "Q_9",
+                "category": 4,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 10,
+                "type": "rating",
+                "question": "አዲስ ኃይል (ቆጣሪ) ለማግኘት ሂደቱ እንዴት ያዩታል?",
+                "label": "Q_10",
+                "category": 4,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 11,
+                "type": "rating",
+                "question": "ቆጣሪ ለማገናኘት መስክ ላይ የሚሰማሩ የቴክኒክ ሠራተኞች ያላቸው የስራ ትብብር እንዴት ይመለከቱታል?",
+                "label": "Q_11",
+                "category": 5,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 12,
+                "type": "rating",
+                "question": "የተቋሙ የክፍያ ስርዓት እንዴት ያዩታል?",
+                "label": "Q_12",
+                "category": 6,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 13,
+                "type": "rating",
+                "question": "የቅድመ ክፍያ ካርድ ለመሙላት የተቋሙ ሰራተኞች አቀባበል እንዴት አገኙት?",
+                "label": "Q_13",
+                "category": 9,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 14,
+                "type": "rating",
+                "question": "የድህረ ክፍያ ቆጣሪ ደንበኛ ከሆኑ ተቋሙ በየወሩ ተንባብ ከመውሰድ አንጻር ምን ላይ ይመድቡታል?",
+                "label": "Q_14",
+                "category": 6,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 15,
+                "type": "rating",
+                "question": "ቆጣሪው ላይ ያለው ንባብ በትክክል ከመውሰድ አንጻር ተቋሙ እንዴት ያዩታል?",
+                "label": "Q_15",
+                "category": 5,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 16,
+                "type": "rating",
+                "question": "የተቋሙ ቆጣሪ አንባቢዎች ደንበኛ አያያዛቸው እንዴት ነው?",
+                "label": "Q_16",
+                "category": 5,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 17,
+                "type": "rating",
+                "question": "አገልግሎት ሲቋረጥ ከማሳወቅ አንጻር ተቋሙን እንዴት ይገመግሙታል?",
+                "label": "Q_17",
+                "category": 7,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 18,
+                "type": "rating",
+                "question": "የብልሽት አመዘጋገብ ሂደት እንዴት አዩት?",
+                "label": "Q_18",
+                "category": 8,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 19,
+                "type": "rating",
+                "question": "አገልግሎት ሲቋረጥ የሚያስተናግዱት ሠራተኞች ምላሽ ምን ይመስላል?",
+                "label": "Q_19",
+                "category": 7,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 20,
+                "type": "rating",
+                "question": "ሃይል ባጭር ጊዜ መልሶ ከማገናኘት አንጻር ተቋሙን እንዴት ያዩታል?",
+                "label": "Q_20",
+                "category": 7,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 21,
+                "type": "rating",
+                "question": "የኤሌክትሪክ ሃይል መዋዠቅ ከማጋጠም አንጻር ተቋሙን እንዴት ይገመግሙታል?",
+                "label": "Q_21",
+                "category": 7,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 22,
+                "type": "rating",
+                "question": "የኤሌክትሪክ ሃይል መዋዠቅ ከማጋጠም አንጻር ተቋሙን እንዴት ይገመግሙታል?",
+                "label": "Q_22",
+                "category": 7,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 23,
+                "type": "rating",
+                "question": "የኤሌክትሪክ ሃይል ዝቅ ከማለት ተቋሙን እንዴት ያዩታል?",
+                "label": "Q_23",
+                "category": 7,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 24,
+                "type": "rating",
+                "question": "የቅሬታ አቀባበል ዘዴን ለደንበኞቹ ከማሳወቅ አንጻር ተቋሙን እንዴት ያዩታል?",
+                "label": "Q_24",
+                "category": 9,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 25,
+                "type": "rating",
+                "question": "አቤቱታ ያላቸው ደንበኞች በተቀመጠዉ ጊዜ ምላሽ አሰጣጥ እንዴት ይገመግሙታል?",
+                "label": "Q_25",
+                "category": 4,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 26,
+                "type": "rating",
+                "question": "ቢሮዉ የሚገኝበት ሥፍራ ምቹነት እንዴት ይገመግሙታል?",
+                "label": "Q_26",
+                "category": 10,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 27,
+                "type": "rating",
+                "question": "ቢሮዉ ውስጥ ያለዉ አደረጃጀት?",
+                "label": "Q_27",
+                "category": 10,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 28,
+                "type": "rating",
+                "question": "ሠራተኞቹ በሥራ ሰዓት መገኘታቸዉ?",
+                "label": "Q_28",
+                "category": 4,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 29,
+                "type": "rating",
+                "question": "ተቋሙ ለሁሉም ተደራሽ የሆነ የመገናኛ ዘዴ ምን ይመስላል?",
+                "label": "Q_29",
+                "category": 9,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 30,
+                "type": "rating",
+                "question": "የቅሬታ መቀበያ ስልክ ቶሎ ከማንሳት አንጻር ተቋሙን እንዴት ይገመግሙታል?",
+                "label": "Q_30",
+                "category": 9,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            },
+            {
+                "id": 31,
+                "type": "rating",
+                "question": "ድረ ገፅ እና ማህበራዊ ሚዲያ ላይ አስፈላጊ መረጃዎች ከመልቀቅ አንጻር ተቋሙን እንዴት ይገመግሙታል?",
+                "label": "Q_31",
+                "category": 9,
+                "options": [],
+                "scale": "1-5",
+                "placeholder": null,
+                "constraints": {
+                    "verifiable": false,
+                    "required": false,
+                    "min_length": null,
+                    "max_length": null
+                }
+            }
+        ],
+        "key_choice": [
+            {
+                "key": "1",
+                "description": "እጅግ በጣም ጥሩ"
+            },
+            {
+                "key": "2",
+                "description": "በጣም ጥሩ"
+            },
+            {
+                "key": "3",
+                "description": "ጥሩ"
+            },
+            {
+                "key": "4",
+                "description": "አጥጋቢ አይደለም"
+            },
+            {
+                "key": "5",
+                "description": "በጣም አጥጋቢ አይደለም"
+            }
+        ],
+        "question_categories": [
+            {
+                "id": 1,
+                "cat_number": 1,
+                "name": "service_location"
+            },
+            {
+                "id": 2,
+                "cat_number": 2,
+                "name": "demographics"
+            },
+            {
+                "id": 3,
+                "cat_number": 3,
+                "name": "service"
+            },
+            {
+                "id": 4,
+                "cat_number": 4,
+                "name": "satisfaction"
+            },
+            {
+                "id": 5,
+                "cat_number": 5,
+                "name": "technical"
+            },
+            {
+                "id": 6,
+                "cat_number": 6,
+                "name": "billing"
+            },
+            {
+                "id": 7,
+                "cat_number": 7,
+                "name": "reliability"
+            },
+            {
+                "id": 8,
+                "cat_number": 8,
+                "name": "process"
+            },
+            {
+                "id": 9,
+                "cat_number": 9,
+                "name": "communication"
+            },
+            {
+                "id": 10,
+                "cat_number": 10,
+                "name": "facility"
+            }
+        ]
+    }

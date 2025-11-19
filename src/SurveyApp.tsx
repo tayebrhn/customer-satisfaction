@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useSurveyFetchOne } from "./hooks/useSurveyFetch";
 import { useFormPersistence } from "./hooks/useFormPersistence";
 import { useSurveyNavigation } from "./hooks/useSurveyNavigation";
@@ -77,19 +77,22 @@ export default function SurveyApp() {
 
   return (
     <SurveyLayout title={title ?? ""} instructions={instructions ?? ""}>
-      <SurveyForm
-        form={form}
-        onSubmit={onSubmit}
-        currentCategory={currentCategory}
-        surveyData={surveyData}
-        submissionStatus={submissionStatus}
-        prevCategory={prevCategory}
-        nextCategory={nextCategory}
-        trigger={form.trigger}
-        progress={progress}
-        isFirstPage={isFirstPage}
-        isLastPage={isLastPage}
-      />
+      <FormProvider {...form}>
+        <SurveyForm
+          form={form}
+          onSubmit={onSubmit}
+          currentCategory={currentCategory}
+          surveyData={surveyData}
+          submissionStatus={submissionStatus}
+          prevCategory={prevCategory}
+          nextCategory={nextCategory}
+          trigger={form.trigger}
+          progress={progress}
+          isFirstPage={isFirstPage}
+          isLastPage={isLastPage}
+        />
+      </FormProvider>
+
       {/* Success/Error Modal */}
       <SurveyModal
         status={submissionStatus}

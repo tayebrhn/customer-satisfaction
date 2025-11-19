@@ -28,7 +28,7 @@ export function SurveyModal({
     }
   }, [isSuccess, response]);
   if (status === "idle" || status === "loading") return null;
-  return (  
+  return (
     <AnimatePresence>
       <motion.div
         key="modal"
@@ -52,12 +52,10 @@ export function SurveyModal({
           </h2>
 
           {isSuccess ? (
-            <p className="text-gray-600 mb-4">
-              Thank you for completing the survey!
-            </p>
+            <p className="text-gray-600 mb-4">ለዳሰሳ ጥናቱ ተሳትፎዎ እናመሰግናለን! </p>
           ) : validationErrors.length > 0 ? (
             <div className="text-left text-sm text-gray-700 mb-4">
-              <p className="font-medium mb-2">Some questions need attention:</p>
+              <p className="font-medium mb-2">አንዳንድ ጥያቄዎች ትኩረት ይፈልጋሉ:</p>
               <ul className="space-y-1">
                 {validationErrors.map((err, idx) => (
                   <li key={idx} className="text-red-600">
@@ -80,7 +78,7 @@ export function SurveyModal({
                 : "bg-red-600 text-white hover:bg-red-700"
             }`}
           >
-            {isSuccess ? "Continue" : "Close"}
+            {isSuccess ? "ቀጥል" : "ዝጋ"}
           </button>
         </motion.div>
       </motion.div>
