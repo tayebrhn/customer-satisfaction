@@ -22,33 +22,54 @@ export default function App() {
         <Route
           path="/"
           element={
-            <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
-              <h1 className="text-3xl font-bold text-gray-900 mb-8">
-                EEU Survey Navigation
-              </h1>
+            <div className="">
+              {surveyData.map((survey) => (
+                <div key={survey.id} className="bg-white shadow rounded-lg p-6">
+                  <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
+                    <div className="bg-white shadow-2xl rounded-xl p-8 md:p-12 w-full max-w-3xl">
+                      {/* የገጹ ርዕስ */}
+                      <h1 className="text-3xl md:text-4xl font-extrabold text-indigo-700 mb-6 border-b pb-3">
+                        {survey.metadata.title || "የዳሰሳ ጥናት መግቢያ"}
+                      </h1>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl">
-                {surveyData.map((survey) => (
-                  <div
-                    key={survey.id}
-                    className="bg-white shadow rounded-lg p-6"
-                  >
-                    <ul className="space-y-2">
-                      <li>
+                      {/* መመሪያዎች */}
+                      <div className="text-gray-700 space-y-4 mb-8">
+                        <p className="font-semibold text-lg text-gray-800">
+                          አስፈላጊ መረጃ እና ፈቃድ (Consent and Information)
+                        </p>
+
+                        <p>
+                          ይህ የዳሰሳ ጥናት የሚቀርበው{" "}
+                          <strong>በኢትዮጵያ ኤሌክትሪክ አገልግሎት (EEU)</strong>
+                          ሲሆን፣ ዓላማውም በደንበኞች እርካታ ጥናት ዙሪያ ያለውን መረጃ ለመሰብሰብ ነው።
+                        </p>
+
+                        {/* <p>
+            **ምስጢራዊነት (Confidentiality):** የእርስዎ ምላሾች በሙሉ በከፍተኛ ሚስጥር ይጠበቃሉ። የግል መረጃዎ አይጠየቅም ወይም አይታወቅም። ምላሾቹ የሚጠቀሙት ለጥናትና ለሪፖርት ዝግጅት ብቻ ነው።
+          </p> */}
+
+                        <p>
+                          <strong>ፈቃድ (Consent):</strong> የዳሰሳ ጥናቱን መመለስ መጀመርዎ
+                          በፈቃደኝነትዎ መሰረት የሚደረግ ሲሆን፣ ጥናቱን በማንኛውም ጊዜ የማቋረጥ መብት
+                          እንዳለዎት ያስገነዝባል።
+                        </p>
+
+                        <p className="text-sm font-medium text-red-600">
+                          እባክዎን ከዚህ በታች ያለውን ማስፈንጠሪያ በመጫን የዳሰሳ ጥናቱን ይጀምሩ።
+                        </p>
+
+                        {/* የመጀመሪያው የዳሰሳ ጥናት መጀመርያ ቁልፍ */}
                         <Link
-                          to={`survey/${survey.id}`}
-                          className="block px-4 py-2 rounded bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition"
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          to={`/survey/${survey.id}`}
+                          className="mt-6 inline-block w-full text-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition duration-150 ease-in-out shadow-lg"
                         >
-                          <div>{survey.metadata.title}</div>
-                          {survey.metadata.instructions}
+                          ✅ የዳሰሳ ጥናቱን ይጀምሩ
                         </Link>
-                      </li>
-                    </ul>
+                      </div>
+                    </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           }
         ></Route>

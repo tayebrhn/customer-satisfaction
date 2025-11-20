@@ -1,4 +1,24 @@
 @import "tailwindcss";
+@font-face {
+  font-family: "MyFont";
+  src: url("/src/assets/fonts/ebrima.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "MyFont";
+  src: url("/src/assets/fonts/ebrima-bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+html, body {
+  font-family: "MyFont", sans-serif;
+}
+
+* {
+  font-family: inherit !important;
+}
 .font-weight {
-  font-weight: bold !important;
+  font-family: "MyFont", sans-serif;
+  font-weight: 600;
 }

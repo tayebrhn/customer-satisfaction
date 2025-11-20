@@ -1,10 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { QuestionRenderer } from "./QuestionRenderer";
 import { SurveyNavigation } from "./SurveyNavigation";
-import type {
-  SurveyQuestion,
-  CurrentCategory,
-} from "../types/survey";
+import type { SurveyQuestion, CurrentCategory } from "../types/survey";
 // import { useState } from "react";
 
 export function SurveyForm({
@@ -50,11 +47,11 @@ export function SurveyForm({
     const verifiableQuestions = currentCategory?.questions.filter(
       (q) => q.constraints?.verifiable
     );
-    
+
     if (verifiableQuestions && verifiableQuestions.length > 0) {
       // Prepare payload
       const verifyPayload: Record<string, any> = {};
-      
+
       verifiableQuestions.forEach((q) => {
         verifyPayload[q.id] = getValues(String(q.id));
       });
@@ -71,7 +68,7 @@ export function SurveyForm({
       // ❌ Backend validation failed
       if (!res.ok || data.valid === false) {
         // (a) Field-level backend errors
-        console.log("ERROR:",data.errors)
+        console.log("ERROR:", data.errors);
         if (data.errors) {
           Object.entries(data.errors).forEach(([fieldId, msg]) => {
             setError(String(fieldId), {
@@ -105,30 +102,38 @@ export function SurveyForm({
   };
 
   return (
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-6 max-w-2xl mx-auto"
-      >
-        <section className="space-y-4">
-          {/* <h2 className="text-xl font-semibold text-gray-700 border-b border-gray-200 pb-2">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 max-w-2xl mx-auto"
+    >
+      <section className="space-y-4">
+        {/* <h2 className="text-xl font-semibold text-gray-700 border-b border-gray-200 pb-2">
             {currentCategory?.name}
           </h2> */}
 
-          {currentCategory?.questions?.map((q: SurveyQuestion) => (
-            <div key={q.id} className="bg-white shadow-md p-4 rounded-lg">
-              <p className="mb-2 font-weight">{q.question}</p>
-              <QuestionRenderer question={q} choices={surveyData.key_choice} />
-            </div>
-          ))}
-
-          <SurveyNavigation
-            onPrevious={prevCategory}
-            onNext={handleNext}
-            progress={progress}
-            isFirstPage={isFirstPage}
-            isLastPage={isLastPage}
-          />
-        </section>
-      </form>
+        {currentCategory?.questions?.map((q: SurveyQuestion) => (
+          <div key={q.id} className="bg-white shadow-md p-4 rounded-lg">
+            <p className="mb-2 font-weight">
+              {q.question}
+              <small style={{ color: "red", marginLeft: "4px" }}>
+                {q.constraints.required ? "*" : ""}
+              </small>
+            </p>
+            <QuestionRenderer question={q} choices={surveyData.key_choice} />
+          </div>
+        ))}
+        <p>
+          <small style={{ color: "red", marginLeft: "4px" }}>*</small> ማለት ግዴታ
+          መመለስ ያለበት ማለት ነው።
+        </p>
+        <SurveyNavigation
+          onPrevious={prevCategory}
+          onNext={handleNext}
+          progress={progress}
+          isFirstPage={isFirstPage}
+          isLastPage={isLastPage}
+        />
+      </section>
+    </form>
   );
 }
