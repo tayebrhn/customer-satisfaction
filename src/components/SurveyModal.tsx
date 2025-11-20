@@ -18,15 +18,15 @@ export function SurveyModal({
   const navigate = useNavigate();
 
   const isSuccess = status === "success";
-  useEffect(() => {
-    if (isSuccess && response) {
-      const timer = setTimeout(() => {
-        navigate("/survey/completion", { state: { response } });
-        // window.location.href = `/survey/completion?response_id=${response?.response_id}`;
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [isSuccess, response]);
+  // useEffect(() => {
+  //   if (isSuccess && response) {
+  //     const timer = setTimeout(() => {
+  //       navigate("/survey/completion", { state: { response } });
+  //       // window.location.href = `/survey/completion?response_id=${response?.response_id}`;
+  //     }, 2000);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [isSuccess, response]);
   if (status === "idle" || status === "loading") return null;
   return (
     <AnimatePresence>
@@ -71,7 +71,13 @@ export function SurveyModal({
           )}
 
           <button
-            onClick={onClose}
+            onClick={() => {
+              if (isSuccess) {
+                navigate("/survey/completion", { state: { response } });
+              } else {
+                onClose();
+              }
+            }}
             className={`px-4 py-2 rounded font-medium ${
               isSuccess
                 ? "bg-green-600 text-white hover:bg-green-700"
