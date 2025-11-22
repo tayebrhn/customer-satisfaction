@@ -1,5 +1,6 @@
 import type { UseFormRegister } from "react-hook-form";
 import type { KeyChoice, SurveyQuestion } from "../../types/survey";
+import { GENERIC_ERROR_MSG } from "../../constants/survey";
 
 interface RatingQuestionProps {
   question: SurveyQuestion;
@@ -7,10 +8,7 @@ interface RatingQuestionProps {
   register: UseFormRegister<any>;
 }
 
-export const RatingQuestion = ({
-  question,
-  register,
-}: RatingQuestionProps) => {
+export const RatingQuestion = ({ question, register }: RatingQuestionProps) => {
   const fieldName = String(question.id);
   const scaleCount = question.scale ? Number(question.scale.split("-")[1]) : 5;
   const { required } = question.constraints;
@@ -37,11 +35,10 @@ export const RatingQuestion = ({
             >
               <input
                 type="radio"
-                
                 value={val}
                 className="hidden peer"
                 {...register(fieldName, {
-                  required: required ? `This field is required` : false,
+                  required: required ? GENERIC_ERROR_MSG : false,
                 })}
               />
               <div

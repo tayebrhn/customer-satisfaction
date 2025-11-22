@@ -1,5 +1,6 @@
-import type { UseFormRegister } from "react-hook-form";
+import { useFormContext, type UseFormRegister } from "react-hook-form";
 import type { SurveyQuestion } from "../../types/survey";
+import { GENERIC_ERROR_MSG } from "../../constants/survey";
 
 interface TextQuestionProps {
   question: SurveyQuestion;
@@ -8,6 +9,9 @@ interface TextQuestionProps {
 
 export const TextQuestion = ({ question, register }: TextQuestionProps) => {
   const fieldName = String(question.id);
+  const {
+    formState: { errors },
+  } = useFormContext();
 
   const { required, min_length, max_length } = question.constraints;
   // Decide which element to render
@@ -15,7 +19,7 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
     return (
       <textarea
         {...register(fieldName, {
-          required: required ? `This field is required` : false,
+          required: required ? GENERIC_ERROR_MSG : false,
           maxLength: max_length
             ? {
                 value: max_length,
@@ -31,15 +35,13 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
         })}
         id={question.id.toString()}
         placeholder={question.placeholder || ""}
-        className="block w-full
-    px-3 py-2
-    text-sm text-gray-900
-    placeholder-gray-400
-    bg-amber-50
-    border border-gray-300 rounded-md
-    shadow
-    focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-brand
-    transition-colors duration-200"
+        className={`block w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-400 
+          bg-amber-50 border ${
+            errors[fieldName]
+              ? "border-red-500 ring-1 ring-red-500"
+              : "border-gray-300"
+          } rounded-md shadow focus:outline-none focus:ring-1 
+          focus:ring-amber-500 focus:border-brand transition-colors duration-200`}
       />
     );
   }
@@ -49,7 +51,7 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
   return (
     <input
       {...register(fieldName, {
-        required: required ? `This field is required` : false,
+        required: required ? GENERIC_ERROR_MSG : false,
         maxLength: max_length
           ? {
               value: max_length,
@@ -66,17 +68,19 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
       id={question.id.toString()}
       type={inputType}
       placeholder={question.placeholder || ""}
-      className="
-    block w-full
+      className={`block w-full
     px-3 py-2
     text-sm text-gray-900
     placeholder-gray-400
     bg-amber-50
-    border border-gray-300 rounded-md
+     border ${
+       errors[fieldName]
+         ? "border-red-500 ring-1 ring-red-500"
+         : "border-gray-300"
+     } rounded-md
     shadow
     focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-brand
-    transition-colors duration-200
-  "
+    transition-colors duration-200`}
     />
   );
 };

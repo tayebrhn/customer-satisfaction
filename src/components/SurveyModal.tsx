@@ -18,15 +18,12 @@ export function SurveyModal({
   const navigate = useNavigate();
 
   const isSuccess = status === "success";
-  // useEffect(() => {
-  //   if (isSuccess && response) {
-  //     const timer = setTimeout(() => {
-  //       navigate("/survey/completion", { state: { response } });
-  //       // window.location.href = `/survey/completion?response_id=${response?.response_id}`;
-  //     }, 2000);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [isSuccess, response]);
+  useEffect(() => {
+    if (isSuccess && response) {
+      navigate("/survey/completion", { state: { response } });
+      // window.location.href = `/survey/completion?response_id=${response?.response_id}`;
+    }
+  }, [isSuccess, response]);
   if (status === "idle" || status === "loading") return null;
   return (
     <AnimatePresence>

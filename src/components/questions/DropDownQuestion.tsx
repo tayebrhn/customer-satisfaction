@@ -1,12 +1,14 @@
 // components/questions/DropDownQuestion.tsx
 import { useState, useRef, useEffect } from "react";
-import type {
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
+import {
+  useFormContext,
+  type UseFormRegister,
+  type UseFormSetValue,
+  type UseFormWatch,
 } from "react-hook-form";
 import type { SurveyQuestion } from "../../types/survey";
 import { parseOption } from "../../utils/helpers";
+import { GENERIC_ERROR_MSG } from "../../constants/survey";
 
 interface DropDownQuestionProps {
   question: SurveyQuestion;
@@ -31,6 +33,9 @@ export const DropDownQuestion = ({
   );
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const {
+    formState: { errors },
+  } = useFormContext();
 
   if (!question.options) return null;
 
@@ -125,7 +130,7 @@ export const DropDownQuestion = ({
   }, [selectedValue, question.options, fieldName, watch]);
 
   const { required, min_length, max_length } = question.constraints;
-  
+
   return (
     <div className="flex flex-col gap-2" ref={dropdownRef}>
       <div className="relative">
@@ -135,23 +140,20 @@ export const DropDownQuestion = ({
           value={inputText}
           onChange={handleInputChange}
           onFocus={() => setShowOptions(true)}
-          placeholder="Type to search or select an option..."
-          className="block w-full
-    px-3 py-2
-    text-sm text-gray-900
-    placeholder-gray-400
-    bg-amber-50
-    border border-gray-300 rounded-md
-    shadow
-    focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-brand
-    transition-colors duration-200"
+          placeholder="ለመፈለግ ወይም አማራጭ ለመምረጥ ይንኩ..."
+          className={`block w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-400 
+          bg-amber-50 border ${
+            errors[fieldName]
+              ? "border-red-500 ring-1 ring-red-500"
+              : "border-gray-300"
+          } rounded-md shadow focus:outline-none focus:ring-1 
+          focus:ring-amber-500 focus:border-brand transition-colors duration-200`}
         />
 
         {showOptions && filteredOptions.length > 0 && (
           <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-48 overflow-y-auto">
             {filteredOptions.map((option) => {
-              const {  optionLabel, optionId, isOther } =
-                parseOption(option);
+              const { optionLabel, optionId, isOther } = parseOption(option);
               return (
                 <div
                   key={optionId}
@@ -176,13 +178,13 @@ export const DropDownQuestion = ({
       {/* Hidden inputs for form registration */}
       <input
         {...register(fieldName, {
-          required: required ? `This field is required` : false,
+          required: required ? GENERIC_ERROR_MSG : false,
         })}
         type="hidden"
       />
       <input
         {...register(`${fieldName}_other`, {
-          required: required ? `This field is required` : false,
+          required: required ? GENERIC_ERROR_MSG : false,
           maxLength: max_length ? max_length : undefined,
           minLength: min_length ? min_length : undefined,
         })}

@@ -2,6 +2,7 @@ import { Controller } from "react-hook-form";
 import type { Control } from "react-hook-form";
 import type { SurveyQuestion } from "../../types/survey";
 import { parseOption } from "../../utils/helpers";
+import { GENERIC_ERROR_MSG, GENERIC_PLACEHOLDER_MSG } from "../../constants/survey";
 
 interface MultiSelectQuestionProps {
   question: SurveyQuestion;
@@ -24,7 +25,7 @@ export const MultiSelectQuestion = ({
       control={control}
       defaultValue={[]}
       rules={{
-        required: required ? "This field is required" : false,
+        required: required ? GENERIC_ERROR_MSG: false,
         // validate: (value: any[]) => {
         //   if (min_length && value.length < min_length) {
         //     return `Select at least ${min_length} options`;
@@ -73,7 +74,7 @@ export const MultiSelectQuestion = ({
                       name={`${fieldName}_other`}
                       control={control}
                       rules={{
-                        required: required ? "This field is required" : false,
+                        required: required ? GENERIC_ERROR_MSG  : false,
                         maxLength: max_length
                           ? {
                               value: max_length,
@@ -91,7 +92,7 @@ export const MultiSelectQuestion = ({
                         <input
                           {...field}
                           type="text"
-                          placeholder="Please specify..."
+                          placeholder={GENERIC_PLACEHOLDER_MSG}
                           className="border p-2 rounded w-auto ml-6 block px-3 py-2
     text-sm text-gray-900
     placeholder-gray-400

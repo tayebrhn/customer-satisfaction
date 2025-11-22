@@ -18,10 +18,10 @@ export const SurveyNavigation = ({
   isSubmitting = false,
 }: SurveyNavigationProps) => {
   return (
-    <div className="sticky bottom-0 left-0 w-full">
+    <div className="sticky bottom-0 left-0 pb-4 w-full">
       <small className="smallpb-1">
-          <small style={{ color: "red" }}>*</small> ማለት ግዴታ
-          መመለስ ያለበት ማለት ነው።
+          <small style={{ color: "red" }}>(*)</small> ግዴታ
+          መመለስ ያለበት።
         </small>
       <ProgressBar progress={progress} />
 
@@ -52,7 +52,7 @@ export const SurveyNavigation = ({
               : "bg-green-500 hover:bg-green-600"
           }`}
         >
-          {!isLastPage ? "ቀጣይ" : isSubmitting ? "እየላክን..." : "አስገባ"}
+          {!isLastPage ? "ቀጣይ" : isSubmitting ? "እየላክን..." : "ላክ"}
         </button>
       </div>
     </div>

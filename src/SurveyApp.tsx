@@ -10,12 +10,19 @@ import { useParams } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { SurveyModal } from "./components/SurveyModal";
 import { SurveyNavigation } from "./components/SurveyNavigation";
+import { scrollToFirstError } from "./utils/helpers";
 
 export default function SurveyApp() {
   const { id } = useParams<{ id: string }>();
   const form = useForm({});
-  const { watch ,handleSubmit} = form;
-  const { getValues, setError, clearErrors,trigger } = useFormContext();
+  const { watch, handleSubmit } = form;
+  const {
+    getValues,
+    setError,
+    clearErrors,
+    trigger,
+    formState: { errors },
+  } = useFormContext();
 
   const { data: surveyData, loading, error } = useSurveyFetchOne(id as string);
   const [submissionStatus, setSubmissionStatus] = useState<
@@ -77,71 +84,86 @@ export default function SurveyApp() {
 
   const { title, instructions } = surveyData.metadata ?? {};
  const handleNext = async () => {
-    const fields = currentCategory?.questions.map((q) => String(q.id));
+  const fields = currentCategory?.questions.map((q) => String(q.id));
+  clearErrors(); // clears only these fields
+// const fields = currentCategory?.questions.map((q) => String(q.id));
 
-    // 1. Frontend validation for this page
-    const isValid = await trigger(fields);
-    if (!isValid) return;
+  // 1️⃣ Frontend validation
+  const isValid = await trigger(fields);
+  if (!isValid) {
+    scrollToFirstError(errors); // Scroll to first frontend error
+    return;
+  }
 
-    // 2. Get verifiable fields on this page
-    const verifiableQuestions = currentCategory?.questions.filter(
-      (q) => q.constraints?.verifiable
-    );
+  // 2️⃣ Backend verifiable fields
+  const verifiableQuestions = currentCategory?.questions.filter(
+    (q) => q.constraints?.verifiable
+  );
 
-    if (verifiableQuestions && verifiableQuestions.length > 0) {
-      // Prepare payload
-      const verifyPayload: Record<string, any> = {};
+  if (verifiableQuestions && verifiableQuestions.length > 0) {
+    const verifyPayload: Record<string, any> = {};
+    verifiableQuestions.forEach((q) => {
+      verifyPayload[q.id] = getValues(String(q.id));
+    });
 
-      verifiableQuestions.forEach((q) => {
-        verifyPayload[q.id] = getValues(String(q.id));
-      });
+    const res = await fetch("http://127.0.0.1:8000/api/survey/verify/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(verifyPayload),
+    });
 
-      // 3. Send verification to backend
-      const res = await fetch("http://127.0.0.1:8000/api/survey/verify/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(verifyPayload),
-      });
+    const data = await res.json().catch(() => ({}));
 
-      const data = await res.json().catch(() => ({}));
+    // ❌ Backend validation failed
+    if (!res.ok || data.valid === false) {
+      const serverErrorKeys: string[] = [];
 
-      // ❌ Backend validation failed
-      if (!res.ok || data.valid === false) {
-        // (a) Field-level backend errors
-        console.log("ERROR:", data.errors);
-        if (data.errors) {
-          Object.entries(data.errors).forEach(([fieldId, msg]) => {
-            setError(String(fieldId), {
-              type: "server",
-              message: String(msg),
-            });
-          });
-        }
-
-        // (b) Global backend error
-        if (data.message) {
-          setError("root", {
+      if (data.errors) {
+        Object.entries(data.errors).forEach(([fieldId, msg]) => {
+          setError(String(fieldId), {
             type: "server",
-            message: data.message,
+            message: String(msg),
           });
-        }
-
-        return; // ❌ Stay on the same page
+          serverErrorKeys.push(fieldId);
+        });
       }
 
-      // If backend verification passed → clear any previous errors
-      clearErrors();
+      if (data.message) {
+        setError("root", { type: "server", message: data.message });
+      }
+
+      // Scroll to the first server error if any, else fallback to frontend errors
+      if (serverErrorKeys.length > 0) {
+        const firstServerField = serverErrorKeys[0];
+        const element = document.querySelector<HTMLInputElement>(
+          `[name="${firstServerField}"]`
+        );
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+          element.focus?.();
+        }
+      } else {
+        scrollToFirstError(errors);
+      }
+
+      return; // Stay on the same page
     }
 
-    // 4. Continue normally
-    if (isLastPage) {
-      handleSubmit(onSubmit)();
-    } else {
-      nextCategory();
-    }
-  };
+    // ✅ Backend validation passed → clear any previous errors
+    clearErrors();
+  }
+
+  // 3️⃣ Continue normally
+  if (isLastPage) {
+    handleSubmit(onSubmit)();
+  } else {
+    nextCategory();
+  }
+};
+
   return (
     <SurveyLayout title={title ?? ""} instructions={instructions ?? ""}>
+      <div className="h-9/12">
         <SurveyForm
           form={form}
           onSubmit={onSubmit}
@@ -149,6 +171,8 @@ export default function SurveyApp() {
           surveyData={surveyData}
           handleSubmit={handleSubmit}
         />
+      </div>
+      <div className="h-3/12"></div>
       <SurveyNavigation
         onPrevious={prevCategory}
         onNext={handleNext}

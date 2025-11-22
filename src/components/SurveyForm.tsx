@@ -19,8 +19,6 @@ export function SurveyForm({
   // const fieldsForCurrentCategory = currentCategory?.questions?.map((q) =>
   //   String(q.id)
   // );
-  
-
  
   return (
     <form
