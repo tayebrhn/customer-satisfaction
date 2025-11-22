@@ -5,10 +5,11 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./assets/index.css";
 import SurveyCompletion from "./SurveyCompletion";
+import { FormProvider, useForm } from "react-hook-form";
 
 export default function App() {
   const { data: surveyData, loading, error } = useSurveyFetch();
-
+    const form = useForm({});
   if (loading) return <p>Loading surveys...</p>;
   if (error)
     return (
@@ -28,14 +29,14 @@ export default function App() {
                   <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
                     <div className="bg-white shadow-2xl rounded-xl p-8 md:p-12 w-full max-w-3xl">
                       {/* የገጹ ርዕስ */}
-                      <h1 className="text-3xl md:text-4xl font-extrabold text-indigo-700 mb-6 border-b pb-3">
+                      <h1 className="text-3xl md:text-4xl font-extrabold text-emerald-600 mb-6 border-b pb-3">
                         {survey.metadata.title || "የዳሰሳ ጥናት መግቢያ"}
                       </h1>
 
                       {/* መመሪያዎች */}
                       <div className="text-gray-700 space-y-4 mb-8">
                         <p className="font-semibold text-lg text-gray-800">
-                          አስፈላጊ መረጃ እና ፈቃድ (Consent and Information)
+                          አስፈላጊ መረጃ እና ፈቃድ
                         </p>
 
                         <p>
@@ -73,7 +74,12 @@ export default function App() {
             </div>
           }
         ></Route>
-        <Route path="/survey/:id" element={<SurveyApp />} />
+        <Route path="/survey/:id" element={
+          <FormProvider {...form}>
+
+            <SurveyApp />
+          </FormProvider>
+          } />
         <Route path="/survey/completion" element={<SurveyCompletion />} />
       </Routes>
     </Router>

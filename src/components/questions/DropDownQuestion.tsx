@@ -136,7 +136,15 @@ export const DropDownQuestion = ({
           onChange={handleInputChange}
           onFocus={() => setShowOptions(true)}
           placeholder="Type to search or select an option..."
-          className="border p-2 rounded w-full"
+          className="block w-full
+    px-3 py-2
+    text-sm text-gray-900
+    placeholder-gray-400
+    bg-amber-50
+    border border-gray-300 rounded-md
+    shadow
+    focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-brand
+    transition-colors duration-200"
         />
 
         {showOptions && filteredOptions.length > 0 && (
@@ -148,7 +156,7 @@ export const DropDownQuestion = ({
                 <div
                   key={optionId}
                   onClick={() => handleOptionSelect(option)}
-                  className="p-2 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                  className="p-2 bg-amber-100 hover:bg-amber-200 cursor-pointer border-b border-amber-100 last:border-b-0"
                 >
                   {isOther
                     ? `Other: ${inputText || "Enter custom text"}`

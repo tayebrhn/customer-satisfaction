@@ -18,7 +18,11 @@ export const SurveyNavigation = ({
   isSubmitting = false,
 }: SurveyNavigationProps) => {
   return (
-    <div className="sticky bottom-0 left-0 w-full bg-white shadow-md p-4 rounded-t-lg">
+    <div className="sticky bottom-0 left-0 w-full">
+      <small className="smallpb-1">
+          <small style={{ color: "red" }}>*</small> ማለት ግዴታ
+          መመለስ ያለበት ማለት ነው።
+        </small>
       <ProgressBar progress={progress} />
 
       <div className="flex justify-between items-center mt-2">
@@ -27,10 +31,10 @@ export const SurveyNavigation = ({
             type="button"
             onClick={onPrevious}
             disabled={isSubmitting}
-            className={`px-4 py-2 rounded text-white ${
+            className={`px-4 py-2 rounded-2xl text-white ${
               isSubmitting
-                ? "bg-gray-300 cursor-not-allowed"
-                : "bg-gray-500 hover:bg-gray-600"
+                ? "bg-amber-300 cursor-not-allowed"
+                : "bg-amber-500 hover:bg-amber-400"
             }`}
           >
             የቀደም ገጽ
@@ -40,7 +44,7 @@ export const SurveyNavigation = ({
           type="button"
           onClick={onNext}
           disabled={isSubmitting}
-          className={`px-4 py-2 rounded ml-auto text-white ${
+          className={`px-4 py-2 rounded-2xl ml-auto text-white ${
             !isLastPage
               ? "bg-blue-500 hover:bg-blue-600"
               : isSubmitting

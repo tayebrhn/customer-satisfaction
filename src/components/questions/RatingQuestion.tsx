@@ -37,6 +37,7 @@ export const RatingQuestion = ({
             >
               <input
                 type="radio"
+                
                 value={val}
                 className="hidden peer"
                 {...register(fieldName, {
@@ -47,9 +48,9 @@ export const RatingQuestion = ({
                 className="
                   flex items-center justify-center 
                   w-6 h-6 sm:w-8 sm:h-8 
-                  border-2 border-gray-400 
-                  rounded-full peer-checked:border-blue-500 
-                  peer-checked:bg-blue-500 
+                  border-2 border-gray-400
+                  rounded-full 
+                  peer-checked:bg-amber-500
                   transition
                 "
               >
