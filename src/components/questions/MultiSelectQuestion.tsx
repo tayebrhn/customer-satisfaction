@@ -52,6 +52,7 @@ export const MultiSelectQuestion = ({
                   >
                     <input
                       type="checkbox"
+                      className="select-none accent-amber-500 ms-2 text-sm font-medium text-heading"
                       id={optionId.toString()}
                       checked={isChecked}
                       onChange={(e) => {
@@ -91,7 +92,14 @@ export const MultiSelectQuestion = ({
                           {...field}
                           type="text"
                           placeholder="Please specify..."
-                          className="border p-2 rounded w-auto ml-6"
+                          className="border p-2 rounded w-auto ml-6 block px-3 py-2
+    text-sm text-gray-900
+    placeholder-gray-400
+    bg-amber-50
+   border-gray-300
+    shadow
+    focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-brand
+    transition-colors duration-200"
                         />
                       )}
                     />

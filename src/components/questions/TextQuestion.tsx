@@ -31,7 +31,15 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
         })}
         id={question.id.toString()}
         placeholder={question.placeholder || ""}
-        className="border p-2 rounded w-full min-h-[100px]"
+        className="block w-full
+    px-3 py-2
+    text-sm text-gray-900
+    placeholder-gray-400
+    bg-amber-50
+    border border-gray-300 rounded-md
+    shadow
+    focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-brand
+    transition-colors duration-200"
       />
     );
   }
@@ -48,7 +56,6 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
               message: `Must be at most ${max_length} characters`,
             }
           : undefined,
-          
         minLength: min_length
           ? {
               value: min_length,
@@ -59,7 +66,17 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
       id={question.id.toString()}
       type={inputType}
       placeholder={question.placeholder || ""}
-      className="border p-2 rounded w-full"
+      className="
+    block w-full
+    px-3 py-2
+    text-sm text-gray-900
+    placeholder-gray-400
+    bg-amber-50
+    border border-gray-300 rounded-md
+    shadow
+    focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-brand
+    transition-colors duration-200
+  "
     />
   );
 };

@@ -8,23 +8,33 @@ interface HeaderProps {
 // }
 export const Header = ({ title, instructions }: HeaderProps) => {
   return (
-    <header className="relative bg-gray-800 px-4 after:pointer-events-none after:absolute after:inset-x-0 after:inset-y-0 after:border-y after:border-white/10">
-      <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col items-center text-center">
-        {/* Logo + Title */}
-        <div className="flex items-center space-x-4">
-          <img
-            src="/eeu_logo.png" // replace with your logo path
-            alt="Logo"
-            className="h-12 w-auto"
-          />
-          <h1 className="text-3xl font-bold tracking-tight text-green-500">
-            {title}
-          </h1>
-        </div>
+   <header
+  className={`relative h-full w-full flex flex-col items-center justify-center text-center`}
+>
+  {/* Logo + Title */}
+  <div className="flex md:flex-col items-center md:space-x-0 md:space-y-4 space-x-4 w-full md:max-w-xs">
+    <img
+      src="/eeu_logo.png"
+      alt="Logo"
+      className="w-auto h-12 md:h-16 lg:h-20 xl:h-24"
+      style={{ maxHeight: "clamp(3rem, 10vw, 6rem)" }}
+    />
+    <h1
+      className="font-bold tracking-tight text-yellow-300"
+      style={{ fontSize: "clamp(1.5rem, 2vw, 3.5rem)", lineHeight: 1 }}
+    >
+      {title}
+    </h1>
+  </div>
 
-        {/* Instructions below */}
-        <p className="mt-2 text-yellow-300">{instructions}</p>
-      </div>
-    </header>
+  {/* Instructions */}
+  <p
+    className="mt-2 "
+    style={{ fontSize: "clamp(0.875rem, 1.8vw, 1.25rem)", lineHeight: 1.3 }}
+  >
+    {instructions}
+  </p>
+</header>
+
   );
 };
