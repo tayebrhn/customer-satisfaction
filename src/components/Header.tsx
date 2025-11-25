@@ -14,7 +14,7 @@ export const Header = ({ title, instructions }: HeaderProps) => {
       {/* Logo + Title */}
       <div className="flex md:flex-col items-center md:space-x-0 md:space-y-4 space-x-4 w-full md:max-w-xs">
         <img
-          src="/eeu_logo.png"
+          src="/eeu_logo_white.png"
           alt="Logo"
           className="w-auto h-12 md:h-16 lg:h-20 xl:h-24"
           style={{ maxHeight: "clamp(3rem, 10vw, 6rem)" }}
@@ -29,7 +29,7 @@ export const Header = ({ title, instructions }: HeaderProps) => {
 
       {/* Instructions */}
       <p
-        className="mt-2 "
+        className="mt-2 text-amber-100"
         style={{ fontSize: "clamp(0.875rem, 1.8vw, 1.25rem)", lineHeight: 1.3 }}
       >
         {instructions}

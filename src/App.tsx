@@ -9,7 +9,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 export default function App() {
   const { data: surveyData, loading, error } = useSurveyFetch();
-    const form = useForm({});
+  
   if (loading) return <p>Loading surveys...</p>;
   if (error)
     return (
@@ -23,63 +23,71 @@ export default function App() {
         <Route
           path="/"
           element={
-            <div className="">
+            <div className="bg-lime-600 min-h-screen flex items-center justify-center p-4">
               {surveyData.map((survey) => (
-                <div key={survey.id} className="bg-white shadow rounded-lg p-6">
-                  <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
-                    <div className="bg-white shadow-2xl rounded-xl p-8 md:p-12 w-full max-w-3xl">
-                      {/* የገጹ ርዕስ */}
-                      <h1 className="text-3xl md:text-4xl font-extrabold text-emerald-600 mb-6 border-b pb-3">
-                        {survey.metadata.title || "የዳሰሳ ጥናት መግቢያ"}
-                      </h1>
-
-                      {/* መመሪያዎች */}
-                      <div className="text-gray-700 space-y-4 mb-8">
-                        <p className="font-semibold text-lg text-gray-800">
-                          አስፈላጊ መረጃ እና ፈቃድ
-                        </p>
-
-                        <p>
-                          ይህ የዳሰሳ ጥናት የሚቀርበው{" "}
-                          <strong>በኢትዮጵያ ኤሌክትሪክ አገልግሎት (EEU)</strong>
-                          ሲሆን፣ ዓላማውም በደንበኞች እርካታ ጥናት ዙሪያ ያለውን መረጃ ለመሰብሰብ ነው።
-                        </p>
-
-                        {/* <p>
-            **ምስጢራዊነት (Confidentiality):** የእርስዎ ምላሾች በሙሉ በከፍተኛ ሚስጥር ይጠበቃሉ። የግል መረጃዎ አይጠየቅም ወይም አይታወቅም። ምላሾቹ የሚጠቀሙት ለጥናትና ለሪፖርት ዝግጅት ብቻ ነው።
-          </p> */}
-
-                        <p>
-                          <strong>ፈቃድ (Consent):</strong> የዳሰሳ ጥናቱን መመለስ መጀመርዎ
-                          በፈቃደኝነትዎ መሰረት የሚደረግ ሲሆን፣ ጥናቱን በማንኛውም ጊዜ የማቋረጥ መብት
-                          እንዳለዎት ያስገነዝባል።
-                        </p>
-
-                        <p className="text-sm font-medium text-red-600">
-                          እባክዎን ከዚህ በታች ያለውን ማስፈንጠሪያ በመጫን የዳሰሳ ጥናቱን ይጀምሩ።
-                        </p>
-
-                        {/* የመጀመሪያው የዳሰሳ ጥናት መጀመርያ ቁልፍ */}
-                        <Link
-                          to={`/survey/${survey.id}`}
-                          className="mt-6 inline-block w-full text-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition duration-150 ease-in-out shadow-lg"
-                        >
-                          ✅ የዳሰሳ ጥናቱን ይጀምሩ
-                        </Link>
-                      </div>
-                    </div>
+                <div
+                  key={survey.id}
+                  className="bg-white shadow-md rounded-2xl p-6 md:p-10 border border-gray-100 max-w-3xl w-full"
+                >
+                  {/* Logo Area */}
+                  <div className="flex justify-center mb-6">
+                    <img
+                      src="eeu_logo.png"
+                      alt="EEU Logo"
+                      className="h-16 md:h-20 object-contain"
+                    />
                   </div>
+
+                  {/* Title */}
+                  <h1 className="text-3xl md:text-4xl font-extrabold text-emerald-700 mb-8 pb-3 border-b border-gray-200 text-center">
+                    {survey.metadata.title || "የዳሰሳ ጥናት መግቢያ"}
+                  </h1>
+
+                  {/* Instructions */}
+                  <div className="text-gray-700 leading-relaxed space-y-5 mb-10">
+                    <p className="font-semibold text-lg text-amber-500">
+                      አስፈላጊ መረጃ እና ፈቃድ
+                    </p>
+
+                    <p>
+                      ይህ የዳሰሳ ጥናት የሚቀርበው{" "}
+                      <strong className="text-gray-900">
+                        በኢትዮጵያ ኤሌክትሪክ አገልግሎት (EEU)
+                      </strong>
+                      ሲሆን፣ ዓላማውም በደንበኞች እርካታ ጥናት ዙሪያ ያለውን መረጃ ለመሰብሰብ ነው።
+                    </p>
+
+                    <p>
+                      <strong className="text-gray-900">ፈቃድ:</strong> የዳሰሳ ጥናቱን
+                      መመለስ መጀመርዎ በፈቃደኝነትዎ መሰረት የሚደረግ ሲሆን፣ ጥናቱን በማንኛውም ጊዜ የማቋረጥ
+                      መብት እንዳለዎት ያስገነዝባል።
+                    </p>
+
+                    <p className="text-sm font-medium text-red-600 mt-6">
+                      እባክዎን ከዚህ በታች ያለውን ማስፈንጠሪያ በመጫን የዳሰሳ ጥናቱን ይጀምሩ።
+                    </p>
+                  </div>
+
+                  {/* CTA Button */}
+                  <Link
+                    to={`/survey/${survey.id}`}
+                    className="block w-full text-center px-8 py-3 rounded-lg font-semibold 
+          bg-lime-600 text-white shadow-md hover:bg-lime-700 
+          transition-all duration-150 ease-in-out"
+                  >
+                    የዳሰሳ ጥናቱን ይጀምሩ
+                  </Link>
                 </div>
               ))}
             </div>
           }
         ></Route>
-        <Route path="/survey/:id" element={
-          <FormProvider {...form}>
-
-            <SurveyApp />
-          </FormProvider>
-          } />
+        <Route
+          path="/survey/:id"
+          element={
+              <SurveyApp />
+          }
+        />
         <Route path="/survey/completion" element={<SurveyCompletion />} />
       </Routes>
     </Router>

@@ -1,4 +1,9 @@
-import type { SurveyQuestion, SurveySubmitResponse, SurveySubmitResult, ValidationError } from "../types/survey";
+import type {
+  SurveyQuestion,
+  SurveySubmitResponse,
+  SurveySubmitResult,
+  ValidationError,
+} from "../types/survey";
 
 export async function handleSurveySubmit({
   formData,
@@ -73,11 +78,11 @@ export async function handleSurveySubmit({
       return base;
     })
     .filter(Boolean);
-
+  console.log(responses);
   const surveyResponse = {
     survey_id: id,
     respondent_info: {
-      ip_address: "192.168.1.1",
+      ip_address: "192.5.1.1",
       user_agent: navigator.userAgent,
       session_id: "optional_session_identifier",
     },

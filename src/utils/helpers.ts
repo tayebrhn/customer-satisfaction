@@ -18,7 +18,7 @@ export function generateRoutes(data: SurveyExport[] | null): AppRoutes {
   return routes;
 }
 
-export async function verifyPageInputs(fields: any[]) {
+export async function n(fields: any[]) {
   console.log(JSON.stringify({ fields }));
   const res = await fetch("/api/survey/verify", {
     method: "POST",
