@@ -72,18 +72,20 @@ export interface QuestionCategory {
   name: string;
 }
 
-export interface CurrentCategory{
-    questions: SurveyQuestion[];
-    id: number;
-    cat_number: number;
-    name: string;
+export interface CurrentCategory {
+  questions: SurveyQuestion[];
+  id: number;
+  cat_number: number;
+  name: string;
 }
 
 export interface QuestionOption {
   id: number;
   text: string;
+  label: string;
   is_other: boolean;
 }
+
 export interface KeyChoice {
   key: string;
   description: string;
@@ -153,8 +155,6 @@ export type SurveySubmitResult = SurveySubmitResponse | SurveySubmitError;
 export interface VerifyPayload {
   [key: string]: any;
 }
-
-
 
 // export type QuestionsArray = Question[];
 
