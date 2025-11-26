@@ -14,6 +14,7 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
   } = useFormContext();
 
   const { required, min_length, max_length } = question.constraints;
+  const length = min_length == max_length ? true : false;
   // Decide which element to render
   if (question.type === "text_area") {
     return (
@@ -33,15 +34,20 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
               }
             : undefined,
         })}
+        onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
+          if (max_length && e.currentTarget.value.length > max_length) {
+            e.currentTarget.value = e.currentTarget.value.slice(0, max_length);
+          }
+        }}
         id={question.id.toString()}
         placeholder={question.placeholder || ""}
         className={`block w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-400 
-          bg-amber-50 border ${
-            errors[fieldName]
-              ? "border-red-500 ring-1 ring-red-500"
-              : "border-gray-300"
-          } rounded-md shadow focus:outline-none focus:ring-1 
-          focus:ring-amber-500 focus:border-brand transition-colors duration-200`}
+    bg-amber-50 border ${
+      errors[fieldName]
+        ? "border-red-500 ring-1 ring-red-500"
+        : "border-gray-300"
+    } rounded-md shadow focus:outline-none focus:ring-1 
+    focus:ring-amber-500 focus:border-brand transition-colors duration-200`}
       />
     );
   }
@@ -65,6 +71,17 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
             }
           : undefined,
       })}
+      maxLength={max_length || undefined}
+      // onInput={(e) => {
+      //   if (max_length && e.target.value.length > max_length) {
+      //     e.target.value = e.target.value.slice(0, max_length);
+      //   }
+      // }}
+      onInput={(e: React.FormEvent<HTMLInputElement>) => {
+        if (max_length && e.currentTarget.value.length > max_length) {
+          e.currentTarget.value = e.currentTarget.value.slice(0, max_length);
+        }
+      }}
       id={question.id.toString()}
       type={inputType}
       placeholder={question.placeholder || ""}
