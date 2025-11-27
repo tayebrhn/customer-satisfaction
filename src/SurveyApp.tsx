@@ -89,32 +89,32 @@ export default function SurveyApp() {
     }
   }, [id, reset]);
 
-const onSubmit = async (_: any) => {
-  // Force form to update its internal state
-  await form.trigger();
+  const onSubmit = async (_: any) => {
+    // Force form to update its internal state
+    await form.trigger();
 
-  // Get ALL form values
-  const allFormValues = getValues();
+    // Get ALL form values
+    const allFormValues = getValues();
 
-  console.log("All form values:", allFormValues); // Debug log
+    console.log("All form values:", allFormValues); // Debug log
 
-  const result = await handleSurveySubmit({
-    formData: allFormValues, // Submit ALL data
-    surveyData,
-    id: id as string,
-    clearSavedData,
-    clearPageData,
-    setSubmissionStatus,
-    setValidationErrors,
-  });
+    const result = await handleSurveySubmit({
+      formData: allFormValues, // Submit ALL data
+      surveyData,
+      id: id as string,
+      clearSavedData,
+      clearPageData,
+      setSubmissionStatus,
+      setValidationErrors,
+    });
 
-  if (result?.success) {
-    setSubmissionResponse(result);
-    clearSavedData();
-    clearPageData();
-    reset(defaultValues);
-  }
-};
+    if (result?.success) {
+      setSubmissionResponse(result);
+      clearSavedData();
+      clearPageData();
+      reset(defaultValues);
+    }
+  };
   const handleNext = async () => {
     if (!currentCategory) return;
 
@@ -125,6 +125,60 @@ const onSubmit = async (_: any) => {
     if (!isValid) {
       scrollToFirstError(errors);
       return;
+    }
+
+    // 2️⃣ Backend verifiable fields
+    const verifiableQuestions = currentCategory?.questions.filter(
+      (q) => q.constraints?.verifiable
+    );
+
+    if (verifiableQuestions && verifiableQuestions.length > 0) {
+      const verifyPayload: Record<string, any> = {};
+      verifiableQuestions.forEach((q) => {
+        verifyPayload[q.id] = getValues(String(q.id));
+      });
+
+      const res = await fetch(import.meta.env.VITE_SURVEY_URL_VERIFY, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(verifyPayload),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      // ❌ Backend validation failed
+      if (!res.ok || data.valid === false) {
+        const serverErrorKeys: string[] = [];
+
+        if (data.errors) {
+          Object.entries(data.errors).forEach(([fieldId, msg]) => {
+            setError(String(fieldId), {
+              type: "server",
+              message: String(msg),
+            });
+            serverErrorKeys.push(fieldId);
+          });
+        }
+
+        if (data.message) {
+          setError("root", { type: "server", message: data.message });
+        }
+
+        // Scroll to the first server error if any, else fallback to frontend errors
+        if (serverErrorKeys.length > 0) {
+          const firstServerField = serverErrorKeys[0];
+          const element = document.querySelector<HTMLInputElement>(
+            `[name="${firstServerField}"]`
+          );
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
+            element.focus?.();
+          }
+        } else {
+          scrollToFirstError(errors);
+        }
+        return;
+      }
     }
 
     if (isLastPage) {

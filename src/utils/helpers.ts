@@ -5,7 +5,7 @@ import type { AppRoutes, QuestionOption, SurveyExport } from "../types/survey";
 export const parseOption = (option: QuestionOption) => {
   return {
     optionValue: option.id,
-    optionLabel: option.label,
+    optionLabel: option.label??option.text,
     optionId: option.id,
     isOther: option.is_other,
   };
