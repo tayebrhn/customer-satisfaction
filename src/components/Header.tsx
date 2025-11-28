@@ -20,7 +20,7 @@ export const Header = ({ title, instructions }: HeaderProps) => {
           style={{ maxHeight: "clamp(3rem, 10vw, 6rem)" }}
         />
         <h2
-          className="font-bold tracking-tight text-amber-500 lg:text-nowrap"
+          className="font-bold tracking-tight text-shadow-gray-950 lg:text-nowrap"
           style={{ fontSize: "clamp(1.5rem, 2vw, 3.5rem)", lineHeight: 1 }}
         >
           {title}
@@ -29,7 +29,7 @@ export const Header = ({ title, instructions }: HeaderProps) => {
 
       {/* Instructions */}
       <p
-        className="mt-2 text-amber-100"
+        className="mt-2 text-shadow-gray-800"
         style={{ fontSize: "clamp(0.875rem, 1.8vw, 1.25rem)", lineHeight: 1.3 }}
       >
         {instructions}

@@ -6,6 +6,7 @@ import { SingleChoiceQuestion } from "./questions/SingleChoiceQuestion";
 import { RatingQuestion } from "./questions/RatingQuestion";
 import { MultiSelectQuestion } from "./questions/MultiSelectQuestion";
 import { DropDownQuestion } from "./questions/DropDownQuestion";
+import { BsExclamationCircleFill } from "react-icons/bs";
 
 interface QuestionRendererProps {
   question: SurveyQuestion;
@@ -27,7 +28,8 @@ QuestionRendererProps) => {
   const {
     register,
     watch,
-    setValue,control,
+    setValue,
+    control,
     formState: { errors },
   } = useFormContext();
   const fieldName = String(question.id);
@@ -57,10 +59,7 @@ QuestionRendererProps) => {
 
           case "multi_select":
             return (
-              <MultiSelectQuestion
-                question={question}
-                control={control}
-              />
+              <MultiSelectQuestion question={question} control={control} />
             );
           case "drop_down":
             return (
@@ -87,10 +86,16 @@ QuestionRendererProps) => {
       })()}
       {/* Error messages */}
       {mainError && (
-        <p className="text-red-500 text-sm mt-1">{mainError.message as string}</p>
+        <p className="text-red-500 text-sm mt-1">
+          <BsExclamationCircleFill className="inline-block" />{" "}
+          {mainError.message as string}
+        </p>
       )}
       {otherError && (
-        <p className="text-red-500 text-sm mt-1 ml-6">{otherError.message as string}</p>
+        <p className="text-red-500 text-sm mt-1 ml-6">
+          <BsExclamationCircleFill className="inline-block" />{" "}
+          {otherError.message as string}
+        </p>
       )}
     </div>
   );

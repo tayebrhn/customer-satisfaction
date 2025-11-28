@@ -1,4 +1,10 @@
 import { ProgressBar } from "./ProgressBar";
+import {
+  BsCaretLeftFill,
+  BsCaretRightFill,
+  BsCheckCircleFill,
+  BsCloudUploadFill,
+} from "react-icons/bs";
 
 interface SurveyNavigationProps {
   onPrevious: () => void;
@@ -20,9 +26,8 @@ export const SurveyNavigation = ({
   return (
     <div className="sticky bottom-0 left-0 pb-4 w-full">
       <small className="smallpb-1">
-          <small style={{ color: "red" }}>(*)</small> ግዴታ
-          መመለስ ያለበት።
-        </small>
+        <small style={{ color: "red" }}>(*)</small> ግዴታ መመለስ ያለበት።
+      </small>
       <ProgressBar progress={progress} />
 
       <div className="flex justify-between items-center mt-2">
@@ -37,6 +42,7 @@ export const SurveyNavigation = ({
                 : "bg-amber-500 hover:bg-amber-400"
             }`}
           >
+            <BsCaretLeftFill className="inline-block" />
             የቀደም ገጽ
           </button>
         )}
@@ -52,7 +58,21 @@ export const SurveyNavigation = ({
               : "bg-green-500 hover:bg-green-600"
           }`}
         >
-          {!isLastPage ? "ቀጣይ" : isSubmitting ? "እየላክን..." : "ላክ"}
+          {!isLastPage ? (
+            <>
+              ቀጣይ
+              <BsCaretRightFill className="inline-block" />
+            </>
+          ) : isSubmitting ? (
+            <>
+              እየላክን...
+              <BsCloudUploadFill className="inline-block" />{" "}
+            </>
+          ) : (
+            <>
+              ላክ <BsCheckCircleFill className="inline-block" />
+            </>
+          )}
         </button>
       </div>
     </div>

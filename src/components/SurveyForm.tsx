@@ -13,15 +13,23 @@ export function SurveyForm({
   onSubmit: (data: any) => void;
   currentCategory: CurrentCategory | undefined;
   surveyData: any;
-  handleSubmit:UseFormHandleSubmit<FieldValues, FieldValues>
+  handleSubmit: UseFormHandleSubmit<FieldValues, FieldValues>;
 }) {
   // const [verifyError, setVerifyError] = useState(null);
   // const fieldsForCurrentCategory = currentCategory?.questions?.map((q) =>
   //   String(q.id)
   // );
- 
+
   return (
     <form
+      onKeyDown={(event: React.KeyboardEvent<HTMLFormElement>) => {
+        if (
+          event.key === "Enter" &&
+          !(event.target instanceof HTMLTextAreaElement)
+        ) {
+          event.preventDefault();
+        }
+      }}
       onSubmit={handleSubmit(onSubmit)}
       className=""
     >
@@ -41,7 +49,6 @@ export function SurveyForm({
             <QuestionRenderer question={q} choices={surveyData.key_choice} />
           </div>
         ))}
-        
       </section>
     </form>
   );
