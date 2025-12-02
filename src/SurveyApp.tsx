@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { useState, useMemo, useEffect } from "react";
 import { SurveyModal } from "./components/SurveyModal";
 import { SurveyNavigation } from "./components/SurveyNavigation";
-import { scrollToFirstError } from "./utils/helpers";
+import { scrollToField, scrollToFirstError } from "./utils/helpers";
 
 export default function SurveyApp() {
   const { id } = useParams<{ id: string }>();
@@ -115,78 +115,78 @@ export default function SurveyApp() {
       reset(defaultValues);
     }
   };
-  const handleNext = async () => {
-    if (!currentCategory) return;
+const handleNext = async () => {
+  if (!currentCategory) return;
 
-    const fields = currentCategory.questions.map((q) => String(q.id));
-    clearErrors();
+  clearErrors();
 
-    const isValid = await trigger(fields);
-    if (!isValid) {
-      scrollToFirstError(errors);
+  // 1️⃣ Validate only current category
+  const fields = currentCategory.questions.map((q) => String(q.id));
+  const isValid = await trigger(fields);
+
+  if (!isValid) {
+    // Use latest formState.errors (never use old 'errors')
+    scrollToFirstError(form.formState.errors);
+    return;
+  }
+
+  // 2️⃣ Check for backend-verifiable fields
+  const verifiableQuestions = currentCategory.questions.filter(
+    (q) => q.constraints?.verifiable
+  );
+
+  if (verifiableQuestions.length > 0) {
+    const verifyPayload: Record<string, any> = {};
+
+    verifiableQuestions.forEach((q) => {
+      verifyPayload[q.id] = getValues(String(q.id));
+    });
+
+    const res = await fetch(import.meta.env.VITE_SURVEY_URL_VERIFY, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(verifyPayload),
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    // ❌ Backend rejected
+    if (!res.ok || data.valid === false) {
+      let serverErrorKeys: string[] = [];
+
+      // Field-level server errors
+      if (data.errors) {
+        Object.entries(data.errors).forEach(([fieldId, msg]) => {
+          serverErrorKeys.push(fieldId);
+          setError(String(fieldId), {
+            type: "server",
+            message: String(msg),
+          });
+        });
+      }
+
+      // Global error
+      if (data.message) {
+        setError("root", { type: "server", message: data.message });
+      }
+
+      // Scroll to first server error OR fallback to form errors
+      if (serverErrorKeys.length > 0) {
+        scrollToField(serverErrorKeys[0]);
+      } else {
+        scrollToFirstError(form.formState.errors);
+      }
       return;
     }
+  }
 
-    // 2️⃣ Backend verifiable fields
-    const verifiableQuestions = currentCategory?.questions.filter(
-      (q) => q.constraints?.verifiable
-    );
-
-    if (verifiableQuestions && verifiableQuestions.length > 0) {
-      const verifyPayload: Record<string, any> = {};
-      verifiableQuestions.forEach((q) => {
-        verifyPayload[q.id] = getValues(String(q.id));
-      });
-
-      const res = await fetch(import.meta.env.VITE_SURVEY_URL_VERIFY, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(verifyPayload),
-      });
-
-      const data = await res.json().catch(() => ({}));
-
-      // ❌ Backend validation failed
-      if (!res.ok || data.valid === false) {
-        const serverErrorKeys: string[] = [];
-
-        if (data.errors) {
-          Object.entries(data.errors).forEach(([fieldId, msg]) => {
-            setError(String(fieldId), {
-              type: "server",
-              message: String(msg),
-            });
-            serverErrorKeys.push(fieldId);
-          });
-        }
-
-        if (data.message) {
-          setError("root", { type: "server", message: data.message });
-        }
-
-        // Scroll to the first server error if any, else fallback to frontend errors
-        if (serverErrorKeys.length > 0) {
-          const firstServerField = serverErrorKeys[0];
-          const element = document.querySelector<HTMLInputElement>(
-            `[name="${firstServerField}"]`
-          );
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth", block: "center" });
-            element.focus?.();
-          }
-        } else {
-          scrollToFirstError(errors);
-        }
-        return;
-      }
-    }
-
-    if (isLastPage) {
-      handleSubmit(onSubmit)();
-    } else {
-      nextCategory();
-    }
-  };
+  // 3️⃣ Proceed
+  if (isLastPage) {
+    handleSubmit(onSubmit)();
+  } else {
+    nextCategory();
+  }
+};
 
   if (loading) return <div>Loading survey...</div>;
   if (error) return <div style={{ color: "red" }}>Error: {error}</div>;

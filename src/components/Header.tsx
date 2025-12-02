@@ -14,7 +14,7 @@ export const Header = ({ title, instructions }: HeaderProps) => {
       {/* Logo + Title */}
       <div className="flex md:flex-col items-center md:space-x-0 md:space-y-4 space-x-4 w-full md:max-w-xs">
         <img
-          src="/eeu_logo_white.png"
+          src="/eeu_logo.png"
           alt="Logo"
           className="w-auto h-12 md:h-16 lg:h-20 xl:h-24"
           style={{ maxHeight: "clamp(3rem, 10vw, 6rem)" }}

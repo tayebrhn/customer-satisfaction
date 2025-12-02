@@ -10,7 +10,12 @@ export function SurveyLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-lime-600 ">
+    <div className="min-h-screen bg-brandGreen-200 flex flex-col md:flex-row bg-survey-bg bg-cover bg-center">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/bg.png')" }}
+      />
+
       {/* Header / Sidebar */}
       <div
         className="
@@ -34,6 +39,7 @@ export function SurveyLayout({
       {/* Main Content */}
       <main
         className="
+        z-10
         flex-1 overflow-hidden
     w-full           /* mobile */
     sm:w-full        /* small screens */

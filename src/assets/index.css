@@ -1,4 +1,31 @@
 @import "tailwindcss";
+
+@import "tailwindcss";
+
+/* Custom theme extensions using @theme directive */
+@theme {
+  /* Background Images */
+  --bg-brand-bg: url('/bg.png');
+  --bg-gradient-brand: linear-gradient(135deg, #69bf70 0%, #4a9e50 100%);
+  
+  /* Brand Green Colors */
+  --color-brandGreen: rgb(105 191 112);
+  --color-brandGreen-50: rgb(105 191 112 / 0.05);
+  --color-brandGreen-100: rgb(105 191 112 / 0.1);
+  --color-brandGreen-200: rgb(105 191 112 / 0.2);
+  --color-brandGreen-300: rgb(105 191 112 / 0.3);
+  --color-brandGreen-400: rgb(105 191 112 / 0.4);
+  --color-brandGreen-500: rgb(105 191 112 / 0.5);
+  --color-brandGreen-600: rgb(105 191 112 / 0.6);
+  --color-brandGreen-700: rgb(105 191 112 / 0.7);
+  --color-brandGreen-800: rgb(105 191 112 / 0.8);
+  --color-brandGreen-900: rgb(105 191 112 / 0.9);
+  
+  /* You can also define font families, spacing, etc. */
+  --font-display: "Inter", "system-ui", "sans-serif";
+  --radius-lg: 1rem;
+}
+
 @font-face {
   font-family: "MyFont";
   src: url("/src/assets/fonts/ebrima.ttf") format("truetype");

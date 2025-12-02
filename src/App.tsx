@@ -9,7 +9,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 export default function App() {
   const { data: surveyData, loading, error } = useSurveyFetch();
-  
+
   if (loading) return <p>Loading surveys...</p>;
   if (error)
     return (
@@ -23,11 +23,15 @@ export default function App() {
         <Route
           path="/"
           element={
-            <div className="bg-lime-600 min-h-screen flex items-center justify-center p-4">
+            <div className="bg-brandGreen-200 min-h-screen flex items-center justify-center p-4">
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: "url('/bg.png')" }}
+              />
               {surveyData.map((survey) => (
                 <div
                   key={survey.id}
-                  className="bg-white shadow-md rounded-2xl p-6 md:p-10 border border-gray-100 max-w-3xl w-full"
+                  className="bg-white z-10 shadow-md rounded-2xl p-6 md:p-10 border border-gray-100 max-w-3xl w-full"
                 >
                   {/* Logo Area */}
                   <div className="flex justify-center mb-6">
@@ -82,12 +86,7 @@ export default function App() {
             </div>
           }
         ></Route>
-        <Route
-          path="/survey/:id"
-          element={
-              <SurveyApp />
-          }
-        />
+        <Route path="/survey/:id" element={<SurveyApp />} />
         <Route path="/survey/completion" element={<SurveyCompletion />} />
       </Routes>
     </Router>

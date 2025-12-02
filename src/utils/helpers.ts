@@ -5,7 +5,7 @@ import type { AppRoutes, QuestionOption, SurveyExport } from "../types/survey";
 export const parseOption = (option: QuestionOption) => {
   return {
     optionValue: option.id,
-    optionLabel: option.label??option.text,
+    optionLabel: option.label ?? option.text,
     optionId: option.id,
     isOther: option.is_other,
   };
@@ -29,18 +29,46 @@ export async function n(fields: any[]) {
   return await res.json();
 }
 
-export const scrollToFirstError = (errors: FieldErrors) => {
-  const firstErrorKey = Object.keys(errors)[0];
+export const scrollToFirstError = (formErrors: FieldErrors) => {
+  const firstErrorKey = Object.keys(formErrors)[0];
   if (!firstErrorKey) return false;
 
-  const element = document.querySelector<HTMLInputElement>(
-    `[name="${firstErrorKey}"]`
-  );
+  // Best selector for RHF + React apps
+  const element = document.querySelector(
+    `[name="${CSS.escape(firstErrorKey)}"]`
+  ) as HTMLElement | null;
+  console.log("Scroll:", element);
 
   if (element) {
-    element.scrollIntoView({ behavior: "smooth", block: "center" });
-    if (typeof element.focus === "function") element.focus();
-  }
+    // Find a visible partner (label or wrapper)
+    const visibleTarget =
+      element.closest("label") || element.parentElement || element;
 
+    visibleTarget.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+    // Delay focus for better UX
+    setTimeout(() => element.focus(), 100);
+  }
   return true;
+};
+
+export const scrollToField = (fieldName: string) => {
+  const el = document.querySelector(
+    `[name="${CSS.escape(fieldName)}"]`
+  ) as HTMLElement | null;
+
+  if (!el) return;
+  
+  // Find a visible partner (label or wrapper)
+  const visibleTarget = el.closest("label") || el.parentElement || el;
+
+  visibleTarget.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
+
+  // delay helps in React render cycles
+  setTimeout(() => el.focus?.(), 100);
 };
