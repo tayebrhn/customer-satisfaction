@@ -1,4 +1,5 @@
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
+  // import logo from "../assets/eeu_logo.png";
+import { FormProvider, useForm } from "react-hook-form";
 import { useSurveyFetchOne } from "./hooks/useSurveyFetch";
 import { useFormPersistence } from "./hooks/useFormPersistence";
 import { useSurveyNavigation } from "./hooks/useSurveyNavigation";
@@ -16,6 +17,7 @@ export default function SurveyApp() {
   const { id } = useParams<{ id: string }>();
 
   const { data: surveyData, loading, error } = useSurveyFetchOne(id as string);
+  const [consentGiven, setConsentGiven] = useState(false); // Track consent
 
   // Set default values for RHF, including _other fields
   const defaultValues = useMemo(() => {
@@ -35,7 +37,7 @@ export default function SurveyApp() {
     setError,
     clearErrors,
     trigger,
-    formState: { errors },
+    // formState: { errors },
     reset,
   } = form;
 
@@ -115,78 +117,78 @@ export default function SurveyApp() {
       reset(defaultValues);
     }
   };
-const handleNext = async () => {
-  if (!currentCategory) return;
+  const handleNext = async () => {
+    if (!currentCategory) return;
 
-  clearErrors();
+    clearErrors();
 
-  // 1️⃣ Validate only current category
-  const fields = currentCategory.questions.map((q) => String(q.id));
-  const isValid = await trigger(fields);
+    // 1️⃣ Validate only current category
+    const fields = currentCategory.questions.map((q) => String(q.id));
+    const isValid = await trigger(fields);
 
-  if (!isValid) {
-    // Use latest formState.errors (never use old 'errors')
-    scrollToFirstError(form.formState.errors);
-    return;
-  }
-
-  // 2️⃣ Check for backend-verifiable fields
-  const verifiableQuestions = currentCategory.questions.filter(
-    (q) => q.constraints?.verifiable
-  );
-
-  if (verifiableQuestions.length > 0) {
-    const verifyPayload: Record<string, any> = {};
-
-    verifiableQuestions.forEach((q) => {
-      verifyPayload[q.id] = getValues(String(q.id));
-    });
-
-    const res = await fetch(import.meta.env.VITE_SURVEY_URL_VERIFY, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(verifyPayload),
-    });
-
-    const data = await res.json().catch(() => ({}));
-
-    // ❌ Backend rejected
-    if (!res.ok || data.valid === false) {
-      let serverErrorKeys: string[] = [];
-
-      // Field-level server errors
-      if (data.errors) {
-        Object.entries(data.errors).forEach(([fieldId, msg]) => {
-          serverErrorKeys.push(fieldId);
-          setError(String(fieldId), {
-            type: "server",
-            message: String(msg),
-          });
-        });
-      }
-
-      // Global error
-      if (data.message) {
-        setError("root", { type: "server", message: data.message });
-      }
-
-      // Scroll to first server error OR fallback to form errors
-      if (serverErrorKeys.length > 0) {
-        scrollToField(serverErrorKeys[0]);
-      } else {
-        scrollToFirstError(form.formState.errors);
-      }
+    if (!isValid) {
+      // Use latest formState.errors (never use old 'errors')
+      scrollToFirstError(form.formState.errors);
       return;
     }
-  }
 
-  // 3️⃣ Proceed
-  if (isLastPage) {
-    handleSubmit(onSubmit)();
-  } else {
-    nextCategory();
-  }
-};
+    // 2️⃣ Check for backend-verifiable fields
+    const verifiableQuestions = currentCategory.questions.filter(
+      (q) => q.constraints?.verifiable
+    );
+
+    if (verifiableQuestions.length > 0) {
+      const verifyPayload: Record<string, any> = {};
+
+      verifiableQuestions.forEach((q) => {
+        verifyPayload[q.id] = getValues(String(q.id));
+      });
+
+      const res = await fetch(import.meta.env.VITE_SURVEY_URL_VERIFY, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(verifyPayload),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      // ❌ Backend rejected
+      if (!res.ok || data.valid === false) {
+        let serverErrorKeys: string[] = [];
+
+        // Field-level server errors
+        if (data.errors) {
+          Object.entries(data.errors).forEach(([fieldId, msg]) => {
+            serverErrorKeys.push(fieldId);
+            setError(String(fieldId), {
+              type: "server",
+              message: String(msg),
+            });
+          });
+        }
+
+        // Global error
+        if (data.message) {
+          setError("root", { type: "server", message: data.message });
+        }
+
+        // Scroll to first server error OR fallback to form errors
+        if (serverErrorKeys.length > 0) {
+          scrollToField(serverErrorKeys[0]);
+        } else {
+          scrollToFirstError(form.formState.errors);
+        }
+        return;
+      }
+    }
+
+    // 3️⃣ Proceed
+    if (isLastPage) {
+      handleSubmit(onSubmit)();
+    } else {
+      nextCategory();
+    }
+  };
 
   if (loading) return <div>Loading survey...</div>;
   if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
@@ -194,6 +196,72 @@ const handleNext = async () => {
     return <div>There is no survey</div>;
 
   const { title, instructions } = surveyData.metadata ?? {};
+  // -----------------------
+  // Show consent first
+  // -----------------------
+  if (!consentGiven) {
+    return (
+      <div className="bg-brandGreen-200 min-h-screen flex items-center justify-center p-4 relative">
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/bg.png')" }}
+        />
+
+        {/* Consent Card */}
+        <div className="bg-white z-10 shadow-md rounded-2xl p-6 md:p-10 border border-gray-100 max-w-3xl w-full">
+          {/* Logo Area */}
+          <div className="flex justify-center mb-6">
+            <img
+              src="/eeu_logo.png"
+              alt="EEU Logo"
+              className="h-16 md:h-20 object-contain"
+            />
+          </div>
+
+          {/* Title */}
+          <h1 className="text-3xl md:text-4xl font-extrabold text-emerald-700 mb-8 pb-3 border-b border-gray-200 text-center">
+            {surveyData.metadata?.title || "የዳሰሳ ጥናት መግቢያ"}
+          </h1>
+
+          {/* Instructions / Consent Info */}
+          <div className="text-gray-700 leading-relaxed space-y-5 mb-10">
+            <p className="font-semibold text-lg text-amber-500">
+              አስፈላጊ መረጃ እና ፈቃድ
+            </p>
+
+            <p>
+              ይህ የዳሰሳ ጥናት የሚቀርበው{" "}
+              <strong className="text-gray-900">
+                በኢትዮጵያ ኤሌክትሪክ አገልግሎት (EEU)
+              </strong>{" "}
+              ሲሆን፣ ዓላማውም በደንበኞች እርካታ ጥናት ዙሪያ ያለውን መረጃ ለመሰብሰብ ነው።
+            </p>
+
+            <p>
+              <strong className="text-gray-900">ፈቃድ:</strong> የዳሰሳ ጥናቱን መመለስ
+              መጀመርዎ በፈቃደኝነትዎ መሰረት የሚደረግ ሲሆን፣ ጥናቱን በማንኛውም ጊዜ የማቋረጥ መብት እንዳለዎት
+              ያስገነዝባል።
+            </p>
+
+            <p className="text-sm font-medium text-red-600 mt-6">
+              እባክዎን ከዚህ በታች ያለውን ማስፈንጠሪያ በመጫን የዳሰሳ ጥናቱን ይጀምሩ።
+            </p>
+          </div>
+
+          {/* CTA Button */}
+          <button
+            className="block w-full text-center px-8 py-3 rounded-lg font-semibold 
+          bg-lime-600 text-white shadow-md hover:bg-lime-700 
+          transition-all duration-150 ease-in-out"
+            onClick={() => setConsentGiven(true)}
+          >
+            የዳሰሳ ጥናቱን ይጀምሩ
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <FormProvider {...form}>

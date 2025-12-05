@@ -5,7 +5,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./assets/index.css";
 import SurveyCompletion from "./SurveyCompletion";
-import { FormProvider, useForm } from "react-hook-form";
+// import { FormProvider, useForm } from "react-hook-form";
 
 export default function App() {
   const { data: surveyData, loading, error } = useSurveyFetch();
@@ -17,76 +17,73 @@ export default function App() {
     );
   if (!surveyData || !Array.isArray(surveyData) || surveyData.length == 0)
     return <p>No data found</p>;
+
   return (
     <Router>
       <Routes>
+        {/* Homepage: list of available surveys */}
         <Route
           path="/"
           element={
-            <div className="bg-brandGreen-200 min-h-screen flex items-center justify-center p-4">
+            <div className="bg-brandGreen-200 min-h-screen flex flex-col items-center p-6 relative">
+              {/* Background image */}
               <div
-                className="absolute inset-0 bg-cover bg-center"
+                className="absolute inset-0 bg-cover bg-center opacity-30"
                 style={{ backgroundImage: "url('/bg.png')" }}
               />
-              {surveyData.map((survey) => (
-                <div
-                  key={survey.id}
-                  className="bg-white z-10 shadow-md rounded-2xl p-6 md:p-10 border border-gray-100 max-w-3xl w-full"
-                >
-                  {/* Logo Area */}
-                  <div className="flex justify-center mb-6">
-                    <img
-                      src="eeu_logo.png"
-                      alt="EEU Logo"
-                      className="h-16 md:h-20 object-contain"
-                    />
-                  </div>
 
-                  {/* Title */}
-                  <h1 className="text-3xl md:text-4xl font-extrabold text-emerald-700 mb-8 pb-3 border-b border-gray-200 text-center">
-                    {survey.metadata.title || "የዳሰሳ ጥናት መግቢያ"}
-                  </h1>
+              <h1 className="text-4xl md:text-5xl font-bold text-emerald-900 mb-8 z-10 relative text-center">
+                የሚገኙ የዳሰሳ ጥናቶች
+              </h1>
 
-                  {/* Instructions */}
-                  <div className="text-gray-700 leading-relaxed space-y-5 mb-10">
-                    <p className="font-semibold text-lg text-amber-500">
-                      አስፈላጊ መረጃ እና ፈቃድ
-                    </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl z-10 relative">
+                {surveyData.length === 0 && (
+                  <p className="text-white text-xl font-semibold col-span-full text-center">
+                    ምንም የዳሰሳ ጥናት አልተገኘም
+                  </p>
+                )}
 
-                    <p>
-                      ይህ የዳሰሳ ጥናት የሚቀርበው{" "}
-                      <strong className="text-gray-900">
-                        በኢትዮጵያ ኤሌክትሪክ አገልግሎት (EEU)
-                      </strong>
-                      ሲሆን፣ ዓላማውም በደንበኞች እርካታ ጥናት ዙሪያ ያለውን መረጃ ለመሰብሰብ ነው።
-                    </p>
-
-                    <p>
-                      <strong className="text-gray-900">ፈቃድ:</strong> የዳሰሳ ጥናቱን
-                      መመለስ መጀመርዎ በፈቃደኝነትዎ መሰረት የሚደረግ ሲሆን፣ ጥናቱን በማንኛውም ጊዜ የማቋረጥ
-                      መብት እንዳለዎት ያስገነዝባል።
-                    </p>
-
-                    <p className="text-sm font-medium text-red-600 mt-6">
-                      እባክዎን ከዚህ በታች ያለውን ማስፈንጠሪያ በመጫን የዳሰሳ ጥናቱን ይጀምሩ።
-                    </p>
-                  </div>
-
-                  {/* CTA Button */}
-                  <Link
-                    to={`/survey/${survey.id}`}
-                    className="block w-full text-center px-8 py-3 rounded-lg font-semibold 
-          bg-lime-600 text-white shadow-md hover:bg-lime-700 
-          transition-all duration-150 ease-in-out"
+                {surveyData.map((survey) => (
+                  <div
+                    key={survey.id}
+                    className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 flex flex-col items-center text-center hover:scale-105 transition-transform duration-200"
                   >
-                    የዳሰሳ ጥናቱን ይጀምሩ
-                  </Link>
-                </div>
-              ))}
+                    {/* Logo */}
+                    <img
+                      src="/eeu_logo.png"
+                      alt="EEU Logo"
+                      className="h-16 md:h-20 mb-4 object-contain"
+                    />
+
+                    {/* Title */}
+                    <h2 className="text-2xl md:text-3xl font-extrabold text-emerald-700 mb-3">
+                      {survey.metadata?.title || "የዳሰሳ ጥናት"}
+                    </h2>
+
+                    {/* Short description / instructions */}
+                    <p className="text-gray-700 text-sm md:text-base mb-6 leading-relaxed">
+                      {survey.metadata?.instructions ||
+                        "ይህ የዳሰሳ ጥናት በEEU ተሰጥቷል። መጀመር ከፈቃድዎ በኋላ ይቻላል።"}
+                    </p>
+
+                    {/* Start Survey Button */}
+                    <Link
+                      to={`/survey/${survey.id}`}
+                      className="bg-lime-600 hover:bg-lime-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md w-full transition-colors"
+                    >
+                      ይጀምሩ
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
           }
-        ></Route>
+        />
+
+        {/* Survey page */}
         <Route path="/survey/:id" element={<SurveyApp />} />
+
+        {/* Completion page */}
         <Route path="/survey/completion" element={<SurveyCompletion />} />
       </Routes>
     </Router>

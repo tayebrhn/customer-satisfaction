@@ -14,7 +14,7 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
   } = useFormContext();
 
   const { required, min_length, max_length } = question.constraints;
-  const length = min_length == max_length ? true : false;
+  // const length = min_length == max_length ? true : false;
   // Decide which element to render
   if (question.type === "text_area") {
     return (
