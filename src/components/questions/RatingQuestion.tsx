@@ -20,24 +20,23 @@ export const RatingQuestion = ({
   return (
     <div className="w-full">
       <div className="flex flex-wrap justify-start gap-3 sm:gap-4 mt-3">
-  {Array.from({ length: scaleCount }, (_, i) => i + 1).map((val) => (
-    <div key={val} className="flex flex-col items-center max-w-[50px]">
-      
-      {/* Hidden radio input as peer */}
-      <input
-        type="radio"
-        id={`rating-${fieldName}-${val}`}
-        value={val}
-        className="hidden peer"
-        {...register(fieldName, {
-          required: required ? GENERIC_ERROR_MSG : false,
-        })}
-      />
+        {Array.from({ length: scaleCount }, (_, i) => i + 1).map((val) => (
+          <div key={val} className="flex flex-col items-center max-w-[50px]">
+            {/* Hidden radio input as peer */}
+            <input
+              type="radio"
+              id={`rating-${fieldName}-${val}`}
+              value={val}
+              className="hidden peer"
+              {...register(fieldName, {
+                required: required ? GENERIC_ERROR_MSG : false,
+              })}
+            />
 
-      {/* Clickable radio circle */}
-      <label
-        htmlFor={`rating-${fieldName}-${val}`}
-        className="
+            {/* Clickable radio circle */}
+            <label
+              htmlFor={`rating-${fieldName}-${val}`}
+              className="
           flex items-center justify-center
           w-5 h-5 sm:w-7 sm:h-7
           border-2 border-gray-400
@@ -46,20 +45,19 @@ export const RatingQuestion = ({
           transition
           peer-checked:bg-amber-500
         "
-      >
-        <span className="font-semibold peer-checked:scale-110 transition">
-          {val}
-        </span>
-      </label>
+            >
+              <span className="font-semibold peer-checked:scale-110 transition">
+                {val}
+              </span>
+            </label>
 
-      {/* Text description outside */}
-      <span className="text-xs sm:text-xs md:text-sm wrap-break-word text-center mt-1">
-        {choices[val - 1]?.description ?? ""}
-      </span>
-    </div>
-  ))}
-</div>
-
+            {/* Text description outside */}
+            <span className="text-xs sm:text-xs md:text-sm wrap-break-word text-center mt-1">
+              {choices[val - 1]?.description ?? ""}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
