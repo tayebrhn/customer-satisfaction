@@ -40,7 +40,7 @@ export function SurveyForm({
 
         {currentCategory?.questions?.map((q: SurveyQuestion) => (
           <div key={q.id} className="py-4 rounded-lg">
-            <p>
+            <p className="text-xs sm:text-base md:text-lg lg:text-xl">
               {q.question}
               <sup style={{ color: "red", marginLeft: "1px" }}>
                 {q.constraints.required ? "*" : ""}
