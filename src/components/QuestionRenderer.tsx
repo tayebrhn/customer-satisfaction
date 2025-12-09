@@ -32,7 +32,7 @@ QuestionRendererProps) => {
     control,
     formState: { errors },
   } = useFormContext();
-  const fieldName = String(question.id);
+  const fieldName = String(question.sequence_num);
   const mainError = errors[fieldName];
   const otherError = errors[`${fieldName}_other`];
 

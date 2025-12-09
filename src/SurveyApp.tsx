@@ -1,4 +1,4 @@
-  // import logo from "../assets/eeu_logo.png";
+// import logo from "../assets/eeu_logo.png";
 import { FormProvider, useForm } from "react-hook-form";
 import { useSurveyFetchOne } from "./hooks/useSurveyFetch";
 import { useFormPersistence } from "./hooks/useFormPersistence";
@@ -23,8 +23,8 @@ export default function SurveyApp() {
   const defaultValues = useMemo(() => {
     if (!surveyData?.questions) return {};
     return surveyData.questions.reduce((acc, q) => {
-      acc[q.id] = null;
-      acc[`${q.id}_other`] = "";
+      acc[q.sequence_num] = null;
+      acc[`${q.sequence_num}_other`] = "";
       return acc;
     }, {} as Record<string, any>);
   }, [surveyData]);
@@ -123,7 +123,7 @@ export default function SurveyApp() {
     clearErrors();
 
     // 1️⃣ Validate only current category
-    const fields = currentCategory.questions.map((q) => String(q.id));
+    const fields = currentCategory.questions.map((q) => String(q.sequence_num));
     const isValid = await trigger(fields);
 
     if (!isValid) {
@@ -141,7 +141,7 @@ export default function SurveyApp() {
       const verifyPayload: Record<string, any> = {};
 
       verifiableQuestions.forEach((q) => {
-        verifyPayload[q.id] = getValues(String(q.id));
+        verifyPayload[q.sequence_num] = getValues(String(q.sequence_num));
       });
 
       const res = await fetch(import.meta.env.VITE_SURVEY_URL_VERIFY, {
@@ -253,23 +253,28 @@ export default function SurveyApp() {
 
   return (
     <FormProvider {...form}>
-      <SurveyLayout title={title ?? ""} instructions={instructions ?? ""}>
-        <div className="h-9/12">
+      <SurveyLayout
+        className={
+          "min-h-screen bg-brandGreen-200 flex flex-col md:flex-row bg-survey-bg bg-cover bg-center"
+        }
+        title={title ?? ""}
+        instructions={instructions ?? ""}
+      >
           <SurveyForm
             form={form}
             onSubmit={onSubmit}
             currentCategory={currentCategory}
             surveyData={surveyData}
             handleSubmit={handleSubmit}
+            className=" pb-19"
           />
-        </div>
-        <div className="h-3/12"></div>
         <SurveyNavigation
           onPrevious={prevCategory}
           onNext={handleNext}
           progress={progress}
           isFirstPage={isFirstPage}
           isLastPage={isLastPage}
+          className="absolute bottom-0 left-0 pb-4 px-5 w-full"
         />
         <SurveyModal
           status={submissionStatus}

@@ -13,7 +13,7 @@ export const RatingQuestion = ({
   register,
   choices,
 }: RatingQuestionProps) => {
-  const fieldName = String(question.id);
+  const fieldName = String(question.sequence_num);
   const scaleCount = question.scale ? Number(question.scale.split("-")[1]) : 5;
   const { required } = question.constraints;
   console.log("LOG_CHOICES:", choices);

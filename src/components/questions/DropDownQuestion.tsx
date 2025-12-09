@@ -23,7 +23,7 @@ export const DropDownQuestion = ({
   setValue,
   watch,
 }: DropDownQuestionProps) => {
-  const fieldName = String(question.id);
+  const fieldName = String(question.sequence_num);
   const selectedValue = watch(fieldName);
 
   const [inputText, setInputText] = useState("");

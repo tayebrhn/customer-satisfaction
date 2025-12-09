@@ -13,6 +13,7 @@ interface SurveyNavigationProps {
   isFirstPage: boolean;
   isLastPage: boolean;
   isSubmitting?: boolean; // <-- optional prop
+  className:string;
 }
 
 export const SurveyNavigation = ({
@@ -22,9 +23,10 @@ export const SurveyNavigation = ({
   isFirstPage,
   isLastPage,
   isSubmitting = false,
+  className
 }: SurveyNavigationProps) => {
   return (
-    <div className="sticky bottom-0 left-0 pb-4 w-full">
+    <div className={className}>
       <small className="smallpb-1">
         <small style={{ color: "red" }}>(*)</small> ግዴታ መመለስ ያለበት።
       </small>

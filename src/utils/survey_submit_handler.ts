@@ -27,11 +27,11 @@ export async function handleSurveySubmit({
 
   const responses = surveyData?.questions
     .map((q: SurveyQuestion) => {
-      const value = formData[q.id];
-      const otherValue = formData[`${q.id}_other`] || null;
+      const value = formData[q.sequence_num];
+      const otherValue = formData[`${q.sequence_num}_other`] || null;
 
       const base = {
-        question_id: q.id,
+        question_id: q.sequence_num,
         question_type: q.type,
         answer: {} as any,
       };

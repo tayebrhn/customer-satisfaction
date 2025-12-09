@@ -92,7 +92,7 @@ export interface KeyChoice {
 }
 
 export interface SurveyQuestion {
-  id: number;
+  sequence_num: number;
   type:
     | "multi_select"
     | "single_choice"

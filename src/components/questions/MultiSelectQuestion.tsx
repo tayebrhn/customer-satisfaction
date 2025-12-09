@@ -13,7 +13,7 @@ export const MultiSelectQuestion = ({
   question,
   control,
 }: MultiSelectQuestionProps) => {
-  const fieldName = String(question.id);
+  const fieldName = String(question.sequence_num);
 
   if (!question.options) return null;
 

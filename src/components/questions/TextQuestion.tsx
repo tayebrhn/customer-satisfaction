@@ -8,7 +8,7 @@ interface TextQuestionProps {
 }
 
 export const TextQuestion = ({ question, register }: TextQuestionProps) => {
-  const fieldName = String(question.id);
+  const fieldName = String(question.sequence_num);
   const {
     formState: { errors },
   } = useFormContext();
@@ -39,7 +39,7 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
             e.currentTarget.value = e.currentTarget.value.slice(0, max_length);
           }
         }}
-        id={question.id.toString()}
+        id={question.sequence_num.toString()}
         placeholder={question.placeholder || ""}
         className={`block w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-400 
     bg-amber-50 border ${
@@ -82,7 +82,7 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
           e.currentTarget.value = e.currentTarget.value.slice(0, max_length);
         }
       }}
-      id={question.id.toString()}
+      id={question.sequence_num.toString()}
       type={inputType}
       placeholder={question.placeholder || ""}
       className={`block w-full

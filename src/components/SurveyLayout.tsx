@@ -4,13 +4,15 @@ export function SurveyLayout({
   title,
   instructions,
   children,
+  className,
 }: {
   title: string;
   instructions: string;
   children: React.ReactNode;
+  className: string
 }) {
   return (
-    <div className="min-h-screen bg-brandGreen-200 flex flex-col md:flex-row bg-survey-bg bg-cover bg-center">
+    <div className={className}>
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/bg.png')" }}
@@ -51,7 +53,7 @@ export function SurveyLayout({
   "
       >
         <div className=" h-full mx-0 sm:mx-2 md:mx-4 lg:mx-6 xl:mx-8 2xl:mx-10">
-          <div className="bg-white rounded-2xl shadow-lg h-full p-4 sm:p-6 lg:p-8">
+          <div className="relative bg-white rounded-2xl shadow-lg h-full p-4 sm:p-6 lg:p-8">
             {children}
           </div>
         </div>

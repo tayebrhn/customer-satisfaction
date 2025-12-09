@@ -21,7 +21,7 @@ export const SingleChoiceQuestion = ({
   register,
   watch,
 }: SingleChoiceQuestionProps) => {
-  const fieldName = String(question.id);
+  const fieldName = String(question.sequence_num);
   const formValues = watch();
   const {
     formState: { errors },
@@ -38,7 +38,7 @@ export const SingleChoiceQuestion = ({
         const { optionValue, optionLabel, optionId, isOther } =
           parseOption(option);
         const isOtherSelected =
-          Number(formValues[question.id]) === optionId && isOther;
+          Number(formValues[question.sequence_num]) === optionId && isOther;
         return (
           <div key={optionId} className="flex flex-col gap-1">
             <label

@@ -8,12 +8,14 @@ export function SurveyForm({
   currentCategory,
   surveyData,
   handleSubmit,
+  className,
 }: {
   form: any;
   onSubmit: (data: any) => void;
   currentCategory: CurrentCategory | undefined;
   surveyData: any;
   handleSubmit: UseFormHandleSubmit<FieldValues, FieldValues>;
+  className:string
 }) {
   // const [verifyError, setVerifyError] = useState(null);
   // const fieldsForCurrentCategory = currentCategory?.questions?.map((q) =>
@@ -31,7 +33,7 @@ export function SurveyForm({
         }
       }}
       onSubmit={handleSubmit(onSubmit)}
-      className=""
+      className={className}
     >
       <section className="">
         {/* <h2 className="text-xl font-semibold text-gray-700 border-b border-gray-200 pb-2">
@@ -39,7 +41,7 @@ export function SurveyForm({
           </h2> */}
 
         {currentCategory?.questions?.map((q: SurveyQuestion) => (
-          <div key={q.id} className="py-4 rounded-lg">
+          <div key={q.sequence_num} className="py-4 rounded-lg">
             <p className="text-xs sm:text-base md:text-lg lg:text-xl">
               {q.question}
               <sup style={{ color: "red", marginLeft: "1px" }}>
