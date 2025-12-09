@@ -118,6 +118,7 @@ export interface SurveyExport {
   id: string;
   metadata: {
     title: string;
+    description: string;
     instructions: string;
     version: string;
     created: string; // ISO date string, e.g., "2025-08-12"
@@ -155,35 +156,6 @@ export type SurveySubmitResult = SurveySubmitResponse | SurveySubmitError;
 export interface VerifyPayload {
   [key: string]: any;
 }
-
-// export type QuestionsArray = Question[];
-
-// // ---------- Type Guards ----------
-// export const isValueLabelQuestion = (q: Question): q is ValueLabelQuestion =>
-//   Array.isArray(q.options) &&
-//   q.options.length > 0 &&
-//   typeof q.options[0] === "object" &&
-//   "value" in q.options[0];
-
-// export const isStringArrayQuestion = (q: Question): q is StringArrayQuestion =>
-//   Array.isArray(q.options) && typeof q.options[0] === "string";
-
-// export const isTextQuestion = (q: Question): q is TextQuestion =>
-//   "placeholder" in q && typeof q.placeholder === "string";
-
-// export const isObjectOptionsQuestion = (
-//   q: Question
-// ): q is ObjectOptionsQuestion =>
-//   Array.isArray(q.options) &&
-//   typeof q.options[0] === "object" &&
-//   "text" in q.options[0];
-
-// export const isRatingQuestion = (q: Question): q is RatingQuestion =>
-//   "scale" in q && typeof q.scale === "string";
-
-// export type FormValues = {
-//   [key: string]: any;
-// };
 
 export type Answer =
   | {

@@ -230,19 +230,7 @@ export default function SurveyApp() {
               አስፈላጊ መረጃ እና ፈቃድ
             </p>
 
-            <p>
-              ይህ የዳሰሳ ጥናት የሚቀርበው{" "}
-              <strong className="text-gray-900">
-                በኢትዮጵያ ኤሌክትሪክ አገልግሎት (EEU)
-              </strong>{" "}
-              ሲሆን፣ ዓላማውም በደንበኞች እርካታ ጥናት ዙሪያ ያለውን መረጃ ለመሰብሰብ ነው።
-            </p>
-
-            <p>
-              <strong className="text-gray-900">ፈቃድ:</strong> የዳሰሳ ጥናቱን መመለስ
-              መጀመርዎ በፈቃደኝነትዎ መሰረት የሚደረግ ሲሆን፣ ጥናቱን በማንኛውም ጊዜ የማቋረጥ መብት እንዳለዎት
-              ያስገነዝባል።
-            </p>
+            {surveyData.metadata.description}
 
             <p className="text-sm font-medium text-red-600 mt-6">
               እባክዎን ከዚህ በታች ያለውን ማስፈንጠሪያ በመጫን የዳሰሳ ጥናቱን ይጀምሩ።
