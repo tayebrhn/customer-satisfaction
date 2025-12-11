@@ -81,6 +81,7 @@ export interface CurrentCategory {
 
 export interface QuestionOption {
   id: number;
+  sub_options: QuestionOption[] | [];
   text: string;
   label: string;
   is_other: boolean;
@@ -138,10 +139,11 @@ export interface SurveySubmitResponse {
   response_id: string | number;
   award_assigned: boolean;
   message: string;
+  response: Response;
 }
 
 export interface ValidationError {
-  question_id: number;
+  question_sn: number;
   error: string;
 }
 
@@ -200,8 +202,8 @@ export type Answer =
       number_value?: undefined;
     };
 
-export interface Response {
-  question_id: number;
+export interface SurveyResponse {
+  question_sn: number;
   question_type:
     | "single_choice"
     | "drop_down"
@@ -213,12 +215,12 @@ export interface Response {
   answer: Answer;
 }
 
-export interface SurveyResponse {
-  survey_id: string;
-  respondent_info: {
-    ip_address?: string;
-    user_agent?: string;
-    session_id?: string;
-  };
-  responses: any;
-}
+// export interface SurveyResponse {
+//   survey_id: string;
+//   respondent_info: {
+//     ip_address?: string;
+//     user_agent?: string;
+//     session_id?: string;
+//   };
+//   responses: any;
+// }

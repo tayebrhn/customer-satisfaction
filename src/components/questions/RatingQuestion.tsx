@@ -16,7 +16,7 @@ export const RatingQuestion = ({
   const fieldName = String(question.sequence_num);
   const scaleCount = question.scale ? Number(question.scale.split("-")[1]) : 5;
   const { required } = question.constraints;
-  console.log("LOG_CHOICES:", choices);
+  // console.log("LOG_CHOICES:", choices);
   return (
     <div className="w-full">
       <div className="flex flex-wrap justify-start gap-3 sm:gap-4 mt-3">

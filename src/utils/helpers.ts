@@ -2,13 +2,37 @@ import type { FieldErrors } from "react-hook-form";
 import type { AppRoutes, QuestionOption, SurveyExport } from "../types/survey";
 
 // Utility function for parsing different option formats
+// utils/helpers.ts
 export const parseOption = (option: QuestionOption) => {
   return {
     optionValue: option.id,
     optionLabel: option.label ?? option.text,
     optionId: option.id,
     isOther: option.is_other,
+    // Add this line to grab children
+    subOptions: option.sub_options || [], 
   };
+};
+
+
+export const flattenOptions = (options: any[], parser: typeof parseOption) => {
+  let flatList: any[] = [];
+
+  const traverse = (opts: any[]) => {
+    opts.forEach((opt) => {
+      const { subOptions } = parser(opt);
+      // Add current option to list
+      flatList.push(opt);
+      
+      // If it has children, recursively add them too
+      if (subOptions && subOptions.length > 0) {
+        traverse(subOptions);
+      }
+    });
+  };
+
+  traverse(options);
+  return flatList;
 };
 
 export function generateRoutes(data: SurveyExport[] | null): AppRoutes {

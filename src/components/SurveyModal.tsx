@@ -11,7 +11,7 @@ export function SurveyModal({
   onClose,
 }: {
   status: "idle" | "loading" | "success" | "error";
-  validationErrors?: { question_id: number; error: string }[];
+  validationErrors?: { question_sn: number; error: string }[];
   response?: SurveySubmitResponse;
   onClose: () => void;
 }) {
@@ -56,7 +56,7 @@ export function SurveyModal({
               <ul className="space-y-1">
                 {validationErrors.map((err, idx) => (
                   <li key={idx} className="text-red-600">
-                    • {err.question_id}: {err.error}
+                    • {err.question_sn}: {err.error}
                   </li>
                 ))}
               </ul>
