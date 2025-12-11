@@ -31,15 +31,15 @@ export default function SurveyCompletion() {
           🎉 ጥናቱን ስላጠናቀቁ እናመሰግናለን!
         </h1>
         <p className="text-gray-600 mb-6">ምላሾችዎ በተሳካ ሁኔታ ተመዝግበዋል።</p>
-        <div className="p-6">
+        {/* <div className="p-6">
           <h1 className="text-2xl text-lime-600 font-bold mb-2">ጥናቱ ተጠናቋል!</h1>
-          {/* Optional: show rewards
+          Optional: show rewards
           {response.award_assigned && (
             <p className="text-green-600">
               You earned a reward: {response.message}
             </p>
-          )} */}
-        </div>
+          )}
+        </div> */}
       </motion.div>
     </div>
   );

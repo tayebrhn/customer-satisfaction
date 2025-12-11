@@ -81,6 +81,7 @@ export interface CurrentCategory {
 
 export interface QuestionOption {
   id: number;
+  sub_options: QuestionOption[] | [];
   text: string;
   label: string;
   is_other: boolean;

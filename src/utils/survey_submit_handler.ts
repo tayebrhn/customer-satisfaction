@@ -24,14 +24,14 @@ export async function handleSurveySubmit({
 }) {
   setSubmissionStatus("loading");
   setValidationErrors([]);
-
+console.log("hello")
   const responses = surveyData?.questions
     .map((q: SurveyQuestion) => {
       const value = formData[q.sequence_num];
       const otherValue = formData[`${q.sequence_num}_other`] || null;
 
       const base = {
-        question_id: q.sequence_num,
+        question_sn: q.sequence_num,
         question_type: q.type,
         answer: {} as any,
       };
@@ -78,7 +78,7 @@ export async function handleSurveySubmit({
       return base;
     })
     .filter(Boolean);
-  console.log(responses);
+  
   const surveyResponse = {
     survey_id: id,
     respondent_info: {
@@ -88,16 +88,15 @@ export async function handleSurveySubmit({
     },
     responses,
   };
-
   try {
     const res = await fetch(import.meta.env.VITE_SURVEY_URL_SUBMIT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(surveyResponse),
     });
-
+    
     const json: SurveySubmitResult = await res.json();
-
+    
     if (!res.ok || json.success === false) {
       // Backend validation errors
       if ("errors" in json && json.errors?.length) {
@@ -106,7 +105,8 @@ export async function handleSurveySubmit({
       setSubmissionStatus("error");
       return;
     }
-
+    
+    console.log("DEBUG:",responses);
     // Success: you can pass json to /survey/completion
     setSubmissionStatus("success");
     clearSavedData();
