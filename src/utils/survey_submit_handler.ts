@@ -79,7 +79,6 @@ export async function handleSurveySubmit({
       return base;
     })
     .filter(Boolean);
-
   const surveyResponse = {
     survey_id: id,
     respondent_info: {
@@ -100,9 +99,9 @@ export async function handleSurveySubmit({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(surveyResponse),
     });
-
+    
     const json: SurveySubmitResult = await res.json();
-
+    
     if (!res.ok || json.success === false) {
       // Backend validation errors
       if ("errors" in json && json.errors?.length) {
