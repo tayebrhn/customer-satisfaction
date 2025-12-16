@@ -72,12 +72,12 @@ export interface QuestionCategory {
   name: string;
 }
 
-export interface CurrentCategory {
-  questions: SurveyQuestion[];
-  id: number;
-  cat_number: number;
-  name: string;
-}
+// export interface CurrentCategory {
+//   questions: SurveyQuestion[];
+//   id: number;
+//   cat_number: number;
+//   name: string;
+// }
 
 export interface QuestionOption {
   id: number;
@@ -113,7 +113,23 @@ export interface SurveyQuestion {
     min_length: number | null;
     max_length: number | null;
   };
+  skip_logic?: LogicRule[]; // Rules where this question is the TARGET
 }
+
+export interface LogicRule {
+  trigger_question_sn: number; // Which question triggers the rule
+  trigger_value: string | number | boolean | (string | number)[]; // Value(s) that trigger the rule
+  operator:
+    | "EQUALS"
+    | "NOT_EQUALS"
+    | "IN"
+    | "GREATER_THAN"
+    | "LESS_THAN"
+    | "CONTAINS";
+  action: Action;
+  target_question_sn?: number; // Only for JUMP_TO Action
+}
+export type Action = "SHOW" | "HIDE" | "JUMP_TO" | "ENABLE" | "REQUIRE";
 
 export interface SurveyExport {
   id: string;
@@ -131,6 +147,13 @@ export interface SurveyExport {
 }
 
 export type AppRoutes = Record<string, string>;
+
+export interface GroupedQuestion {
+  questions: SurveyQuestion[];
+  id: number;
+  cat_number: number;
+  name: string;
+}
 
 // types/surveyResponses.ts
 

@@ -1,9 +1,19 @@
-import { type FieldValues, type UseFormHandleSubmit } from "react-hook-form";
+import {
+  useFormContext,
+  type FieldValues,
+  type UseFormHandleSubmit,
+} from "react-hook-form";
 import { QuestionRenderer } from "./QuestionRenderer";
-import type { SurveyQuestion, CurrentCategory } from "../types/survey";
-// import { useState } from "react";
+import type {
+  SurveyQuestion,
+  SurveyExport,
+  GroupedQuestion,
+} from "../types/survey";
+import { useSkipLogic } from "../utils/useSkipLogic";
+import { useEffect, useRef } from "react";
 
 export function SurveyForm({
+  form,
   onSubmit,
   currentCategory,
   surveyData,
@@ -12,16 +22,35 @@ export function SurveyForm({
 }: {
   form: any;
   onSubmit: (data: any) => void;
-  currentCategory: CurrentCategory | undefined;
-  surveyData: any;
+  currentCategory: GroupedQuestion;
+  surveyData: SurveyExport;
   handleSubmit: UseFormHandleSubmit<FieldValues, FieldValues>;
-  className:string
+  className: string;
 }) {
-  // const [verifyError, setVerifyError] = useState(null);
-  // const fieldsForCurrentCategory = currentCategory?.questions?.map((q) =>
-  //   String(q.id)
-  // );
+  const { watch } = useFormContext();
+  const allFormValues = watch();
+  const allQuestions = surveyData?.questions || [];
 
+  // Convert GroupedQuestion to the format expected by useSkipLogic
+  const skipLogicCategory = currentCategory
+    ? {
+        id: currentCategory.id || 0,
+        cat_number: currentCategory.cat_number || 0,
+        name: currentCategory.name || "",
+        questions: currentCategory.questions || [],
+        // description: currentCategory.description || ''
+      }
+    : null;
+  const {
+    visibleQuestions,
+    visibleCategoryQuestions,
+    visibleCategoryCount,
+    totalCategoryQuestions,
+    // handleAnswerChangeWithLogic, // <--- USE THIS
+  } = useSkipLogic({
+    currentCategory: skipLogicCategory,
+    allQuestions,
+  });
   return (
     <form
       onKeyDown={(event: React.KeyboardEvent<HTMLFormElement>) => {
@@ -36,11 +65,7 @@ export function SurveyForm({
       className={className}
     >
       <section className="">
-        {/* <h2 className="text-xl font-semibold text-gray-700 border-b border-gray-200 pb-2">
-            {currentCategory?.name}
-          </h2> */}
-
-        {currentCategory?.questions?.map((q: SurveyQuestion) => (
+        {visibleCategoryQuestions?.map((q: SurveyQuestion) => (
           <div key={q.sequence_num} className="py-4 rounded-lg">
             <p className="text-xs sm:text-base md:text-lg lg:text-xl">
               {q.question}
@@ -48,9 +73,45 @@ export function SurveyForm({
                 {q.constraints.required ? "*" : ""}
               </sup>
             </p>
-            <QuestionRenderer question={q} choices={surveyData.key_choice} />
+            {/* Update QuestionRenderer to use handleAnswerChangeWithLogic */}
+            <QuestionRenderer
+              question={q}
+              choices={surveyData.key_choice}
+              // onChange={(value) => handleAnswerChangeWithLogic(q.sequence_num, value, true)}
+            />
           </div>
         ))}
+
+        {/* Optional: Show questions that are hidden in this category */}
+        {import.meta.env.DEV &&
+          totalCategoryQuestions > visibleCategoryCount && (
+            <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
+              <details className="text-sm">
+                <summary className="cursor-pointer text-gray-600 font-medium">
+                  Hidden in this category (
+                  {totalCategoryQuestions - visibleCategoryCount} questions)
+                </summary>
+                <div className="mt-2 space-y-1">
+                  {currentCategory.questions
+                    .filter((q) => !visibleQuestions.has(q.sequence_num))
+                    .map((q) => (
+                      <div
+                        key={q.sequence_num}
+                        className="text-gray-500 text-xs p-2 bg-gray-100 rounded"
+                      >
+                        Q{q.sequence_num}: {q.question.substring(0, 60)}...
+                        {q.skip_logic?.map((rule, idx) => (
+                          <div key={idx} className="ml-4 text-gray-400">
+                            • If Q{rule.trigger_question_sn} {rule.operator}{" "}
+                            {rule.trigger_value} → {rule.action}
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                </div>
+              </details>
+            </div>
+          )}
       </section>
     </form>
   );

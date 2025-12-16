@@ -163,7 +163,7 @@ export const DropDownQuestion = ({
                 onClick={handleBack}
                 className="sticky top-0 bg-gray-100 p-2 border-b border-gray-200 cursor-pointer flex items-center text-sm font-medium text-gray-600 hover:bg-gray-200"
               >
-                <span className="mr-2">←</span> Back
+                <span className="mr-2">←</span> ተመለስ
               </div>
             )}
 
