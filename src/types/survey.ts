@@ -118,7 +118,7 @@ export interface SurveyQuestion {
 
 export interface LogicRule {
   trigger_question_sn: number; // Which question triggers the rule
-  trigger_value: string | number | boolean | (string | number)[]; // Value(s) that trigger the rule
+  trigger_options: number[]; // Value(s) that trigger the rule
   operator:
     | "EQUALS"
     | "NOT_EQUALS"
@@ -144,6 +144,7 @@ export interface SurveyExport {
   questions: SurveyQuestion[];
   question_categories?: QuestionCategory[];
   key_choice: KeyChoice[];
+  skip_logic?: LogicRule[]; // Rules where this question is the TARGET
 }
 
 export type AppRoutes = Record<string, string>;

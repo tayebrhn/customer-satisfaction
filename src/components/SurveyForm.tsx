@@ -10,7 +10,7 @@ import type {
   GroupedQuestion,
 } from "../types/survey";
 import { useSkipLogic } from "../utils/useSkipLogic";
-import { useEffect, useRef } from "react";
+// import { useEffect, useRef } from "react";
 
 export function SurveyForm({
   form,
@@ -28,7 +28,7 @@ export function SurveyForm({
   className: string;
 }) {
   const { watch } = useFormContext();
-  const allFormValues = watch();
+  // const allFormValues = watch();
   const allQuestions = surveyData?.questions || [];
 
   // Convert GroupedQuestion to the format expected by useSkipLogic
@@ -103,7 +103,7 @@ export function SurveyForm({
                         {q.skip_logic?.map((rule, idx) => (
                           <div key={idx} className="ml-4 text-gray-400">
                             • If Q{rule.trigger_question_sn} {rule.operator}{" "}
-                            {rule.trigger_value} → {rule.action}
+                            {rule.trigger_options} → {rule.action}
                           </div>
                         ))}
                       </div>

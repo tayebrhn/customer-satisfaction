@@ -33,7 +33,7 @@ type LogicAction =
 interface SurveyRule {
   trigger_question_sn: string;
   operator: LogicOperator;
-  trigger_value: any;
+  trigger_options: any;
   action: LogicAction;
   target_question_id?: string; // Required for JUMP_TO
 }
@@ -77,19 +77,19 @@ export function useSurveyLogic() {
     // Type casting for comparison safety
     const strUserAnswer = String(userAnswer);
     const numUserAnswer = Number(userAnswer);
-    const numTriggerValue = Number(rule.trigger_value);
+    const numTriggerValue = Number(rule.trigger_options);
 
     switch(rule.operator) {
       case 'EQUALS':
-        return userAnswer === rule.trigger_value;
+        return userAnswer === rule.trigger_options;
         
       case 'NOT_EQUALS':
-        return userAnswer !== rule.trigger_value;
+        return userAnswer !== rule.trigger_options;
         
       case 'IN':
-        // Check if the trigger_value is an array and if it includes the user's answer
-        return Array.isArray(rule.trigger_value) &&
-               rule.trigger_value.includes(userAnswer);
+        // Check if the trigger_options is an array and if it includes the user's answer
+        return Array.isArray(rule.trigger_options) &&
+               rule.trigger_options.includes(userAnswer);
         
       case 'GREATER_THAN':
         // Ensure both are valid numbers before comparison
@@ -101,7 +101,7 @@ export function useSurveyLogic() {
         
       case 'CONTAINS':
         // Check if the string representation of the answer includes the string representation of the trigger value
-        return strUserAnswer.includes(String(rule.trigger_value));
+        return strUserAnswer.includes(String(rule.trigger_options));
         
       default:
         console.warn(`Unknown operator: ${rule.operator}`);
