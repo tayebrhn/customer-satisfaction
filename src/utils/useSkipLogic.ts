@@ -1,16 +1,14 @@
 // hooks/useSkipLogic.ts
 import { useEffect, useCallback, useRef, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import type { SkipLogicRule, SurveyQuestion } from "../types/survey";
+import type {
+  GroupedQuestion,
+  SkipLogicRule,
+  SurveyQuestion,
+} from "../types/survey";
 
 interface UseSkipLogicProps {
-  currentCategory: {
-    id: number;
-    cat_number: number;
-    name: string;
-    questions: SurveyQuestion[];
-    description?: string;
-  } | null;
+  currentCategory: GroupedQuestion | null;
   allQuestions: SurveyQuestion[];
   skipLogic?: SkipLogicRule[];
   onQuestionVisibilityChange?: (visibleQuestions: Set<number>) => void;

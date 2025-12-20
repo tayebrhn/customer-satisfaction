@@ -151,7 +151,7 @@ export type AppRoutes = Record<string, string>;
 
 export interface GroupedQuestion {
   questions: SurveyQuestion[];
-  id: number;
+  // id: number;
   cat_number: number;
   name: string;
 }

@@ -1,8 +1,13 @@
 // components/questions/DropDownQuestion.tsx
 import { useState, useRef, useEffect, useMemo } from "react";
-import { useFormContext, type UseFormRegister, type UseFormSetValue, type UseFormWatch } from "react-hook-form";
+import {
+  useFormContext,
+  type UseFormRegister,
+  type UseFormSetValue,
+  type UseFormWatch,
+} from "react-hook-form";
 import type { SurveyQuestion } from "../../types/survey";
-import { parseOption, flattenOptions } from "../../utils/helpers"; // Import the new helper
+import { parseOption, flattenOptions } from "../../utils/helpers";
 import { GENERIC_ERROR_MSG } from "../../constants/survey";
 
 interface DropDownQuestionProps {
@@ -12,97 +17,153 @@ interface DropDownQuestionProps {
   watch: UseFormWatch<any>;
 }
 
+interface HistoryItem {
+  options: any[];
+  label?: string;
+}
+
+const findPathToOption = (
+  options: any[],
+  targetId: string | number
+): string[] | null => {
+  for (const option of options) {
+    const { optionId, optionLabel, subOptions } = parseOption(option);
+    if (String(optionId) === String(targetId)) return [optionLabel];
+    if (subOptions && subOptions.length > 0) {
+      const childPath = findPathToOption(subOptions, targetId);
+      if (childPath) return [optionLabel, ...childPath];
+    }
+  }
+  return null;
+};
+
 export const DropDownQuestion = ({
   question,
   register,
   setValue,
-  // watch,
+  watch,
 }: DropDownQuestionProps) => {
   const fieldName = String(question.sequence_num);
-  
-  // 1. Setup Data Sources
-  // The root level options (for navigation)
-  const initialOptions = question.options || [];
 
-  // The flattened list of ALL options (for global search)
-  // We use useMemo so we don't recalculate this on every render
-  const allFlatOptions = useMemo(() => {
-    return flattenOptions(initialOptions, parseOption);
-  }, [initialOptions]);
+  const initialOptions = question.options || [];
+  const allFlatOptions = useMemo(
+    () => flattenOptions(initialOptions, parseOption),
+    [initialOptions]
+  );
+
+  const existingValue = watch(fieldName);
+  const existingOther = watch(`${fieldName}_other`);
 
   const [inputText, setInputText] = useState("");
   const [showOptions, setShowOptions] = useState(false);
-  
-  // Navigation State
   const [currentNavOptions, setCurrentNavOptions] = useState(initialOptions);
-  const [history, setHistory] = useState<any[]>([]); // Tracks depth
-  
-  // Display State
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const [filteredOptions, setFilteredOptions] = useState(initialOptions);
-  
+
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { formState: { errors } } = useFormContext();
+  const {
+    formState: { errors },
+  } = useFormContext();
 
   if (!question.options) return null;
 
-  // 2. Logic: Switch between "Search Mode" and "Navigation Mode"
+  // --- Initialize Input from Existing Value ---
+  useEffect(() => {
+    if (existingValue && !inputText) {
+      const flatMatch = allFlatOptions.find(
+        (o: any) => String(parseOption(o).optionId) === String(existingValue)
+      );
+      if (flatMatch && parseOption(flatMatch).isOther) {
+        setInputText(existingOther || "Other");
+      } else {
+        const path = findPathToOption(initialOptions, existingValue);
+        if (path) setInputText(path.join(" / "));
+      }
+    }
+  }, [existingValue, initialOptions, allFlatOptions, existingOther]);
+
+  // --- Filtering Logic ---
   useEffect(() => {
     if (inputText) {
-      // --- SEARCH MODE ---
-      // Filter against the FLATTENED list of all options
-      const searchResults = allFlatOptions.filter((opt) => {
-        const { optionLabel } = parseOption(opt);
-        return optionLabel.toLowerCase().includes(inputText.toLowerCase());
-      });
-      setFilteredOptions(searchResults);
+      const isBreadcrumb = inputText.includes(" / ");
+      if (!isBreadcrumb) {
+        const searchResults = allFlatOptions.filter((opt: any) =>
+          parseOption(opt)
+            .optionLabel.toLowerCase()
+            .includes(inputText.toLowerCase())
+        );
+        setFilteredOptions(searchResults);
+      }
     } else {
-      // --- NAVIGATION MODE ---
-      // Show the options for the current level of depth
       setFilteredOptions(currentNavOptions);
     }
   }, [inputText, currentNavOptions, allFlatOptions]);
 
-  // 3. Logic: Handling Selection
+  // --- NEW: Handle Clear (The X Button Logic) ---
+  const handleClear = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent dropdown from toggling if overlapping
+
+    // 1. Reset Visuals
+    setInputText("");
+
+    // 2. Reset Form Data
+    setValue(fieldName, ""); // Clear main value
+    setValue(`${fieldName}_other`, ""); // Clear "other" text if any
+
+    // 3. Reset Navigation Hierarchy to Root
+    setHistory([]);
+    setCurrentNavOptions(initialOptions);
+
+    // 4. Focus input so user can start over immediately
+    inputRef.current?.focus();
+  };
+
   const handleOptionSelect = (option: any) => {
-    const { optionValue, optionLabel, optionId, isOther, subOptions } = parseOption(option);
+    const { optionValue, optionLabel, optionId, isOther, subOptions } =
+      parseOption(option);
     const hasChildren = subOptions && subOptions.length > 0;
 
-    // SCENARIO A: Search Mode Active
-    // If user is searching, clicking a result usually selects it directly.
-    // However, if the result is a category (has children), we might want to drill into it.
-    if (inputText) {
-       if (hasChildren) {
-          // If searching and clicking a parent, clear search and show its children
-          setHistory((prev) => [...prev, { options: currentNavOptions }]); // Save where we were (or root)
-          setCurrentNavOptions(subOptions);
-          setInputText(""); // Clear text to enter Navigation Mode
-          inputRef.current?.focus();
-          return;
-       }
-       // If it's a leaf node (sub-option), fall through to Selection Logic below
-    } 
-    // SCENARIO B: Navigation Mode Active (Drilling Down)
-    else if (hasChildren) {
-        setHistory((prev) => [...prev, { options: currentNavOptions }]);
-        setCurrentNavOptions(subOptions);
-        inputRef.current?.focus();
-        return;
+    // 1. Navigation Logic (Drill-down)
+    // If the user selects a parent, move into its sub-options
+    if (hasChildren) {
+      setHistory((prev) => [
+        ...prev,
+        { options: currentNavOptions, label: optionLabel },
+      ]);
+      setCurrentNavOptions(subOptions);
+      setInputText(""); // Clear search text to show sub-options
+      inputRef.current?.focus();
+      return;
     }
 
-    // --- FINAL SELECTION LOGIC ---
+    // 2. Leaf Selection Logic
+    let displayLabel = "";
+
     if (isOther) {
       setValue(fieldName, optionId);
       setValue(`${fieldName}_other`, inputText);
+      displayLabel = inputText || "Other";
     } else {
-      setInputText(optionLabel);
+      // --- LOGIC CHANGE START ---
+      // If we have history, we are drilling down normally
+      if (history.length > 0) {
+        const breadcrumbs = history.map((h) => h.label).filter(Boolean);
+        displayLabel = [...breadcrumbs, optionLabel].join(" / ");
+      } else {
+        // If history is empty, the user likely found this via Search.
+        // We find the full path from the root to this specific option.
+        const fullPath = findPathToOption(initialOptions, optionId);
+        displayLabel = fullPath ? fullPath.join(" / ") : optionLabel;
+      }
+      // --- LOGIC CHANGE END ---
+
+      setInputText(displayLabel);
       setValue(fieldName, optionValue);
       setValue(`${fieldName}_other`, "");
     }
 
     setShowOptions(false);
-    
-    // Reset navigation to top level after selection (optional, but good UX)
     setHistory([]);
     setCurrentNavOptions(initialOptions);
   };
@@ -111,11 +172,11 @@ export const DropDownQuestion = ({
     const value = e.target.value;
     setInputText(value);
     setShowOptions(true);
-    
-    // While typing, clear the actual form value until they select something
-    if (value === "") {
-        // If they clear the input, ensure we reset navigation to top if they weren't deep in hierarchy
-        if (history.length === 0) setCurrentNavOptions(initialOptions);
+
+    // Only reset navigation if the user completely clears the input
+    // and they weren't already deep in a folder
+    if (value === "" && history.length === 0) {
+      setCurrentNavOptions(initialOptions);
     }
   };
 
@@ -127,10 +188,12 @@ export const DropDownQuestion = ({
     setInputText("");
   };
 
-  // Close dropdown on click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowOptions(false);
       }
     };
@@ -139,6 +202,11 @@ export const DropDownQuestion = ({
   }, []);
 
   const { required } = question.constraints;
+  const currentParent =
+    history.length > 0 ? history[history.length - 1].label : null;
+  const placeholderText = currentParent
+    ? `በ${currentParent} ውስጥ ይምረጡ...`
+    : question.placeholder || "Select an option...";
 
   return (
     <div className="flex flex-col gap-2" ref={dropdownRef}>
@@ -149,31 +217,57 @@ export const DropDownQuestion = ({
           value={inputText}
           onChange={handleInputChange}
           onFocus={() => setShowOptions(true)}
-          placeholder={history.length > 0 ? "..." : question.placeholder}
-          className={`block w-full px-3 py-2 text-sm border rounded-md shadow focus:outline-none focus:ring-1 transition-colors duration-200 
-            ${errors[fieldName] ? "border-red-500 ring-red-500" : "border-gray-300 focus:ring-amber-500 bg-amber-50"}`}
+          placeholder={placeholderText}
+          // Added 'pr-8' (padding-right) so text doesn't go under the X button
+          className={`block w-full pl-3 pr-8 py-2 text-sm border rounded-md shadow focus:outline-none focus:ring-1 transition-colors duration-200 
+            ${
+              errors[fieldName]
+                ? "border-red-500 ring-red-500"
+                : "border-gray-300 focus:ring-amber-500 bg-amber-50"
+            }`}
         />
+
+        {/* --- NEW: Clear Button (Only shows when there is text) --- */}
+        {inputText && (
+          <button
+            type="button" // Important: prevents form submission
+            onClick={handleClear}
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors"
+            aria-label="Clear selection"
+          >
+            {/* Simple X Icon SVG */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+        )}
 
         {showOptions && (
           <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-60 overflow-y-auto">
-            
-            {/* Back Button - Only show if traversing history AND not currently searching */}
             {history.length > 0 && !inputText && (
-              <div 
+              <div
                 onClick={handleBack}
-                className="sticky top-0 bg-gray-100 p-2 border-b border-gray-200 cursor-pointer flex items-center text-sm font-medium text-gray-600 hover:bg-gray-200"
+                className="sticky top-0 bg-gray-50 p-2 border-b border-gray-200 cursor-pointer flex items-center text-sm font-medium text-amber-700 hover:bg-gray-100"
               >
-                <span className="mr-2">←</span> ተመለስ
+                <span className="mr-2">←</span>ተመለስ{" "}
+                {/* {history.length > 1 ? history[history.length - 2].label : "Top"} */}
               </div>
             )}
 
             {filteredOptions.length > 0 ? (
-              filteredOptions.map((option) => {
-                const { optionLabel, optionId, isOther, subOptions } = parseOption(option);
+              filteredOptions.map((option: any) => {
+                const { optionLabel, optionId, isOther, subOptions } =
+                  parseOption(option);
                 const hasChildren = subOptions && subOptions.length > 0;
-                
-                // Show arrow if it's a parent node
-                const showArrow = hasChildren;
 
                 return (
                   <div
@@ -181,14 +275,18 @@ export const DropDownQuestion = ({
                     onClick={() => handleOptionSelect(option)}
                     className="flex justify-between items-center p-3 bg-white hover:bg-amber-100 cursor-pointer border-b border-gray-100 last:border-b-0"
                   >
-                    <span>
+                    <span className="text-gray-700">
                       {isOther ? `Other: ${inputText || "..."}` : optionLabel}
-                      {/* Optional: Add a label to show parent name if in global search mode */}
-                      {inputText && hasChildren && <span className="text-gray-400 text-xs ml-2">(Category)</span>}
+                      {inputText &&
+                        hasChildren &&
+                        !inputText.includes(" / ") && (
+                          <span className="text-gray-400 text-xs ml-2">
+                            (ንዑስ አማራጮችን ይዟል)
+                          </span>
+                        )}
                     </span>
-                    
-                    {showArrow && (
-                       <span className="text-gray-400 text-xs">►</span>
+                    {hasChildren && (
+                      <span className="text-gray-400 text-xs">►</span>
                     )}
                   </div>
                 );
@@ -202,7 +300,12 @@ export const DropDownQuestion = ({
         )}
       </div>
 
-      <input {...register(fieldName, { required: required ? GENERIC_ERROR_MSG : false })} type="hidden" />
+      <input
+        {...register(fieldName, {
+          required: required ? GENERIC_ERROR_MSG : false,
+        })}
+        type="hidden"
+      />
       <input {...register(`${fieldName}_other`)} type="hidden" />
     </div>
   );

@@ -18,7 +18,7 @@ export default function App() {
         type="loading"
         title={messages.loading[lang].title}
         description={messages.loading[lang].description}
-        imageSrc="/images/loading.svg"
+        imageSrc="/Processing-bro.svg"
       />
     );
   if (error)
@@ -29,7 +29,7 @@ export default function App() {
         description={messages.error[lang].description}
         actionLabel={messages.error[lang].action}
         onAction={() => window.location.reload()}
-        imageSrc="/images/error.svg"
+        imageSrc="/Bug fixing-bro.svg"
       />
     );
   if (!surveyData || !Array.isArray(surveyData) || surveyData.length == 0)
@@ -38,7 +38,7 @@ export default function App() {
         type="empty"
         title={messages.empty[lang].title}
         description={messages.empty[lang].description}
-        imageSrc="/images/empty.svg"
+        imageSrc="/Empty street-bro.svg"
       />
     );
   return (

@@ -86,13 +86,13 @@ QuestionRendererProps) => {
       })()}
       {/* Error messages */}
       {mainError && (
-        <p className="text-red-500 text-sm mt-1">
+        <p className="text-red-500 text-xs mt-1">
           <BsExclamationCircleFill className="inline-block" />{" "}
           {mainError.message as string}
         </p>
       )}
       {otherError && (
-        <p className="text-red-500 text-sm mt-1 ml-6">
+        <p className="text-red-500 text-xs mt-1 ml-6">
           <BsExclamationCircleFill className="inline-block" />{" "}
           {otherError.message as string}
         </p>

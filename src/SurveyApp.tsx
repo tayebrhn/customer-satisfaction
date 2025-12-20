@@ -12,8 +12,12 @@ import { useState, useMemo, useEffect } from "react";
 import { SurveyModal } from "./components/SurveyModal";
 import { SurveyNavigation } from "./components/SurveyNavigation";
 import { scrollToField, scrollToFirstError } from "./utils/helpers";
+import { StatusMessage } from "./components/StatusMessage";
+import { messages, type Lang } from "./utils/messages";
 
 export default function SurveyApp() {
+  const lang: Lang = "am"; // or from context / settings
+
   const { id } = useParams<{ id: string }>();
 
   const { data: surveyData, loading, error } = useSurveyFetchOne(id as string);
@@ -190,10 +194,35 @@ export default function SurveyApp() {
     }
   };
 
-  if (loading) return <div>Loading survey...</div>;
-  if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
+  if (loading)
+    return (
+      <StatusMessage
+        type="loading"
+        title={messages.loading[lang].title}
+        description={messages.loading[lang].description}
+        imageSrc="/Processing-bro.svg"
+      />
+    );
+  if (error)
+    return (
+      <StatusMessage
+        type="error"
+        title={messages.error[lang].title}
+        description={messages.error[lang].description}
+        actionLabel={messages.error[lang].action}
+        onAction={() => window.location.reload()}
+        imageSrc="/Bug fixing-bro.svg"
+      />
+    );
   if (!surveyData || groupedQuestions.length === 0)
-    return <div>There is no survey</div>;
+    return (
+      <StatusMessage
+        type="empty"
+        title={messages.empty[lang].title}
+        description={messages.empty[lang].description}
+        imageSrc="/Empty street-bro.svg"
+      />
+    );
 
   const { title, instructions } = surveyData.metadata ?? {};
   // -----------------------
@@ -250,7 +279,7 @@ export default function SurveyApp() {
       </div>
     );
   }
-console.log("LOGIC:",surveyData.skip_logic)
+  // console.log("LOGIC:",surveyData.skip_logic)
   return (
     <FormProvider {...form}>
       <SurveyLayout
@@ -260,14 +289,14 @@ console.log("LOGIC:",surveyData.skip_logic)
         title={title ?? ""}
         instructions={instructions ?? ""}
       >
-          <SurveyForm
-            form={form}
-            onSubmit={onSubmit}
-            currentCategory={currentCategory}
-            surveyData={surveyData}
-            handleSubmit={handleSubmit}
-            className=" pb-19"
-          />
+        <SurveyForm
+          form={form}
+          onSubmit={onSubmit}
+          currentCategory={currentCategory}
+          surveyData={surveyData}
+          handleSubmit={handleSubmit}
+          className=" pb-19"
+        />
         <SurveyNavigation
           onPrevious={prevCategory}
           onNext={handleNext}
