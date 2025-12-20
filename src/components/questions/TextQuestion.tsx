@@ -14,25 +14,33 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
   } = useFormContext();
 
   const { required, min_length, max_length } = question.constraints;
-  // const length = min_length == max_length ? true : false;
+  const exactLength = min_length === max_length ? min_length : null;
   // Decide which element to render
   if (question.type === "text_area") {
     return (
       <textarea
         {...register(fieldName, {
           required: required ? GENERIC_ERROR_MSG : false,
-          maxLength: max_length
+          ...(exactLength
             ? {
-                value: max_length,
-                message: `Must be at most ${max_length} characters`,
+                validate: (value) =>
+                  value.length === exactLength ||
+                  `ትክክለኛው ርዝመት ${exactLength} ዲጂት መሆን አለበት`,
               }
-            : undefined,
-          minLength: min_length
-            ? {
-                value: min_length,
-                message: `Must be at least ${min_length} characters`,
-              }
-            : undefined,
+            : {
+                minLength: min_length
+                  ? {
+                      value: min_length,
+                      message: `ቢያንስ ${min_length} ዲጂት መሆን አለበት`,
+                    }
+                  : undefined,
+                maxLength: max_length
+                  ? {
+                      value: max_length,
+                      message: `ቢበዛ ${max_length} ዲጂት መሆን አለበት`,
+                    }
+                  : undefined,
+              }),
         })}
         onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
           if (max_length && e.currentTarget.value.length > max_length) {
@@ -58,18 +66,26 @@ export const TextQuestion = ({ question, register }: TextQuestionProps) => {
     <input
       {...register(fieldName, {
         required: required ? GENERIC_ERROR_MSG : false,
-        maxLength: max_length
+        ...(exactLength
           ? {
-              value: max_length,
-              message: `Must be at most ${max_length} characters`,
+              validate: (value) =>
+                value.length === exactLength ||
+                `ትክክለኛው ርዝመት ${exactLength} ዲጂት መሆን አለበት`,
             }
-          : undefined,
-        minLength: min_length
-          ? {
-              value: min_length,
-              message: `Must be at least ${min_length} characters`,
-            }
-          : undefined,
+          : {
+              minLength: min_length
+                ? {
+                    value: min_length,
+                    message: `ቢያንስ ${min_length} ዲጂት መሆን አለበት`,
+                  }
+                : undefined,
+              maxLength: max_length
+                ? {
+                    value: max_length,
+                    message: `ቢበዛ ${max_length} ዲጂት መሆን አለበት`,
+                  }
+                : undefined,
+            }),
       })}
       maxLength={max_length || undefined}
       // onInput={(e) => {
