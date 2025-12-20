@@ -1,7 +1,7 @@
 // hooks/useSkipLogic.ts
 import { useEffect, useCallback, useRef, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import type { LogicRule, SurveyQuestion } from "../types/survey";
+import type { SkipLogicRule, SurveyQuestion } from "../types/survey";
 
 interface UseSkipLogicProps {
   currentCategory: {
@@ -12,6 +12,7 @@ interface UseSkipLogicProps {
     description?: string;
   } | null;
   allQuestions: SurveyQuestion[];
+  skipLogic?: SkipLogicRule[];
   onQuestionVisibilityChange?: (visibleQuestions: Set<number>) => void;
 }
 
@@ -19,6 +20,7 @@ export function useSkipLogic({
   currentCategory,
   allQuestions,
   onQuestionVisibilityChange,
+  skipLogic,
 }: UseSkipLogicProps) {
   const { watch, setValue, getValues, trigger } = useFormContext();
 
@@ -33,10 +35,30 @@ export function useSkipLogic({
 
   // Watch all form values
   const allFormValues = watch();
-
+  // Build a map once: questionSequenceNum -> rules affecting it
+  const rulesMap = useMemo(() => {
+    if (!skipLogic) return {};
+    return skipLogic.reduce<Record<number, SkipLogicRule[]>>((acc, rule) => {
+      rule.target_questions_sn.forEach((sn) => {
+        if (!acc[sn]) acc[sn] = [];
+        acc[sn].push(rule);
+      });
+      return acc;
+    }, {});
+  }, [skipLogic]);
+  const normalizeIds = (value: any): number[] => {
+    if (Array.isArray(value)) {
+      return value.map((v) => Number(v)).filter((v) => !Number.isNaN(v));
+    }
+    if (value !== null && value !== undefined && value !== "") {
+      const n = Number(value);
+      return Number.isNaN(n) ? [] : [n];
+    }
+    return [];
+  };
   // Evaluate a single logic rule
   const evaluateRule = useCallback(
-    (rule: LogicRule, formValues: Record<string, any>) => {
+    (rule: SkipLogicRule, formValues: Record<string, any>) => {
       const triggerAnswer = formValues[String(rule.trigger_question_sn)];
 
       // Handle empty values
@@ -50,32 +72,35 @@ export function useSkipLogic({
 
       const comparisonValue = rule.trigger_options;
 
-      // Numeric Comparisons
-      // if (["GREATER_THAN", "LESS_THAN"].includes(rule.operator)) {
-      //   const numAnswer = Number(triggerAnswer);
-      //   const numValue = Number(comparisonValue);
-      //   if (isNaN(numAnswer) || isNaN(numValue)) return false;
+      // Normalize to array
+      const actualIds = normalizeIds(triggerAnswer);
+      const expectedIds = normalizeIds(comparisonValue);
 
-      //   if (rule.operator === "GREATER_THAN") return numAnswer > numValue;
-      //   if (rule.operator === "LESS_THAN") return numAnswer < numValue;
-      // }
+      // IN → any match
+      if (rule.operator === "IN") {
+        console.log("Evaluate: ", actualIds, "||", expectedIds);
+        return expectedIds.some((id) => actualIds.includes(id));
+      }
 
-      // // Array/String Comparisons
-      // if (rule.operator === "IN") {
-      //   return (
-      //     Array.isArray(comparisonValue) &&
-      //     comparisonValue.includes(triggerAnswer)
-      //   );
-      // }
-      // if (rule.operator === "CONTAINS") {
-      //   return String(triggerAnswer).includes(String(comparisonValue));
-      // }
-      // console.log("DEBUG_COMPARISION triggerAnswer : ", triggerAnswer);
-      // console.log("DEBUG_COMPARISION comparisonValue : ", triggerAnswer);
-      // Equality
-      if (rule.operator === "EQUALS") return triggerAnswer == comparisonValue;
-      if (rule.operator === "NOT_EQUALS")
-        return triggerAnswer != comparisonValue;
+      // CONTAINS → all required
+      if (rule.operator === "CONTAINS") {
+        return expectedIds.every((id) => actualIds.includes(id));
+      }
+
+      const actualSet = new Set(actualIds);
+      const expectedSet = new Set(expectedIds);
+
+      // EQUALS → exact same values
+      if (rule.operator === "EQUALS") {
+        if (actualSet.size !== expectedSet.size) return false;
+        return [...actualSet].every((id) => expectedSet.has(id));
+      }
+
+      // NOT_EQUALS → anything different
+      if (rule.operator === "NOT_EQUALS") {
+        if (actualSet.size !== expectedSet.size) return true;
+        return [...actualSet].some((id) => !expectedSet.has(id));
+      }
 
       return false;
     },
@@ -85,14 +110,21 @@ export function useSkipLogic({
   // Check if a question should be visible
   const isQuestionVisible = useCallback(
     (question: SurveyQuestion, formValues: Record<string, any>) => {
-      if (!question.skip_logic || question.skip_logic.length === 0) {
-        return true;
+      const rulesForQuestion = rulesMap[question.sequence_num] ?? [];
+
+      // Grab rules from the provided skipLogic param
+      // const rulesForQuestion = skipLogic?.filter((rule) =>
+      //   rule.target_questions_sn.includes(question.sequence_num)
+      // );
+
+      if (!rulesForQuestion || rulesForQuestion.length === 0) {
+        return true; // No rules → visible by default
       }
 
       let hasShowRule = false;
       let hasHideRule = false;
 
-      for (const rule of question.skip_logic) {
+      for (const rule of rulesForQuestion) {
         const conditionMet = evaluateRule(rule, formValues);
 
         if (rule.action === "SHOW") {

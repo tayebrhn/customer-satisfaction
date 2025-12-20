@@ -250,7 +250,7 @@ export default function SurveyApp() {
       </div>
     );
   }
-
+console.log("LOGIC:",surveyData.skip_logic)
   return (
     <FormProvider {...form}>
       <SurveyLayout

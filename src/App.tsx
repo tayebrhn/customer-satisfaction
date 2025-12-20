@@ -5,19 +5,42 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./assets/index.css";
 import SurveyCompletion from "./SurveyCompletion";
+import { StatusMessage } from "./components/StatusMessage";
+import { messages, type Lang } from "./utils/messages";
 // import { FormProvider, useForm } from "react-hook-form";
 
 export default function App() {
   const { data: surveyData, loading, error } = useSurveyFetch();
-
-  if (loading) return <p>Loading surveys...</p>;
+  const lang: Lang = "am"; // or from context / settings
+  if (loading)
+    return (
+      <StatusMessage
+        type="loading"
+        title={messages.loading[lang].title}
+        description={messages.loading[lang].description}
+        imageSrc="/images/loading.svg"
+      />
+    );
   if (error)
     return (
-      <p className="text-red-600">App::Error Loading Survey List: {error}</p>
+      <StatusMessage
+        type="error"
+        title={messages.error[lang].title}
+        description={messages.error[lang].description}
+        actionLabel={messages.error[lang].action}
+        onAction={() => window.location.reload()}
+        imageSrc="/images/error.svg"
+      />
     );
   if (!surveyData || !Array.isArray(surveyData) || surveyData.length == 0)
-    return <p>No data found</p>;
-
+    return (
+      <StatusMessage
+        type="empty"
+        title={messages.empty[lang].title}
+        description={messages.empty[lang].description}
+        imageSrc="/images/empty.svg"
+      />
+    );
   return (
     <Router>
       <Routes>

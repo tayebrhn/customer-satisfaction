@@ -1,5 +1,5 @@
 import {
-  useFormContext,
+  // useFormContext,
   type FieldValues,
   type UseFormHandleSubmit,
 } from "react-hook-form";
@@ -13,7 +13,7 @@ import { useSkipLogic } from "../utils/useSkipLogic";
 // import { useEffect, useRef } from "react";
 
 export function SurveyForm({
-  form,
+  // form,
   onSubmit,
   currentCategory,
   surveyData,
@@ -27,20 +27,21 @@ export function SurveyForm({
   handleSubmit: UseFormHandleSubmit<FieldValues, FieldValues>;
   className: string;
 }) {
-  const { watch } = useFormContext();
+  const { questions:allQuestions, skip_logic } = surveyData;
+  // const { watch } = useFormContext();
   // const allFormValues = watch();
-  const allQuestions = surveyData?.questions || [];
+  // const allQuestions = surveyData?.questions || [];
 
   // Convert GroupedQuestion to the format expected by useSkipLogic
-  const skipLogicCategory = currentCategory
-    ? {
-        id: currentCategory.id || 0,
-        cat_number: currentCategory.cat_number || 0,
-        name: currentCategory.name || "",
-        questions: currentCategory.questions || [],
-        // description: currentCategory.description || ''
-      }
-    : null;
+  // const skipLogicCategory = currentCategory
+  //   ? {
+  //       id: currentCategory.id || 0,
+  //       cat_number: currentCategory.cat_number || 0,
+  //       name: currentCategory.name || "",
+  //       questions: currentCategory.questions || [],
+  //       // description: currentCategory.description || ''
+  //     }
+  //   : null;
   const {
     visibleQuestions,
     visibleCategoryQuestions,
@@ -48,8 +49,9 @@ export function SurveyForm({
     totalCategoryQuestions,
     // handleAnswerChangeWithLogic, // <--- USE THIS
   } = useSkipLogic({
-    currentCategory: skipLogicCategory,
+    currentCategory: currentCategory,
     allQuestions,
+    skipLogic: skip_logic,
   });
   return (
     <form

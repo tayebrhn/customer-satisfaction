@@ -16,7 +16,7 @@ export const DropDownQuestion = ({
   question,
   register,
   setValue,
-  watch,
+  // watch,
 }: DropDownQuestionProps) => {
   const fieldName = String(question.sequence_num);
   

@@ -113,12 +113,12 @@ export interface SurveyQuestion {
     min_length: number | null;
     max_length: number | null;
   };
-  skip_logic?: LogicRule[]; // Rules where this question is the TARGET
+  skip_logic?: SkipLogicRule[]; // Rules where this question is the TARGET
 }
 
-export interface LogicRule {
+export interface SkipLogicRule {
   trigger_question_sn: number; // Which question triggers the rule
-  trigger_options: number[]; // Value(s) that trigger the rule
+  trigger_options: number[]|number; // Value(s) that trigger the rule
   operator:
     | "EQUALS"
     | "NOT_EQUALS"
@@ -127,7 +127,7 @@ export interface LogicRule {
     | "LESS_THAN"
     | "CONTAINS";
   action: Action;
-  target_question_sn?: number; // Only for JUMP_TO Action
+  target_questions_sn: number[]; // Only for JUMP_TO Action
 }
 export type Action = "SHOW" | "HIDE" | "JUMP_TO" | "ENABLE" | "REQUIRE";
 
@@ -144,7 +144,7 @@ export interface SurveyExport {
   questions: SurveyQuestion[];
   question_categories?: QuestionCategory[];
   key_choice: KeyChoice[];
-  skip_logic?: LogicRule[]; // Rules where this question is the TARGET
+  skip_logic?: SkipLogicRule[]; // Rules where this question is the TARGET
 }
 
 export type AppRoutes = Record<string, string>;
