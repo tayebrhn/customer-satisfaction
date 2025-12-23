@@ -5,9 +5,9 @@ import type { AppRoutes, QuestionOption, SurveyExport } from "../types/survey";
 // utils/helpers.ts
 export const parseOption = (option: QuestionOption) => {
   return {
-    optionValue: option.id,
+    optionValue: option.sequence,
     optionLabel: option.label ?? option.text,
-    optionId: option.id,
+    optionId: option.sequence,
     isOther: option.is_other,
     // Add this line to grab children
     subOptions: option.sub_options || [], 

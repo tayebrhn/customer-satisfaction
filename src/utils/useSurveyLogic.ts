@@ -4,36 +4,36 @@
 // import { useSurveyContext } from './SurveyContext ';
 // import type { SurveyQuestion } from '../types/survey';
 // // Assuming the following types and hook are exported from SurveyContext.tsx
-// // import { 
-// //   useSurvey, 
-// //   Question, 
-// //   SurveyState, 
-// //   Action, 
+// // import {
+// //   useSurvey,
+// //   Question,
+// //   SurveyState,
+// //   Action,
 // //   useSurveyContext // Use the dedicated hook that returns both state and dispatch
-// // } from './'; 
+// // } from './';
 
 // // --- 1. Type Definitions for Logic Rules ---
 
 // /** Operators for comparing the trigger answer to the trigger value. */
-// type LogicOperator = 
-//   | 'EQUALS' 
-//   | 'NOT_EQUALS' 
-//   | 'IN' 
-//   | 'GREATER_THAN' 
-//   | 'LESS_THAN' 
+// type LogicOperator =
+//   | 'EQUALS'
+//   | 'NOT_EQUALS'
+//   | 'IN'
+//   | 'GREATER_THAN'
+//   | 'LESS_THAN'
 //   | 'CONTAINS';
 
 // /** Actions to take when a rule is met. */
-// type LogicAction = 
-//   | 'SHOW' 
-//   | 'HIDE' 
-//   | 'JUMP_TO'; 
+// type LogicAction =
+//   | 'SHOW'
+//   | 'HIDE'
+//   | 'JUMP_TO';
 
 // /** Defines a single dependency/logic rule for a question. */
 // interface SurveyRule {
 //   trigger_question_sn: string;
 //   operator: LogicOperator;
-//   trigger_options: any;
+//   trigger_options_sn: any;
 //   action: LogicAction;
 //   target_question_id?: string; // Required for JUMP_TO
 // }
@@ -54,61 +54,60 @@
 // }
 // */
 
-
 // // --- 2. Main Logic Hook ---
 
 // export function useSurveyLogic() {
 //   // Use the destructuring method based on the structure of the useSurvey hook
-//   const { state, dispatch } = useSurveyContext(); 
+//   const { state, dispatch } = useSurveyContext();
 
 //   // --- Core Utility: Rule Evaluation ---
-  
+
 //   /**
 //    * Evaluates a single logic rule against the current set of answers.
 //    */
 //   const evaluateRule = useCallback((rule: SurveyRule, answers: Record<string, any>): boolean => {
 //     const userAnswer = answers[rule.trigger_question_sn];
-    
+
 //     // Safety check for null/undefined answers
 //     if (userAnswer === undefined || userAnswer === null) {
 //       return false;
 //     }
-    
+
 //     // Type casting for comparison safety
 //     const strUserAnswer = String(userAnswer);
 //     const numUserAnswer = Number(userAnswer);
-//     const numTriggerValue = Number(rule.trigger_options);
+//     const numTriggerValue = Number(rule.trigger_options_sn);
 
 //     switch(rule.operator) {
 //       case 'EQUALS':
-//         return userAnswer === rule.trigger_options;
-        
+//         return userAnswer === rule.trigger_options_sn;
+
 //       case 'NOT_EQUALS':
-//         return userAnswer !== rule.trigger_options;
-        
+//         return userAnswer !== rule.trigger_options_sn;
+
 //       case 'IN':
-//         // Check if the trigger_options is an array and if it includes the user's answer
-//         return Array.isArray(rule.trigger_options) &&
-//                rule.trigger_options.includes(userAnswer);
-        
+//         // Check if the trigger_options_sn is an array and if it includes the user's answer
+//         return Array.isArray(rule.trigger_options_sn) &&
+//                rule.trigger_options_sn.includes(userAnswer);
+
 //       case 'GREATER_THAN':
 //         // Ensure both are valid numbers before comparison
 //         return !isNaN(numUserAnswer) && !isNaN(numTriggerValue) && numUserAnswer > numTriggerValue;
-        
+
 //       case 'LESS_THAN':
 //         // Ensure both are valid numbers before comparison
 //         return !isNaN(numUserAnswer) && !isNaN(numTriggerValue) && numUserAnswer < numTriggerValue;
-        
+
 //       case 'CONTAINS':
 //         // Check if the string representation of the answer includes the string representation of the trigger value
-//         return strUserAnswer.includes(String(rule.trigger_options));
-        
+//         return strUserAnswer.includes(String(rule.trigger_options_sn));
+
 //       default:
 //         console.warn(`Unknown operator: ${rule.operator}`);
 //         return false;
 //     }
 //   }, []);
-  
+
 //   // --- Visibility Check ---
 
 //   /**
@@ -119,24 +118,24 @@
 //   const isQuestionVisible = useCallback((questionSn: string, customAnswers: Record<string, any> | null = null): boolean => {
 //     const answers = customAnswers || state.answers;
 //     const question = state.questions.find(q => q.sequence_num.toString() === questionSn);
-    
+
 //     if (!question || !question.dependencies || question.dependencies.length === 0) {
 //       return true; // No dependencies means it's always visible
 //     }
-    
+
 //     // Evaluate all dependencies
 //     for (const rule of question.dependencies) {
 //       const conditionMet = evaluateRule(rule, answers);
-      
+
 //       // 1. Logic for SHOW/HIDE
 //       if (rule.action === 'SHOW' && !conditionMet) {
 //         return false; // Requires condition to SHOW, but it wasn't met.
 //       }
-      
+
 //       if (rule.action === 'HIDE' && conditionMet) {
 //         return false; // Condition met, so we HIDE it.
 //       }
-      
+
 //       // 2. Logic for JUMP_TO (triggers state change immediately)
 //       if (rule.action === 'JUMP_TO' && conditionMet && rule.target_question_id) {
 //         const targetIndex = state.questions.findIndex(q => q.id === rule.target_question_id);
@@ -148,10 +147,10 @@
 //         }
 //       }
 //     }
-    
+
 //     return true; // All rules passed the visibility check
 //   }, [state.questions, state.answers, evaluateRule, dispatch]);
-  
+
 //   // --- Recalculate Visibility ---
 
 //   /**
@@ -161,11 +160,11 @@
 //     const visibleIds = state.questions
 //       .filter(q => isQuestionVisible(q.sequence_num.toString()))
 //       .map(q => q.sequence_num);
-    
+
 //     // Dispatch the updated list of visible question IDs
 //     dispatch({ type: 'SET_VISIBLE_QUESTIONS', payload: visibleIds });
 //   }, [state.questions, isQuestionVisible, dispatch]);
-  
+
 //   // --- Handle Answer Change & Cleanup ---
 
 //   /**
@@ -174,12 +173,12 @@
 //   const handleAnswerChange = useCallback((questionId: string, value: any) => {
 //     // 1. Update the answer
 //     dispatch({ type: 'SET_ANSWER', payload: { questionId, value } });
-    
+
 //     // 2. Find questions that depend on this answer (for cleanup)
 //     const dependentQuestions = state.questions.filter(q =>
 //       q.dependencies?.some(rule => rule.trigger_question_sn === questionId)
 //     );
-    
+
 //     // Use the *potential new answers* to check visibility immediately for cleanup
 //     const nextAnswers = { ...state.answers, [questionId]: value };
 
@@ -190,15 +189,15 @@
 //         dispatch({ type: 'CLEAR_ANSWER', payload: q.id });
 //       }
 //     });
-    
+
 //     // 4. Recalculate global visibility after the state update has processed
 //     // Using setTimeout(..., 0) ensures this runs *after* the initial SET_ANSWER dispatch.
 //     // In many cases, relying on an `useEffect` hook listening to `state.answers` might be cleaner.
 //     setTimeout(() => {
 //       recalculateVisibility();
-//     }, 0); 
+//     }, 0);
 //   }, [state.questions, state.answers, isQuestionVisible, recalculateVisibility, dispatch]);
-  
+
 //   // --- Validation ---
 
 //   /**
@@ -206,7 +205,7 @@
 //    */
 //   const validateQuestion = useCallback((question: Question): boolean => {
 //     const answer = state.answers[question.id];
-    
+
 //     // 1. Required field check
 //     if (question.is_required && (answer === undefined || answer === null || answer === '')) {
 //       dispatch({
@@ -215,7 +214,7 @@
 //       });
 //       return false;
 //     }
-    
+
 //     // 2. Type-specific checks (e.g., number validation)
 //     if (question.question_type === 'number' && answer !== undefined && answer !== '') {
 //       if (isNaN(Number(answer))) {
@@ -226,12 +225,12 @@
 //         return false;
 //       }
 //     }
-    
+
 //     // Clear error if validation passes
 //     dispatch({ type: 'CLEAR_VALIDATION_ERROR', payload: question.id });
 //     return true;
 //   }, [state.answers, dispatch]);
-  
+
 //   /**
 //    * Validates all currently visible questions.
 //    */
@@ -240,7 +239,7 @@
 //     const visibleQuestionsToValidate = state.questions.filter(q =>
 //       state.visibleQuestions.has(q.id)
 //     );
-    
+
 //     // Use `forEach` instead of `map` so `isValid` can be updated
 //     visibleQuestionsToValidate.forEach(question => {
 //       // We must check if the question is visible again *inside* the loop
@@ -250,10 +249,10 @@
 //         isValid = false;
 //       }
 //     });
-    
+
 //     return isValid;
 //   }, [state.questions, state.visibleQuestions, validateQuestion]);
-  
+
 //   // --- Memoized Derived State ---
 
 //   /**
@@ -263,19 +262,19 @@
 //     const visibleQuestionsCount = state.questions.filter(q =>
 //       state.visibleQuestions.has(q.sequence_num.toString())
 //     ).length;
-    
+
 //     const answeredQuestionsCount = state.questions.filter(q =>
 //       state.visibleQuestions.has(q.sequence_num.toString()) &&
 //       state.answers[q.sequence_num] !== undefined &&
 //       state.answers[q.sequence_num] !== null &&
 //       state.answers[q.sequence_num] !== ''
 //     ).length;
-    
+
 //     return visibleQuestionsCount > 0
 //       ? Math.round((answeredQuestionsCount / visibleQuestionsCount) * 100)
 //       : 0;
 //   }, [state.questions, state.visibleQuestions, state.answers]);
-  
+
 //   /**
 //    * Gets the list of currently visible questions, sorted by their order property.
 //    */
@@ -284,13 +283,13 @@
 //       .filter(q => state.visibleQuestions.has(q.sequence_num.toString()))
 //       .sort((a, b) => a.sequence_num - b.sequence_num); // Assumes Question interface has an 'order' property
 //   }, [state.questions, state.visibleQuestions]);
-  
+
 //   // --- Navigation ---
 
 //   const goToNextQuestion = useCallback(() => {
 //     const currentQuestionId = state.questions[state.currentQuestionIndex]?.id;
 //     const currentVisibleIndex = visibleQuestions.findIndex(q => q.id === currentQuestionId);
-    
+
 //     if (currentVisibleIndex < visibleQuestions.length - 1) {
 //       const nextQuestion = visibleQuestions[currentVisibleIndex + 1];
 //       // We need the index *in the full state.questions array* for SET_CURRENT_QUESTION
@@ -298,11 +297,11 @@
 //       dispatch({ type: 'SET_CURRENT_QUESTION', payload: nextIndex });
 //     }
 //   }, [state.questions, state.currentQuestionIndex, visibleQuestions, dispatch]);
-  
+
 //   const goToPreviousQuestion = useCallback(() => {
 //     const currentQuestionId = state.questions[state.currentQuestionIndex]?.id;
 //     const currentVisibleIndex = visibleQuestions.findIndex(q => q.id === currentQuestionId);
-    
+
 //     if (currentVisibleIndex > 0) {
 //       const prevQuestion = visibleQuestions[currentVisibleIndex - 1];
 //       // We need the index *in the full state.questions array* for SET_CURRENT_QUESTION
@@ -310,7 +309,7 @@
 //       dispatch({ type: 'SET_CURRENT_QUESTION', payload: prevIndex });
 //     }
 //   }, [state.questions, state.currentQuestionIndex, visibleQuestions, dispatch]);
-  
+
 //   // --- Return Value ---
 
 //   return {

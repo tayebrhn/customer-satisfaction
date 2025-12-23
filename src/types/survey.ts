@@ -80,7 +80,7 @@ export interface QuestionCategory {
 // }
 
 export interface QuestionOption {
-  id: number;
+  sequence: number;
   sub_options: QuestionOption[] | [];
   text: string;
   label: string;
@@ -118,7 +118,7 @@ export interface SurveyQuestion {
 
 export interface SkipLogicRule {
   trigger_question_sn: number; // Which question triggers the rule
-  trigger_options: number[]|number; // Value(s) that trigger the rule
+  trigger_options_sn: number[] | number; // Value(s) that trigger the rule
   operator:
     | "EQUALS"
     | "NOT_EQUALS"

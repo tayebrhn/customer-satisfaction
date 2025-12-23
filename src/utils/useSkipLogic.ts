@@ -68,7 +68,7 @@ export function useSkipLogic({
         return false;
       }
 
-      const comparisonValue = rule.trigger_options;
+      const comparisonValue = rule.trigger_options_sn;
 
       // Normalize to array
       const actualIds = normalizeIds(triggerAnswer);
