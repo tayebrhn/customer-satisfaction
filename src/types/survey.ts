@@ -67,7 +67,6 @@
 //   | RatingQuestion;
 
 export interface QuestionCategory {
-  id: number;
   cat_number: number;
   name: string;
 }
@@ -92,16 +91,21 @@ export interface KeyChoice {
   description: string;
 }
 
+export const QUESTION_TYPE = {
+  MULTI_SELECT: "multi_select",
+  SINGLE_CHOICE: "single_choice",
+  NUMBER: "number",
+  RATING: "rating",
+  DROP_DOWN: "drop_down",
+  TEXT_AREA: "text_area",
+  TEXT: "text",
+} as const;
+
+export type QuestionType = (typeof QUESTION_TYPE)[keyof typeof QUESTION_TYPE];
+
 export interface SurveyQuestion {
   sequence_num: number;
-  type:
-    | "multi_select"
-    | "single_choice"
-    | "number"
-    | "rating"
-    | "drop_down"
-    | "text_area"
-    | "text";
+  type: QuestionType;
   question: string;
   category: number; // category name
   placeholder?: string;

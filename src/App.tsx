@@ -55,9 +55,9 @@ export default function App() {
                 style={{ backgroundImage: "url('/bg.png')" }}
               />
 
-              <h1 className="text-4xl md:text-5xl font-bold text-emerald-900 mb-8 z-10 relative text-center">
+              {/* <h1 className="text-4xl md:text-5xl font-bold text-emerald-900 mb-8 z-10 relative text-center">
                 የሚገኙ የዳሰሳ ጥናቶች
-              </h1>
+              </h1> */}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl z-10 relative">
                 {surveyData.length === 0 && (
@@ -91,7 +91,7 @@ export default function App() {
 
                     {/* Start Survey Button */}
                     <Link
-                      to={`/survey/${survey.id}`}
+                      to={`/${survey.id}`}
                       className="bg-lime-600 hover:bg-lime-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md w-full transition-colors"
                     >
                       ይጀምሩ
@@ -104,10 +104,10 @@ export default function App() {
         />
 
         {/* Survey page */}
-        <Route path="/survey/:id" element={<SurveyApp />} />
+        <Route path="/:id" element={<SurveyApp />} />
 
         {/* Completion page */}
-        <Route path="/survey/completion" element={<SurveyCompletion />} />
+        <Route path="/completion" element={<SurveyCompletion />} />
       </Routes>
     </Router>
   );

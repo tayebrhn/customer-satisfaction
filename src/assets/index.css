@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@import "tailwindcss";
-
 /* Custom theme extensions using @theme directive */
 @theme {
   /* Background Images */
@@ -47,19 +45,45 @@ input[type=number]::-webkit-inner-spin-button {
     margin: 0;
 }
 
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield; /* hides arrows */
-}
 
 body {
-  font-family: "MyFont", sans-serif;
+  font-family: "MyFont", sans-serif !important;
 }
 
 * {
   font-family: inherit !important;
   /* background-color: rgb(105, 191, 112) !important; */
 }
+
+/* body {
+  font-family: "MyFont", sans-serif;
+}
+
+html,
+body,
+input,
+textarea,
+select,
+button,
+p,
+span,
+div,
+label,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+} */
+
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield; /* hides arrows */
+}
+
 .font-weight {
   font-family: "MyFont", sans-serif;
   font-weight: 600;

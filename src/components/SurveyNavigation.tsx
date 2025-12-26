@@ -67,12 +67,12 @@ export const SurveyNavigation = ({
             </>
           ) : isSubmitting ? (
             <>
-              እየላክን...
+              እየላከ...
               <BsCloudUploadFill className="inline-block" />{" "}
             </>
           ) : (
             <>
-              ላክ <BsCheckCircleFill className="inline-block" />
+              ላክ/next <BsCheckCircleFill className="inline-block" />
             </>
           )}
         </button>

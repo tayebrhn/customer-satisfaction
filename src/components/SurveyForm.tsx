@@ -54,7 +54,7 @@ export function SurveyForm({
     skipLogic: skip_logic,
   });
 
-  const {cat_number,name:cat_name} = currentCategory
+  const { cat_number, name: cat_name } = currentCategory;
   return (
     <form
       onKeyDown={(event: React.KeyboardEvent<HTMLFormElement>) => {
@@ -77,14 +77,14 @@ export function SurveyForm({
         </header>
 
         <section className="space-y-6">
-          {visibleCategoryQuestions?.map((q: SurveyQuestion,index) => (
+          {visibleCategoryQuestions?.map((q: SurveyQuestion, index) => (
             <div
               key={q.sequence_num}
               className="p-6 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200"
             >
               <div className="mb-4">
                 <label className="block font-medium text-gray-900 text-base sm:text-lg md:text-xl leading-relaxed">
-                  {`${cat_number}.${index+1}. `}
+                  {`${cat_number}.${index + 1}. `}
                   {q.question}
                   {q.constraints.required && (
                     <span
@@ -105,6 +105,36 @@ export function SurveyForm({
               </div>
             </div>
           ))}
+          {/* Optional: Show questions that are hidden in this category */}
+          {import.meta.env.DEV &&
+            totalCategoryQuestions > visibleCategoryCount && (
+              <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <details className="text-sm">
+                  <summary className="cursor-pointer text-gray-600 font-medium">
+                    Hidden in this category (
+                    {totalCategoryQuestions - visibleCategoryCount} questions)
+                  </summary>
+                  <div className="mt-2 space-y-1">
+                    {currentCategory.questions
+                      .filter((q) => !visibleQuestions.has(q.sequence_num))
+                      .map((q) => (
+                        <div
+                          key={q.sequence_num}
+                          className="text-gray-500 text-xs p-2 bg-gray-100 rounded"
+                        >
+                          Q{q.sequence_num}: {q.question.substring(0, 60)}...
+                          {q.skip_logic?.map((rule, idx) => (
+                            <div key={idx} className="ml-4 text-gray-400">
+                              • If Q{rule.trigger_question_sn} {rule.operator}{" "}
+                              {rule.trigger_options_sn} → {rule.action}
+                            </div>
+                          ))}
+                        </div>
+                      ))}
+                  </div>
+                </details>
+              </div>
+            )}
         </section>
       </div>
     </form>

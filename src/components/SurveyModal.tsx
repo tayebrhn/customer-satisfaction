@@ -20,8 +20,8 @@ export function SurveyModal({
   const isSuccess = status === "success";
   useEffect(() => {
     if (isSuccess && response) {
-      navigate("/survey/completion", { state: { response } });
-      // window.location.href = `/survey/completion?response_id=${response?.response_id}`;
+      navigate("/completion", { state: { response } });
+      // window.location.href = `/completion?response_id=${response?.response_id}`;
     }
   }, [isSuccess, response]);
   if (status === "idle" || status === "loading") return null;
@@ -70,7 +70,7 @@ export function SurveyModal({
           <button
             onClick={() => {
               if (isSuccess) {
-                navigate("/survey/completion", { state: { response } });
+                navigate("/surve/completion", { state: { response } });
               } else {
                 onClose();
               }

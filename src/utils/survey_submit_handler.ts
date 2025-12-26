@@ -112,7 +112,7 @@ export async function handleSurveySubmit({
     }
 
     console.log("DEBUG:", responses);
-    // Success: you can pass json to /survey/completion
+    // Success: you can pass json to /completion
     setSubmissionStatus("success");
     clearSavedData();
     clearPageData();

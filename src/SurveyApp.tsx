@@ -63,7 +63,7 @@ export default function SurveyApp() {
     return surveyData.question_categories.map((cat: QuestionCategory) => ({
       ...cat,
       questions: surveyData.questions.filter(
-        (q: SurveyQuestion) => q.category === cat.id
+        (q: SurveyQuestion) => q.category === cat.cat_number
       ),
     }));
   }, [surveyData]);
@@ -191,6 +191,10 @@ export default function SurveyApp() {
       handleSubmit(onSubmit)();
     } else {
       nextCategory();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", // optional
+      });
     }
   };
 
