@@ -1,89 +1,17 @@
-// export type ValueLabelOption = {
-//   value: string;
-//   label: string;
-// };
 
-// export type ChoiceOption = {
-//   id: number;
-//   text: string;
-//   is_other?: boolean;
-// };
-
-// export type ValueLabelQuestion = {
-//   id: number;
-//   type: string;
-//   question: string;
-//   category: number;
-//   options: ValueLabelOption[];
-//   placeholder?: undefined;
-//   scale?: undefined;
-// };
-
-// export type StringArrayQuestion = {
-//   id: number;
-//   type: string;
-//   question: string;
-//   category: number;
-//   options: string[];
-//   placeholder?: undefined;
-//   scale?: undefined;
-// };
-
-// export type TextQuestion = {
-//   id: number;
-//   question: string;
-//   type: string;
-//   placeholder: string;
-//   category: number;
-//   options?: undefined;
-//   scale?: undefined;
-// };
-
-// export type ObjectOptionsQuestion = {
-//   id: number;
-//   question: string;
-//   type: string;
-//   options: QuestionOption[];
-//   category: number;
-//   placeholder?: undefined;
-//   scale?: undefined;
-// };
-
-// export type RatingQuestion = {
-//   id: number;
-//   question: string;
-//   type: string; // e.g. "rating"
-//   scale: string; // e.g. "1-5"
-//   category: number;
-//   options?: undefined;
-//   placeholder?: undefined;
-// };
-
-// export type Question =
-//   | ValueLabelQuestion
-//   | StringArrayQuestion
-//   | TextQuestion
-//   | ObjectOptionsQuestion
-//   | RatingQuestion;
 
 export interface QuestionCategory {
   cat_number: number;
   name: string;
 }
 
-// export interface CurrentCategory {
-//   questions: SurveyQuestion[];
-//   id: number;
-//   cat_number: number;
-//   name: string;
-// }
-
 export interface QuestionOption {
   sequence: number;
-  sub_options: QuestionOption[] | [];
   text: string;
   label: string;
   is_other: boolean;
+  dependency_option?:number
+  sub_options: QuestionOption[] | [];
 }
 
 export interface KeyChoice {
@@ -110,14 +38,14 @@ export interface SurveyQuestion {
   category: number; // category name
   placeholder?: string;
   scale?: string;
-  options: QuestionOption[];
   constraints: {
     verifiable: boolean;
     required: boolean;
-    min_length: number | null;
-    max_length: number | null;
+    min_length?: number;
+    max_length?: number;
   };
-  skip_logic?: SkipLogicRule[]; // Rules where this question is the TARGET
+  depends_on?: number;
+  options: QuestionOption[];
 }
 
 export interface SkipLogicRule {
@@ -151,7 +79,7 @@ export interface SurveyExport {
   skip_logic?: SkipLogicRule[]; // Rules where this question is the TARGET
 }
 
-export type AppRoutes = Record<string, string>;
+// export type AppRoutes = Record<string, string>;
 
 export interface GroupedQuestion {
   questions: SurveyQuestion[];

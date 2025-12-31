@@ -1,5 +1,5 @@
 import type { FieldErrors } from "react-hook-form";
-import type { AppRoutes, QuestionOption, SurveyExport } from "../types/survey";
+import type { QuestionOption } from "../types/survey";
 
 // Utility function for parsing different option formats
 // utils/helpers.ts
@@ -35,12 +35,27 @@ export const flattenOptions = (options: any[], parser: typeof parseOption) => {
   return flatList;
 };
 
-export function generateRoutes(data: SurveyExport[] | null): AppRoutes {
-  if (!data) return {}; // return empty when null
-  const routes: AppRoutes = {};
-  data.map((element) => (routes[element.metadata.title] = `/${element.id}`));
-  return routes;
-}
+// export function generateRoutes(data: SurveyExport[] | null): AppRoutes {
+//   if (!data) return {}; // return empty when null
+//   const routes: AppRoutes = {};
+//   data.map((element) => (routes[element.metadata.title] = `/${element.id}`));
+//   return routes;
+// }
+
+export const findPathToOption = (
+  options: any[],
+  targetId: string | number
+): string[] | null => {
+  for (const option of options) {
+    const { optionId, optionLabel, subOptions } = parseOption(option);
+    if (String(optionId) === String(targetId)) return [optionLabel];
+    if (subOptions && subOptions.length > 0) {
+      const childPath = findPathToOption(subOptions, targetId);
+      if (childPath) return [optionLabel, ...childPath];
+    }
+  }
+  return null;
+};
 
 export async function n(fields: any[]) {
   console.log(JSON.stringify({ fields }));
